@@ -1,8 +1,8 @@
 const express = require("express");
+const { createTourPackages, getAllTourPakages, deletedById } = require("../controllers/tourPackages");
 
 const tour_packagesRouter = express.Router();
 
-const { createTourPackages ,getAllTourPakages,deletedById} = require("../backend/controllers/tourPackages");
 
 tour_packagesRouter.post("/createTour", createTourPackages);
 tour_packagesRouter.get("/all", getAllTourPakages);
