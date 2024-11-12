@@ -1,5 +1,5 @@
-const db = require("../../models/db");
-//create tour packages 
+const db = require("../models/db");
+//create tour packages
 const createTourPackages = async (req, res) => {
   const {
     name,
@@ -45,7 +45,7 @@ const createTourPackages = async (req, res) => {
     res.status(500).json({ success: false, error: error });
   }
 };
-//the get all tour packeges 
+//the get all tour packeges
 const getAllTourPakages = async (req, res) => {
   const query = `SELECT  * FROM tour_packages INNER JOIN articles ON users.id=articles.author_id WHERE articles.id=$1 AND articles.is_deleted=0;`;
 
@@ -69,7 +69,7 @@ const getAllTourPakages = async (req, res) => {
     });
   }
 };
-  //This function delete tour By id 
+//This function delete tour By id
 const deletedById = async (req, res) => {
   const tour_packages_id = req.params.tour_packages_id;
   const query = `DELETE FROM tour_packages WHERE tour_packages_id = $1 RETURNING * `;
