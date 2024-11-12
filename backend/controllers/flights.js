@@ -40,5 +40,30 @@ const createFlights = (req, res) => {
       });
     });
 };
+const bookFlight = (req, res) => {
+  const { user_id, flights_id } = req.body;
 
-module.exports = { createFlights };
+  module.exports = { createFlights };
+  const query = `
+      INSERT INTO userFlight (user_id, flights_id)
+      VALUES ($1, $2) RETURNING *;
+    `;
+  const values = [user_id, flights_id];
+
+  db.query(query, values)
+    .then((result) => {
+      res.status(200).json({
+        success: true,
+        message: "Flight booked successfully",
+        result: result.rows[0],
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: "Server error",
+        err: err,
+      });
+    });
+};
+module.exports = { createFlights, bookFlight };
