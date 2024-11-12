@@ -66,4 +66,7 @@ const bookFlight = (req, res) => {
       });
     });
 };
-module.exports = { createFlights, bookFlight };
+const findAtrip= (req,res)=>{
+
+}
+module.exports = { createFlights, bookFlight,findAtrip };

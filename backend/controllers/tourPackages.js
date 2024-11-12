@@ -1,4 +1,4 @@
-const db = require("../../models/db");
+const db = require("../models/db");
 //create tour packages 
 const createTourPackages = async (req, res) => {
   const {
