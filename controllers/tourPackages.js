@@ -13,24 +13,27 @@ const createTourPackages = async (req, res) => {
     image_url,
   } = req.body;
 
-  const query = `INSERT INTO tour_packages (image_url,
+  const query = `INSERT INTO tour_packages (
     name,
     destination,
     duration_days,
     start_date,
     end_date,
+    hotel_name,
+    description,
     price,
-    description,is_deleted) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,0) RETURNING *`;
+    image_url,is_deleted) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,9,0) RETURNING *`;
 
   const values = [
-    image_url,
     name,
     destination,
     duration_days,
     start_date,
     end_date,
-    price,
+    hotel_name,
     description,
+    price,
+    image_url,
   ];
 
   try {
@@ -44,7 +47,7 @@ const createTourPackages = async (req, res) => {
 };
 //the get all tour packeges 
 const getAllTourPakages = async (req, res) => {
-  const query = `SELECT  * FROM tour_packages WHERE is_deleted = 0`;
+  const query = `SELECT  * FROM tour_packages INNER JOIN articles ON users.id=articles.author_id WHERE articles.id=$1 AND articles.is_deleted=0;`;
 
   try {
     const result = await db.query(query);
