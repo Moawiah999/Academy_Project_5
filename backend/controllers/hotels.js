@@ -41,4 +41,26 @@ const getAllHotels = (req, res) => {
       });
     });
 };
-module.exports = { createHotel, getAllHotels };
+const updateHotelById = (req, res) => {
+  const id = req.params.id;
+  const { name, location, price_per_night, image_url } = req.body;
+  pool
+    .query(
+      `UPDATE hotels SET name='${name}',location='${location}',price_per_night='${price_per_night}',image_url='${image_url}' WHERE hotel_id='${id}' RETURNING *`
+    )
+    .then((result) => {
+      res.status(200).json({
+        success: true,
+        message: `Hotel with id:${id} updated successfully`,
+        article: result.rows,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: "Server error",
+        err: err.message,
+      });
+    });
+};
+module.exports = { createHotel, getAllHotels, updateHotelById };
