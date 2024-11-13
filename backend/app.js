@@ -32,6 +32,9 @@ app.use("/Tour", tour_packagesRouter);
 const hotelsRouter = require("./routes/hotels");
 app.use("/hotels", hotelsRouter);
 
+// Notification
+const notificationRouter = require("./routes/notifications");
+app.use("/notifications", notificationRouter);
 app.listen(PORT, () => {
   console.log(`Server is run at https://localhost:${PORT}`);
 });
