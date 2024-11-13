@@ -32,6 +32,10 @@ app.use("/Tour", tour_packagesRouter);
 const hotelsRouter = require("./routes/hotels");
 app.use("/hotels", hotelsRouter);
 
+//reservationsRouter
+const reservationsRoute = require('./routes/reservationsRoute')
+app.use('/reservations',reservationsRoute)
+
 app.listen(PORT, () => {
   console.log(`Server is run at https://localhost:${PORT}`);
 });

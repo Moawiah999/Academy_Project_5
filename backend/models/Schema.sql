@@ -111,7 +111,6 @@ CREATE TABLE reservations (
   flight_id INT,
   hotel_id INT,
   tour_package_id INT,
-
   reservation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   status VARCHAR(50) DEFAULT 'Pending',
   is_deleted SMALLINT DEFAULT 0,
