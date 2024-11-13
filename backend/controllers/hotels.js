@@ -4,7 +4,7 @@ const createHotel = (req, res) => {
   const { name, location, price_per_night, image_url } = req.body;
   pool
     .query(
-      `INSERT INTO hotels (name ,location , price_per_night , image_url) VALUES ($1,$2,$3,$4) RETURNING *`,
+      `INSERT INTO hotels (name ,location , price_per_night , image_url) VALUES ($1,$2,$3,$4) WHERE is_deleted=0 RETURNING *`,
       [name, location, price_per_night, image_url]
     )
     .then((result) => {
@@ -63,4 +63,27 @@ const updateHotelById = (req, res) => {
       });
     });
 };
-module.exports = { createHotel, getAllHotels, updateHotelById };
+const deleteHotelById = (req, res) => {
+  const id = req.params.id;
+  pool
+    .query(`UPDATE hotels SET is_deleted=1 WHERE hotel_id='${id}'`)
+    .then((result) => {
+      res.status(200).json({
+        success: true,
+        message: `Hotel with id : ${id} deleted successfully`,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: "Server error",
+        err: err.message,
+      });
+    });
+};
+module.exports = {
+  createHotel,
+  getAllHotels,
+  updateHotelById,
+  deleteHotelById,
+};
