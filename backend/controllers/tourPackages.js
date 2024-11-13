@@ -77,17 +77,17 @@ const getAllTourPakages = async (req, res) => {
 const updateTourPackage = async (req, res) => {
   const tour_packages_id = req.params.tour_packages_id;
 
-  const { 
-    name, 
-    destination, 
-    duration_days, 
-    start_date, 
-    end_date, 
-    hotel_name, 
-    description, 
-    price, 
-    image_url 
-  } = req.body;  
+  const {
+    name,
+    destination,
+    duration_days,
+    start_date,
+    end_date,
+    hotel_name,
+    description,
+    price,
+    image_url,
+  } = req.body;
   const query = `
     UPDATE tour_packages 
     SET 
@@ -119,8 +119,7 @@ const updateTourPackage = async (req, res) => {
 
   try {
     const result = await db.query(query, values);
-res.status(200).json({success : true , message : "Update successfully"})
-  
+    res.status(200).json({ success: true, message: "Update successfully" });
   } catch (error) {
     console.log(error);
     res.status(500).json({
@@ -131,12 +130,10 @@ res.status(200).json({success : true , message : "Update successfully"})
   }
 };
 //This function delete tour By id
-
 const deletedById = async (req, res) => {
   const tour_packages_id = req.params.tour_packages_id;
   const query = `DELETE FROM tour_packages WHERE tour_packages_id = $1 RETURNING * `;
   const values = [tour_packages_id];
-
   try {
     const result = await db.query(query, values);
     res.status(200).json({
