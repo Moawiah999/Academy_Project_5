@@ -81,9 +81,30 @@ const deleteHotelById = (req, res) => {
       });
     });
 };
+const getHotelById = (req, res) => {
+  const id = req.params.id;
+  // console.log(req.params.id);
+  pool
+    .query(`SELECT * FROM hotels WHERE hotel_id='${id}' AND hotels.is_deleted=0`)
+    .then((result) => {
+      res.status(200).json({
+        success: true,
+        message: `Hotel ${id}`,
+        result: result.rows,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: "Server error",
+        err: err,
+      });
+    });
+};
 module.exports = {
   createHotel,
   getAllHotels,
   updateHotelById,
   deleteHotelById,
+  getHotelById,
 };
