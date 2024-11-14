@@ -10,5 +10,6 @@ const {
 } = require("../controllers/roles");
 
 roleRouter.post("/", createNewRole);
-
+roleRouter.post("/permission", createNewPermission);
+roleRouter.post("/role_permission", createNewRolePermission);
 module.exports = roleRouter;
