@@ -1,22 +1,19 @@
 const db = require("../models/db");
 const jwt = require("jsonwebtoken");
-
 const bcrypt = require("bcryptjs");
 
 //This function To create new user :
 const register = async (req, res) => {
-  const { firstName, lastName, age, country, email, password, role_id } =
-    req.body;
+  const { first_name, last_name, country, email, password, role_id } = req.body;
   const normalizedEmail = email.toLowerCase();
   const encryptedPassword = await bcrypt.hash(password, 5);
 
-  // Ensure column names match exactly with your table structure
-  const query = `INSERT INTO users (first_name, last_name, age, country, email, password, role_id) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`;
+  const query = `INSERT INTO users (first_name, last_name, country, email, password, role_id) 
+                 VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`;
 
   const values = [
-    firstName,
-    lastName,
-    age,
+    first_name,
+    last_name,
     country,
     normalizedEmail,
     encryptedPassword,
@@ -32,6 +29,8 @@ const register = async (req, res) => {
       });
     })
     .catch((err) => {
+      console.log(err);
+
       res.status(409).json({
         success: false,
         message: "The email already exists",
@@ -46,41 +45,48 @@ const login = async (req, res) => {
   const values = [email];
 
   try {
-    const result = db.query(query, values);
-    const user = result.row[0];
+    const result = await db.query(query, values);
+    const user = result.rows[0];
+
     if (!user) {
       return res.status(403).json({
         success: false,
         message: "Invalid email or password",
       });
     }
+
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(403).json({
         success: false,
-        message: "Invalid email or password",
+        message: "An error occurred while logging in",
       });
     }
+
     const payload = {
-      userId: user.id,
+      userId: user.user_id,
       role: user.role_id,
     };
+
     const options = {
       expiresIn: "60m",
     };
+
     const token = jwt.sign(payload, process.env.SECRET, options);
+
     res.status(201).json({
       success: true,
       message: "Login successful",
       token,
-      userId: user.id,
+      userId: user.user_id,
     });
-  } catch (error) {
-    console.error("Error during login:", error);
+  } catch (err) {
+    console.log(err);
     res.status(500).json({
       success: false,
-      message: "An error occurred while logging in",
+      message: "Server error",
     });
   }
 };
+
 module.exports = { register, login };
