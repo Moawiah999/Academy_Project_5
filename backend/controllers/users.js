@@ -1,15 +1,13 @@
 const db = require("../models/db");
 const jwt = require("jsonwebtoken");
-
 const bcrypt = require("bcryptjs");
 
 //This function To create new user :
 const register = async (req, res) => {
-
   const { first_name, last_name, country, email, password, role_id } = req.body;
   const normalizedEmail = email.toLowerCase();
   const encryptedPassword = await bcrypt.hash(password, 5);
-  // Ensure column names match exactly with your table structure
+
   const query = `INSERT INTO users (first_name, last_name, country, email, password, role_id) 
                  VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`;
 
@@ -38,21 +36,16 @@ const register = async (req, res) => {
         message: "The email already exists",
         err: err,
       });
-
     });
-  }
 };
 
 const login = async (req, res) => {
-
   const { email, password } = req.body;
   const query = `SELECT * FROM users WHERE email = $1`;
   const values = [email];
 
-
   try {
     const result = await db.query(query, values);
-
     const user = result.rows[0];
 
     if (!user) {
@@ -68,7 +61,6 @@ const login = async (req, res) => {
         success: false,
         message: "An error occurred while logging in",
       });
-
     }
 
     const payload = {
@@ -87,7 +79,14 @@ const login = async (req, res) => {
       message: "Login successful",
       token,
       userId: user.user_id,
-
     });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      success: false,
+      message: "Server error",
+    });
+  }
 };
+
 module.exports = { register, login };
