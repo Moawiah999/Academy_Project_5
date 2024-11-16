@@ -1,0 +1,37 @@
+.logo{
+max-width: 50%;    
+  height: auto;           
+  width: 90px;
+  margin-left: -60px;
+}
+.bg-white-mb-3{
+    height: 60px;
+
+}
+.title {
+    font-family: 'Arial', sans-serif; 
+    font-weight: bold;              
+    font-size: 24px;                
+    text-transform: uppercase;       
+    background: linear-gradient(90deg, red, black); 
+    -webkit-background-clip: text;   
+    -webkit-text-fill-color: transparent; 
+    display: inline-block;          
+    letter-spacing: 2px;         
+  }
+  .nav-link {
+    font-size: 16px;
+    font-weight: bold;
+    color: black;
+    margin: 0 15px;
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+  }
+  
+  .nav-link:hover {
+    color: red;
+  }
+  
+  .nav-link.active {
+    color: red;
+  }

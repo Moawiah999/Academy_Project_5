@@ -15,9 +15,11 @@ const NavbarPage = () => {
   return (<>
     <>
       {['sm'].map((expand) => (
-        <Navbar key={expand} expand={expand} className="bg-body-tertiary mb-3">
+        <Navbar key={expand} expand={expand} className="bg-white-mb-3">
           <Container fluid>
-            <Navbar.Brand href="#">QuickReservePro</Navbar.Brand>
+            <Navbar.Brand className="title" href="#">QuickReservePro</Navbar.Brand>
+            <img className = "logo" src='\public\updateLogo.png'/>
+
             <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
             <Navbar.Offcanvas
               id={`offcanvasNavbar-expand-${expand}`}
@@ -31,12 +33,12 @@ const NavbarPage = () => {
               </Offcanvas.Header>
               <Offcanvas.Body>
                 <Nav className="justify-content-end flex-grow-1 pe-3">
-                  <Nav.Link href="#action1" >Home</Nav.Link>
-                  <Nav.Link href="#action2">About</Nav.Link>
-                  <Nav.Link href="#action2">Hotels</Nav.Link>
-                  <Nav.Link href="#action2">Flights</Nav.Link>
-                  <Nav.Link href="#action2">Packages</Nav.Link>
-                  <Nav.Link href="#action2">Contact Us</Nav.Link>
+                  <Nav.Link href="#action1" >HOME</Nav.Link>
+                  <Nav.Link href="#action2">ABOUT</Nav.Link>
+                  <Nav.Link href="#action2">HOTELS</Nav.Link>
+                  <Nav.Link href="#action2">FLIGHTS</Nav.Link>
+                  <Nav.Link href="#action2">PACKAGES</Nav.Link>
+                  <Nav.Link href="#action2">CONTACT US</Nav.Link>
                 </Nav>
                 {/* <Form className="d-flex">
                   <Form.Control
