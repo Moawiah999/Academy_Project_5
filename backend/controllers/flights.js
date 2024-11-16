@@ -11,7 +11,7 @@ const createFlights = (req, res) => {
     price,
   } = req.body;
   const query = `
-    INSERT INTO flights (flight_Company, flight_number, origin, destination, departure_time, arrival_time, price,userId)
+    INSERT INTO flights (flight_Company, flight_number, origin, destination, departure_time, arrival_time, price)
     VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;
   `;
   const values = [
