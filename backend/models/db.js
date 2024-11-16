@@ -12,7 +12,7 @@ pool
     console.log(err);
   });
 
-module.exports = { pool };
+module.exports = pool;
 // ===============================================================================
 
 // ! Don't Active the function please
