@@ -1,0 +1,22 @@
+.header{
+    font-weight: bold;
+   
+}
+
+.containerAboutUs{
+    width: 100%;
+    padding: 40px 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr ;
+}
+.paragraph{
+   margin-top: 80px;
+   margin-left: -300px;
+   font-size: 20px;
+}
+
+ .imageAboutUs{
+    width: 100%; 
+    max-width: 700px; 
+    height: auto; 
+} 
