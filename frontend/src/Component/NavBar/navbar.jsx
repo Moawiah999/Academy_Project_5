@@ -13,10 +13,6 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 const NavbarPage = () => {
 // const navigate = useNavigate()
   return (<>
-    {/* <div>navbar</div>
-    <div className='container'>
-    <Button variant='primary'>اي اشي</Button>
-    </div> */}
     <>
       {['sm'].map((expand) => (
         <Navbar key={expand} expand={expand} className="bg-body-tertiary mb-3">
@@ -36,22 +32,13 @@ const NavbarPage = () => {
               <Offcanvas.Body>
                 <Nav className="justify-content-end flex-grow-1 pe-3">
                   <Nav.Link href="#action1" >Home</Nav.Link>
-                  <Nav.Link href="#action2">Link</Nav.Link>
-                  <NavDropdown
-                    title="Dropdown"
-                    id={`offcanvasNavbarDropdown-expand-${expand}`}
-                  >
-                    <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
-                    <NavDropdown.Item href="#action4">
-                      Another action
-                    </NavDropdown.Item>
-                    <NavDropdown.Divider />
-                    <NavDropdown.Item href="#action5">
-                      Something else here
-                    </NavDropdown.Item>
-                  </NavDropdown>
+                  <Nav.Link href="#action2">About</Nav.Link>
+                  <Nav.Link href="#action2">Hotels</Nav.Link>
+                  <Nav.Link href="#action2">Flights</Nav.Link>
+                  <Nav.Link href="#action2">Packages</Nav.Link>
+                  <Nav.Link href="#action2">Contact Us</Nav.Link>
                 </Nav>
-                <Form className="d-flex">
+                {/* <Form className="d-flex">
                   <Form.Control
                     type="search"
                     placeholder="Search"
@@ -59,7 +46,7 @@ const NavbarPage = () => {
                     aria-label="Search"
                   />
                   <Button variant="outline-success">Search</Button>
-                </Form>
+                </Form> */}
               </Offcanvas.Body>
             </Navbar.Offcanvas>
           </Container>
