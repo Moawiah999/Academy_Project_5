@@ -18,7 +18,7 @@ const NavbarPage = () => {
         <Navbar key={expand} expand={expand} className="bg-white-mb-3">
           <Container fluid>
             <Navbar.Brand className="title" href="#">QuickReservePro</Navbar.Brand>
-            <img className = "logo" src='\public\updateLogo.png'/>
+            <img className = "logo" src='\images\updateLogo.png'/>
 
             <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
             <Navbar.Offcanvas
