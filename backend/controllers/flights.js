@@ -101,4 +101,28 @@ const cancelFlight = (req, res) => {
       });
     });
 };
-module.exports = { createFlights, bookFlight, findAtrip, cancelFlight };
+const getAllFlight = (req, res) => {
+  const query = "SELECT * FROM flights";
+  db.query(query)
+    .then((result) => {
+      res.status(200).json({
+        success: true,
+        message: "Flight booking canceled successfully",
+        result: result.rows
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: "No flights",
+        err: err,
+      });
+    });
+};
+module.exports = {
+  createFlights,
+  bookFlight,
+  findAtrip,
+  cancelFlight,
+  getAllFlight,
+};
