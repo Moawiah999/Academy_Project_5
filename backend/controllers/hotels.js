@@ -1,10 +1,10 @@
-const { pool } = require("../models/db");
+const  pool  = require("../models/db");
 
 const createHotel = (req, res) => {
   const { name, location, price_per_night, image_url } = req.body;
   pool
     .query(
-      `INSERT INTO hotels (name ,location , price_per_night , image_url) VALUES ($1,$2,$3,$4) WHERE is_deleted=0 RETURNING *`,
+      `INSERT INTO hotels (name ,location , price_per_night , image_url) VALUES ($1,$2,$3,$4) RETURNING *`,
       [name, location, price_per_night, image_url]
     )
     .then((result) => {
