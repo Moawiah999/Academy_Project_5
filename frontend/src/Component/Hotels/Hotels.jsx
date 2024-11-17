@@ -29,11 +29,11 @@ const Hotels = () => {
               <Card.Body>
                 <Card.Title>
                   <h1>{ele.name}</h1>
-                  
+
                   <h3>{ele.location}</h3>
                 </Card.Title>
                 <Card.Text>
-                  <h3>Price : {ele.price_per_night} JOD</h3>
+                  <h3>Price : {ele.price_per_night} $</h3>
                 </Card.Text>
                 <Button variant="primary">See More</Button>
               </Card.Body>
