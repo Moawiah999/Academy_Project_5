@@ -1,22 +1,32 @@
-.header{
+/* .header {
+margin-left: 47px;
     font-weight: bold;
-   
 }
 
-.containerAboutUs{
+.containerAboutUs {
+
+gap:50px;
     width: 100%;
+    
+    height: 30px;
     padding: 40px 20px;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr ;
-}
-.paragraph{
-   margin-top: 80px;
-   margin-left: -300px;
-   font-size: 20px;
-}
+    grid-template-columns: 1fr 1fr 1fr;
 
- .imageAboutUs{
+} */
+
+/* .paragraph { */
+    /* padding: 30px; */
+    /* margin-top: 80px;
+    margin-left: -300px;
+    font-size: 20px;
+
+} */
+
+/* .imageAboutUs { */
+    /* padding: 30px; */
+    /* margin-right: 25px;
     width: 100%; 
-    max-width: 700px; 
-    height: auto; 
-} 
+    max-width: 700px;
+    height: 100px;
+} */
