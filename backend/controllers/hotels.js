@@ -1,4 +1,4 @@
-const  pool  = require("../models/db");
+const pool = require("../models/db");
 
 const createHotel = (req, res) => {
   const { name, location, price_per_night, image_url } = req.body;
@@ -85,7 +85,9 @@ const getHotelById = (req, res) => {
   const id = req.params.id;
   // console.log(req.params.id);
   pool
-    .query(`SELECT * FROM hotels WHERE hotel_id='${id}' AND hotels.is_deleted=0`)
+    .query(
+      `SELECT * FROM hotels WHERE hotel_id='${id}' AND hotels.is_deleted=0`
+    )
     .then((result) => {
       res.status(200).json({
         success: true,
@@ -101,10 +103,32 @@ const getHotelById = (req, res) => {
       });
     });
 };
+const getBestHotels = (req, res) => {
+  console.log(10);
+  pool
+    .query(`SELECT * FROM hotels WHERE hotels.is_deleted=0 ORDER BY hotel_id LIMIT 6 OFFSET 0`)
+    .then((result) => {
+      res.status(200).json({
+        success: true,
+        message: "Best hotels",
+        result: result.rows,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({
+        success: false,
+        message: "Server error",
+        err: err,
+      });
+    });
+};
 module.exports = {
   createHotel,
   getAllHotels,
   updateHotelById,
   deleteHotelById,
   getHotelById,
+  getBestHotels,
 };
+// ORDER BY id LIMIT 6 OFFSEST 0

@@ -5,6 +5,7 @@ const {
   updateHotelById,
   deleteHotelById,
   getHotelById,
+  getBestHotels,
 } = require("../controllers/hotels");
 const hotelsRouter = express.Router();
 
@@ -13,5 +14,6 @@ hotelsRouter.get("/", getAllHotels);
 hotelsRouter.put("/:id", updateHotelById);
 hotelsRouter.delete("/:id", deleteHotelById);
 hotelsRouter.get("/:id", getHotelById);
+hotelsRouter.get("/bestHotel/best", getBestHotels)
 
 module.exports = hotelsRouter;
