@@ -104,7 +104,7 @@ const getHotelById = (req, res) => {
     });
 };
 const getBestHotels = (req, res) => {
-  console.log(10);
+  // console.log(10);
   pool
     .query(`SELECT * FROM hotels WHERE hotels.is_deleted=0 ORDER BY hotel_id LIMIT 6 OFFSET 0`)
     .then((result) => {
