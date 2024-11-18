@@ -1,3 +1,4 @@
+
 import React from 'react'
 import ImageSlider from '../imageslider/ImageSlider';
 import AboutUs from '../AboutUs/AboutUs';
@@ -17,4 +18,5 @@ const Home = () => {
   )
 }
 
-export default Home
+
+export default Home;
