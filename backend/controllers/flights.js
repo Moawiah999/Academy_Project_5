@@ -1,3 +1,4 @@
+const { query } = require("express");
 const db = require("../models/db");
 
 const createFlights = (req, res) => {
@@ -66,7 +67,29 @@ const bookFlight = (req, res) => {
       });
     });
 };
-const findAtrip = (req, res) => {};
+const findAtrip = (req, res) => {
+  const { origin, destination, departure_date } = req.query;
+  const query =
+    "SELECT * FROM flights WHERE origin=$1 and destination=$2 and CAST(departure_time AS TIMESTAMP)=$3";
+
+  const values = [origin, destination, departure_date];
+  db.query(query, values)
+    .then((result) => {
+      res.status(200).json({
+        success: true,
+        message: "Get All Flight successfully",
+        result: result.rows,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: "Server error",
+        err: err,
+      });
+    });
+};
+
 const cancelFlight = (req, res) => {
   // user_id from token
   const { user_id, flights_id } = req.body;
