@@ -14,6 +14,7 @@ const NavbarPage = () => {
   const navigate = useNavigate();
   return (
     <>
+
       <>
         {["sm"].map((expand) => (
           <Navbar key={expand} expand={expand} className="bg-white-mb-3">
@@ -27,6 +28,7 @@ const NavbarPage = () => {
                 QuickReservePro
               </Navbar.Brand>
               <img className="logo" src="\public\updateLogo.png" />
+
 
               <Navbar.Toggle
                 aria-controls={`offcanvasNavbar-expand-${expand}`}
