@@ -32,7 +32,7 @@ const ContactUs = () => {
               color: "#000",
             }}
             className="text-center">
-            ABOUT <span style={{ color: "red" }}>US</span>
+            CONTACT <span style={{ color: "red" }}>US</span>
           </h1>
       <Row>
         {/* Form Section */}
