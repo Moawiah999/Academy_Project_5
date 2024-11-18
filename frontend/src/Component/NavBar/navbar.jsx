@@ -27,7 +27,7 @@ const NavbarPage = () => {
               >
                 QuickReservePro
               </Navbar.Brand>
-              <img className="logo" src="\public\updateLogo.png" />
+              <img className="logo" src="\images\updateLogo.png" />
 
 
               <Navbar.Toggle
@@ -71,7 +71,10 @@ const NavbarPage = () => {
                       HOTELS
                     </Nav.Link>
                     <Nav.Link href="#action2">FLIGHTS</Nav.Link>
-                    <Nav.Link href="#action2">PACKAGES</Nav.Link>
+
+                    <Nav.Link onClick={() => {
+                        navigate("/Packages");
+                      }}>PACKAGES</Nav.Link>
                     {/* <Nav.Link href="#action2">CONTACT US</Nav.Link> */}
                   </Nav>
                   {/* <Form className="d-flex">
