@@ -107,8 +107,8 @@ const getAllFlight = (req, res) => {
     .then((result) => {
       res.status(200).json({
         success: true,
-        message: "Flight booking canceled successfully",
-        result: result.rows
+        message: "Get All Flight successfully",
+        result: result.rows,
       });
     })
     .catch((err) => {
