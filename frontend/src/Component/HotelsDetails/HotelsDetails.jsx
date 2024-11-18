@@ -76,18 +76,23 @@ const HotelsDetails = () => {
             
           );
         })} */}
-        <Row xs={3} md={3}  className="g-4" style={{margin:"10px"}}>
+        <Row
+          xs={3}
+          md={3}
+          className="g-4"
+          style={({ margin: "15px" }, { padding: "10px" })}
+        >
           {hotelDetails.map((ele, i) => (
             <Col key={i}>
               <Card>
-                <Card.Img variant="top" src={ele.image_url} />
+                <Card.Img className="img2" variant="top" src={ele.image_url} />
                 <Card.Body>
                   <Card.Title>{ele.name}</Card.Title>
                   <Card.Text>
                     <h4>{ele.price_per_night} $</h4>
-                   <h4>City : {ele.location}</h4>
+                    <h4>City : {ele.location}</h4>
                   </Card.Text>
-                  <Button variant="primary">Go somewhere</Button>
+                  <Button variant="primary">Book Now</Button>
                 </Card.Body>
               </Card>
             </Col>
