@@ -68,12 +68,14 @@ const NavbarPage = () => {
                     >
                       HOTELS
                     </Nav.Link>
+
                     <Nav.Link onClick={()=>{
                       navigate("/flight")
                     }}>FLIGHTS</Nav.Link>
                     <Nav.Link onClick={()=>{
                       navigate("/packages")
                     }}>PACKAGES</Nav.Link>
+
                     {/* <Nav.Link href="#action2">CONTACT US</Nav.Link> */}
                   </Nav>
                   {/* <Form className="d-flex">

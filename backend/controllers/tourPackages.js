@@ -59,7 +59,7 @@ const getAllTourPakages = async (req, res) => {
 
       message: "All the tour packages",
 
-      TourPakages: [result.rows],
+      result: result.rows,
     });
   } catch (error) {
     console.log(error);
@@ -133,7 +133,7 @@ const updateTourPackage = async (req, res) => {
 const deletedById = async (req, res) => {
   const tour_packages_id = req.params.tour_packages_id;
   const query = `DELETE FROM tour_packages WHERE tour_packages_id = $1 RETURNING * `;
-  const values = [tour_packages_id];
+  const values = tour_packages_id;
   try {
     const result = await db.query(query, values);
     res.status(200).json({
