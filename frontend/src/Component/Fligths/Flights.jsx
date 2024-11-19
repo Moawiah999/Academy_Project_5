@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { Container, Row, Col, Button, Form, Card } from "react-bootstrap";
 import axios from "axios";
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
-
 const Flights = () => {
   const [flights, setFlights] = useState([]);
+  const [findeFlight, setFindeFlight] = useState({
+    origin: "",
+    destination: "",
+    departure_date: "",
+  });
   useEffect(() => {
     axios
       .get("http://localhost:5000/flights/")
@@ -11,13 +15,85 @@ const Flights = () => {
         setFlights(result.data.result);
       })
       .catch((err) => {
-        console.log("err : ", err);
+        console.log("err: ", err);
       });
   }, []);
 
   return (
     <Container>
-      <h1 className="my-4">Available Flights</h1>
+      <h2>Search for Flights</h2>
+      <Form>
+        <Row className="align-items-end">
+          <Col md={3}>
+            <Form.Group>
+              <Form.Label>Origin</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter origin"
+                onChange={(e) =>
+                  setFindeFlight({ ...findeFlight, origin: e.target.value })
+                }
+              />
+            </Form.Group>
+          </Col>
+          <Col md={3}>
+            <Form.Group>
+              <Form.Label>Destination</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter destination"
+                onChange={(e) =>
+                  setFindeFlight({
+                    ...findeFlight,
+                    destination: e.target.value,
+                  })
+                }
+              />
+            </Form.Group>
+          </Col>
+          <Col md={2}>
+            <Form.Group>
+              <Form.Label>Departure Date</Form.Label>
+              <Form.Control
+                type="date"
+                onChange={(e) =>
+                  setFindeFlight({
+                    ...findeFlight,
+                    departure_date: e.target.value,
+                  })
+                }
+              />
+            </Form.Group>
+          </Col>
+          <Col md={2}>
+            <Button
+              variant="danger"
+              className="w-100"
+              onClick={() => {
+                const { origin, destination, departure_date } = findeFlight;
+                axios
+                  .get("http://localhost:5000/flights/findAtrip", {
+                    params: {
+                      origin,
+                      destination,
+                      departure_date,
+                    },
+                  })
+                  .then((result) => {
+                    console.log("result : ", result.data.result);
+                    setFlights(result.data.result);
+                  })
+                  .catch((err) => {
+                    console.log("err : ", err);
+                  });
+              }}
+            >
+              Search
+            </Button>
+          </Col>
+        </Row>
+      </Form>
+      <div style={{ marginTop: "100px" }}></div>
       <Row>
         {flights.map((flight) => (
           <Col key={flight.flights_id} xs={12} className="mb-4">
@@ -58,7 +134,7 @@ const Flights = () => {
                   </Col>
 
                   <Col xs={2} className="text-center">
-                    <Button variant="primary">Book Now</Button>
+                    <Button variant="danger">Book Now</Button>
                   </Col>
                 </Row>
               </Card.Body>

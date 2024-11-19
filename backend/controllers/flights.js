@@ -70,7 +70,7 @@ const bookFlight = (req, res) => {
 const findAtrip = (req, res) => {
   const { origin, destination, departure_date } = req.query;
   const query =
-    "SELECT * FROM flights WHERE origin=$1 and destination=$2 and CAST(departure_time AS TIMESTAMP)=$3";
+    "SELECT * FROM flights WHERE origin=$1 and destination=$2 and CAST(departure_time AS date)=$3";
 
   const values = [origin, destination, departure_date];
   db.query(query, values)

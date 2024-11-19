@@ -9,15 +9,17 @@ import Hotels from "../Hotels/Hotels";
 const Home = () => {
   return (
     <>
-      <div>
-        <ImageSlider />
-        <AboutUs />
-        <Hotels />
-        {/* <ContactUs/> */}
-      </div>
-      <ContactUs />
-    </>
-  );
-};
+  <div>
+    
+  <ImageSlider/>
+  <AboutUs/>
+  {/* <ContactUs/> */}
+  </div>
+  <ContactUs/> 
+  </>
+
+  )
+}
+
 
 export default Home;

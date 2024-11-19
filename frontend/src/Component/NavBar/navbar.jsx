@@ -14,7 +14,6 @@ const NavbarPage = () => {
   const navigate = useNavigate();
   return (
     <>
-
       <>
         {["sm"].map((expand) => (
           <Navbar key={expand} expand={expand} className="bg-white-mb-3">
@@ -27,8 +26,7 @@ const NavbarPage = () => {
               >
                 QuickReservePro
               </Navbar.Brand>
-              <img className="logo" src="\images\updateLogo.png" />
-
+              <img className="logo" src="\public\updateLogo.png" />
 
               <Navbar.Toggle
                 aria-controls={`offcanvasNavbar-expand-${expand}`}
@@ -70,11 +68,14 @@ const NavbarPage = () => {
                     >
                       HOTELS
                     </Nav.Link>
-                    <Nav.Link href="#action2">FLIGHTS</Nav.Link>
 
-                    <Nav.Link onClick={() => {
-                        navigate("/Packages");
-                      }}>PACKAGES</Nav.Link>
+                    <Nav.Link onClick={()=>{
+                      navigate("/flight")
+                    }}>FLIGHTS</Nav.Link>
+                    <Nav.Link onClick={()=>{
+                      navigate("/packages")
+                    }}>PACKAGES</Nav.Link>
+
                     {/* <Nav.Link href="#action2">CONTACT US</Nav.Link> */}
                   </Nav>
                   {/* <Form className="d-flex">
