@@ -25,8 +25,32 @@ const login = () => {
   return (
     <>
       <div>login</div>
+      <br></br>
+      <input
+        type="email"
+        placeholder="email"
+        onChange={(e) => {
+          setEmail(e.target.value);
+        }}
+      ></input>
+      <br></br>
+      <input
+        type="password"
+        placeholder="Password"
+        onChange={(e) => {
+          setPassword(e.target.value);
+        }}
+      ></input>
+      <br />
+      <button
+        onClick={() => {
+          handleLogin();
+        }}
+      >
+        Login
+      </button>
     </>
-  )
+  );
 };
 
 export default login;

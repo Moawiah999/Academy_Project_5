@@ -4,7 +4,7 @@ export const userSlice = createSlice({
   name: "user",
   initialState: {
     token: localStorage.getItem("token"),
-    userId: localStorage.getItem("userId"),
+    user_id: localStorage.getItem("userId"),
   },
   reducers: {
     userToken: (state, action) => {
@@ -13,7 +13,7 @@ export const userSlice = createSlice({
     },
     user_id: (state, action) => {
       state.userId = action.payload;
-      localStorage.setItem("userId", userId);
+      localStorage.setItem("userId", user_id);
     },
   },
 });

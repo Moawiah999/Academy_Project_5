@@ -78,10 +78,12 @@ CREATE TABLE userHotel (
   userHotel_id SERIAL NOT NULL,
   user_id INT,
   hotel_id INT,
+  from_date date,
+  to_date date,
   FOREIGN KEY (user_id) REFERENCES users(user_id),
   FOREIGN KEY (hotel_id) REFERENCES hotels(hotel_id),
   is_deleted SMALLINT DEFAULT 0,
-  PRIMARY KEY (id_userFlight)
+  PRIMARY KEY (userHotel_id)
 );
 
 -- Create a table called **tour_packages** in the database
