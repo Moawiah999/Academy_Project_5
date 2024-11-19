@@ -84,7 +84,7 @@ const HotelsDetails = () => {
         >
           {hotelDetails.map((ele, i) => (
             <Col key={i}>
-              <Card>
+              <Card className="card">
                 <Card.Img className="img2" variant="top" src={ele.image_url} />
                 <Card.Body>
                   <Card.Title>{ele.name}</Card.Title>

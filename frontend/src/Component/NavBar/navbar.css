@@ -28,10 +28,11 @@ max-width: 50%;
     transition: color 0.3s ease-in-out;
   }
   
-  .nav-link:hover {
-    color: red;
+  .navbar .nav-link {
+    transition: background-color 0.3s ease;
   }
   
-  .nav-link.active {
-    color: red;
+  .navbar .nav-link:hover {
+    color: red; 
   }
+ 

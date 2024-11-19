@@ -33,6 +33,11 @@ const Packages = () => {
     setShowModal(false);
   };
 
+  const shortDiscription = (description) => {
+    const words = description.split(" ");
+    return words.slice(0, 4).join(" ") + " ...";
+  };
+
   if (loading) {
     return (
       <div
@@ -47,7 +52,6 @@ const Packages = () => {
   return (
     <div className="packages-container" style={{ fontFamily: 'Roboto, sans-serif' }}>
       <div className="d-flex justify-content-center align-items-center flex-column" style={{ minHeight: '80vh' }}>
-        {/* Adjust Row with gap style */}
         <Row xs={1} sm={2} md={3} lg={4} className="g-4 justify-content-center" style={{ gap: '70px' }}>
           {tourPackages.map((item, index) => (
             <Col key={index} className="d-flex justify-content-center">
@@ -58,7 +62,7 @@ const Packages = () => {
                   cursor: "pointer", 
                   maxWidth: "350px", 
                   margin: "0 auto",
-                  marginBottom: "80px"
+                  marginBottom: "-30px"
                 }}
               >
                 <Card.Img
@@ -67,14 +71,29 @@ const Packages = () => {
                   alt={item.destination}
                   className="img-fluid"
                 />
-                <Card.Body>
+                <Card.Body style={{
+              background: "#f8f9fa"
+              ,
+            }}>
                   <Card.Title className="text-success">{item.destination}</Card.Title>
-                  <Card.Text className="text-muted">
+                  <Card.Text className="text-muted" >
                     <strong>Duration: </strong>{item.duration_days} days
                     <br />
                     <strong>Price: </strong>
                     <span className="text-success">${item.price}</span>
+                    <p><strong>Description:</strong> {shortDiscription(item.description)}</p>
+                    <Button
+            variant="primary"
+            className="w-35"
+            style={{
+              background: "linear-gradient(90deg, #ff4b5c, #333)",
+              color: "white",
+            }}
+          >
+            Book Now
+          </Button>
                   </Card.Text>
+                  
                 </Card.Body>
               </Card>
             </Col>
@@ -90,8 +109,7 @@ const Packages = () => {
             color: "white",
           }}
         >
-                    <Modal.Title>{selectedPackage?.destination}</Modal.Title>
-
+          <Modal.Title>{selectedPackage?.destination}</Modal.Title>
         </Modal.Header>
 
         <Modal.Body className="d-flex flex-column align-items-center">
@@ -103,6 +121,7 @@ const Packages = () => {
               {selectedPackage?.price ? `$${selectedPackage.price}` : "Contact for pricing"}
             </p>
             <p><strong>Description:</strong> {selectedPackage?.description}</p>
+           
           </div>
         </Modal.Body>
 
