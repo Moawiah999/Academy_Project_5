@@ -3,3 +3,17 @@
     width:100%;
     
   }
+  .slider {
+    position: relative;
+    max-width: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+    border-radius: 10px; 
+    height: 600px;      
+    width: 100%;
+    margin-bottom: 50px;
+  }
+  .img2 {
+    height: 250px;
+    width: 100%;
+  }
