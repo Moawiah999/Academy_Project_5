@@ -73,15 +73,20 @@ const login = async (req, res) => {
     };
 
     const token = jwt.sign(payload, process.env.SECRET, options);
-
+    // console.log("test")
     res.status(201).json({
       success: true,
       message: "Login successful",
-      token,
+      token: token,
       userId: user.user_id,
     });
   } catch (err) {
-
+    console.log(err);
+    res.status(404).json({
+      success: false,
+      message: "Valid Loin Credentials",
+      err: err.message,
+    });
   }
 };
 
