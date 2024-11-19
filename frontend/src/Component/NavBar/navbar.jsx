@@ -26,7 +26,7 @@ const NavbarPage = () => {
               >
                 QuickReservePro
               </Navbar.Brand>
-              <img className="logo" src="\public\updateLogo.png" />
+              <img className="logo" src="\images\updateLogo.png" />
 
               <Navbar.Toggle
                 aria-controls={`offcanvasNavbar-expand-${expand}`}
