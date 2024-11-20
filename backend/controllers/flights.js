@@ -45,7 +45,7 @@ const bookFlight = (req, res) => {
   const user_id = req.token.userId;
   const { flights_id } = req.body;
 
-  module.exports = { createFlights };
+
   const query = `
       INSERT INTO userFlight (user_id, flights_id)
       VALUES ($1, $2) RETURNING *;
