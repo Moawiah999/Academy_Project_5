@@ -11,7 +11,7 @@ const { authentication } = require("../middlewares/authentication");
 const flightsRouter = express.Router();
 flightsRouter.get("/", getAllFlight);
 flightsRouter.post("/", createFlights);
-flightsRouter.post("/bookFlight", bookFlight);
+flightsRouter.post("/bookFlight", authentication, bookFlight);
 flightsRouter.get("/findAtrip", findAtrip);
 flightsRouter.delete("/cancelFlight", cancelFlight);
 module.exports = flightsRouter;
