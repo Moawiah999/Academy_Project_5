@@ -8,7 +8,7 @@ const ImageSlider = () => {
       <Carousel className="slider p-3">
         <Carousel.Item interval={5000}>
           <img
-            src="https://themewagon.github.io/keto/images/banner3.jpg"
+            src="https://images.pexels.com/photos/46148/aircraft-jet-landing-cloud-46148.jpeg"
             alt="First slide"
             className="d-block w-100"
           />
@@ -24,7 +24,8 @@ const ImageSlider = () => {
 
         <Carousel.Item interval={5000}>
           <img
-            src="https://images.pexels.com/photos/46148/aircraft-jet-landing-cloud-46148.jpeg"
+            src="https://themewagon.github.io/keto/images/banner3.jpg
+"
             alt="Third slide"
             className="d-block w-100"
           />
