@@ -42,9 +42,10 @@ const createFlights = (req, res) => {
     });
 };
 const bookFlight = (req, res) => {
-  const { user_id, flights_id } = req.body;
+  const user_id = req.token.userId;
+  const { flights_id } = req.body;
 
-  module.exports = { createFlights };
+
   const query = `
       INSERT INTO userFlight (user_id, flights_id)
       VALUES ($1, $2) RETURNING *;
@@ -53,7 +54,7 @@ const bookFlight = (req, res) => {
 
   db.query(query, values)
     .then((result) => {
-      res.status(200).json({
+      res.status(201).json({
         success: true,
         message: "Flight booked successfully",
         result: result.rows[0],

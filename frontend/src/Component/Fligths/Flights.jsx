@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Button, Form, Card } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  Form,
+  Card,
+  Modal,
+} from "react-bootstrap";
 import axios from "axios";
 const Flights = () => {
   const [flights, setFlights] = useState([]);
@@ -8,6 +16,8 @@ const Flights = () => {
     destination: "",
     departure_date: "",
   });
+  const [showModal, setShowModal] = useState(false);
+  const [selectedFlight, setSelectedFlight] = useState(null);
   useEffect(() => {
     axios
       .get("http://localhost:5000/flights/")
@@ -19,6 +29,10 @@ const Flights = () => {
       });
   }, []);
 
+  const handleBookNow = (flight) => {
+    setSelectedFlight(flight);
+    setShowModal(true);
+  };
   return (
     <Container>
       <h2>Search for Flights</h2>
@@ -134,7 +148,12 @@ const Flights = () => {
                   </Col>
 
                   <Col xs={2} className="text-center">
-                    <Button variant="danger">Book Now</Button>
+                    <Button
+                      variant="danger"
+                      onClick={() => handleBookNow(flight)}
+                    >
+                      Book Now
+                    </Button>
                   </Col>
                 </Row>
               </Card.Body>
@@ -142,6 +161,46 @@ const Flights = () => {
           </Col>
         ))}
       </Row>
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Flight Information</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {selectedFlight && (
+            <>
+              <p>
+                <strong>Flight Company:</strong> {selectedFlight.flight_company}
+              </p>
+              <p>
+                <strong>Flight Number:</strong> {selectedFlight.flight_number}
+              </p>
+              <p>
+                <strong>Origin:</strong> {selectedFlight.origin}
+              </p>
+              <p>
+                <strong>Destination:</strong> {selectedFlight.destination}
+              </p>
+              <p>
+                <strong>Departure Time:</strong>{" "}
+                {new Date(selectedFlight.departure_time).toLocaleString()}
+              </p>
+              <p>
+                <strong>Arrival Time:</strong>{" "}
+                {new Date(selectedFlight.arrival_time).toLocaleString()}
+              </p>
+              <p>
+                <strong>Price:</strong> ${selectedFlight.price}
+              </p>
+            </>
+          )}
+        </Modal.Body>
+        <Modal.Footer className="d-flex justify-content-center">
+          <Button variant="danger">Confirm Booking</Button>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Container>
   );
 };
