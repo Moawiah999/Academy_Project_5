@@ -73,6 +73,16 @@ const NavbarPage = () => {
                     }}>
                     PACKAGES
                   </Nav.Link>
+                  <Nav.Link onClick={() => {
+                      navigate("/Register")
+                    }}>
+                    REGISTER
+                  </Nav.Link>
+                  <Nav.Link onClick={() => {
+                      navigate("/packages")
+                    }}>
+                    PACKAGES
+                  </Nav.Link>
                 </Nav>
                 <hr />
               </Offcanvas.Body>

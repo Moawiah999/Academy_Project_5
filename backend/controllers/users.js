@@ -4,7 +4,17 @@ const bcrypt = require("bcryptjs");
 
 //This function To create new user :
 const register = async (req, res) => {
+  console.log(req.body); // Add this to see the request body
+
   const { first_name, last_name, country, email, password, role_id } = req.body;
+
+  if (!email) {
+    return res.status(400).json({
+      success: false,
+      message: "Email is required",
+    });
+  }
+
   const normalizedEmail = email.toLowerCase();
   const encryptedPassword = await bcrypt.hash(password, 5);
 

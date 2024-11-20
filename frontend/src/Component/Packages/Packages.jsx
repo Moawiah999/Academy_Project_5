@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Card, Button, Modal, Spinner, Row, Col } from "react-bootstrap";
-import './Packages.css'; 
+import { Button, Modal, Spinner, Row, Col } from "react-bootstrap";
+import './Packages.css';
 
 const Packages = () => {
   const [tourPackages, setTourPackages] = useState([]);
@@ -55,97 +55,79 @@ const Packages = () => {
         <Row xs={1} sm={2} md={3} lg={4} className="g-4 justify-content-center" style={{ gap: '70px' }}>
           {tourPackages.map((item, index) => (
             <Col key={index} className="d-flex justify-content-center">
-              <Card
-                className="custom-card"
+              <div
+                className="package-item"
                 onClick={() => handleCardClick(item)}
                 style={{
-                  cursor: "pointer", 
-                  maxWidth: "350px", 
+                  cursor: "pointer",
+                  maxWidth: "350px",
                   margin: "0 auto",
-                  marginBottom: "-30px"
+                  marginBottom: "-30px",
+                  background: "#fff",
+                  border: "1px solid #ddd",
+                  borderRadius: "8px",
+                  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)"
                 }}
               >
-                <Card.Img
-                  variant="top"
+                <img
                   src={item.image_url}
                   alt={item.destination}
-                  className="img-fluid"
+                  style={{
+                    width: "100%",
+                    height: "200px",
+                    objectFit: "cover",
+                    borderTopLeftRadius: "8px",
+                    borderTopRightRadius: "8px"
+                  }}
                 />
-                <Card.Body style={{
-              background: "#f8f9fa"
-              ,
-            }}>
-                  <Card.Title className="text-success">{item.destination}</Card.Title>
-                  <Card.Text className="text-muted" >
+                <div style={{ padding: "16px", background: "#f8f9fa" }}>
+                  <h5 className="text-success">{item.destination}</h5>
+                  <p className="text-muted">
                     <strong>Duration: </strong>{item.duration_days} days
                     <br />
                     <strong>Price: </strong>
                     <span className="text-success">${item.price}</span>
                     <p><strong>Description:</strong> {shortDiscription(item.description)}</p>
-                    <Button
-            variant="primary"
-            className="w-35"
-            style={{
-              background: "linear-gradient(90deg, #ff4b5c, #333)",
-              color: "white",
-            }}
-          >
-            Book Now
-          </Button>
-                  </Card.Text>
-                  
-                </Card.Body>
-              </Card>
+                    <Button variant="danger">Confirm Booking</Button>
+                  </p>
+                </div>
+              </div>
             </Col>
           ))}
         </Row>
       </div>
 
-      <Modal show={showModal} onHide={handleCloseModal} centered size="lg">
-        <Modal.Header
-          closeButton
-          style={{
-            background: "linear-gradient(90deg, #ff4b5c, #333)",
-            color: "white",
-          }}
-        >
+      <Modal show={showModal} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
           <Modal.Title>{selectedPackage?.destination}</Modal.Title>
         </Modal.Header>
 
-        <Modal.Body className="d-flex flex-column align-items-center">
-          <div className="w-100">
-            <p><strong>Hotel:</strong> {selectedPackage?.hotel_name}</p>
-            <p><strong>Duration:</strong> {selectedPackage?.duration_days} days</p>
-            <p>
-              <strong>Price:</strong> 
-              {selectedPackage?.price ? `$${selectedPackage.price}` : "Contact for pricing"}
-            </p>
-            <p><strong>Description:</strong> {selectedPackage?.description}</p>
-           
-          </div>
+        <Modal.Body>
+          {selectedPackage && (
+            <>
+              <p>
+                <strong>Hotel :</strong> {selectedPackage?.hotel_name}
+              </p>
+              <p>
+                <strong>Duration :</strong> {selectedPackage?.duration_days} days
+              </p>
+              <p>
+                <strong>Price :</strong> {selectedPackage?.price}
+              </p>
+              <p>
+                <strong>Description :</strong> {selectedPackage?.destination}
+              </p>
+              <p>
+                <strong>Departure Time:</strong>{selectedPackage?.description}
+              </p>
+            </>
+          )}
         </Modal.Body>
 
-        <Modal.Footer>
-          <Button
-            style={{
-              background: "linear-gradient(90deg, #ff4b5c, #333)",
-              color: "white",
-            }}
-            variant="secondary"
-            onClick={handleCloseModal}
-            className="w-25"
-          >
+        <Modal.Footer className="d-flex justify-content-center">
+          <Button variant="danger">Confirm Booking</Button>
+          <Button variant="secondary" onClick={handleCloseModal}>
             Close
-          </Button>
-          <Button
-            variant="primary"
-            className="w-25"
-            style={{
-              background: "linear-gradient(90deg, #ff4b5c, #333)",
-              color: "white",
-            }}
-          >
-            Book Now
           </Button>
         </Modal.Footer>
       </Modal>
