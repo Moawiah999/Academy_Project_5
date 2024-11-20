@@ -15,10 +15,13 @@ import Login from "./Component/Login/login";
 const App = () => {
   const navigate = useNavigate();
   return (
+    
     <>
-      <NavbarPage />
+          <NavbarPage />
 
-      {/* <Home /> */}
+          {/* <Home /> */}
+
+
 
       <Routes>
         <Route path="/login" element={<Login />} />

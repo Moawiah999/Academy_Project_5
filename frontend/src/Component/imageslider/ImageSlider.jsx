@@ -1,14 +1,14 @@
 import React from 'react';
 import './ImageSlider.css';
-import { Carousel } from 'react-bootstrap'; 
+import { Carousel } from 'react-bootstrap';
 
 const ImageSlider = () => {
   return (
     <div className="slider">
-      <Carousel className="slider">
+      <Carousel className="slider p-3">
         <Carousel.Item interval={5000}>
           <img
-            src="https://images.pexels.com/photos/338504/pexels-photo-338504.jpeg?auto=compress&cs=tinysrgb&w=600"
+            src="https://images.pexels.com/photos/105831/pexels-photo-105831.jpeg"
             alt="First slide"
             className="d-block w-100"
           />
@@ -16,7 +16,7 @@ const ImageSlider = () => {
 
         <Carousel.Item interval={5000}>
           <img
-            src="https://images.pexels.com/photos/3999943/pexels-photo-3999943.jpeg?auto=compress&cs=tinysrgb&w=600"
+            src="https://images.pexels.com/photos/1051075/pexels-photo-1051075.jpeg"
             alt="Second slide"
             className="d-block w-100"
           />
@@ -24,7 +24,7 @@ const ImageSlider = () => {
 
         <Carousel.Item interval={5000}>
           <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQtY0pssXxkH_76eqltSvsCmUcFZECasnffA&s"
+            src="https://images.pexels.com/photos/46148/aircraft-jet-landing-cloud-46148.jpeg"
             alt="Third slide"
             className="d-block w-100"
           />
