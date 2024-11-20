@@ -97,7 +97,7 @@ const Flights = () => {
       <Row>
         {flights.map((flight) => (
           <Col key={flight.flights_id} xs={12} className="mb-4">
-            <Card>
+            <Card style={{ height: "150px" }}>
               <Card.Body>
                 <Row className="d-flex align-items-center">
                   <Col xs={2}>
