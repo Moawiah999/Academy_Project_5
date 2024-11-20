@@ -9,6 +9,9 @@ import Row from "react-bootstrap/Row";
 
 const HotelsDetails = () => {
   const [hotelDetails, setHotelDetails] = useState([]);
+  const [showDetail, setShowDetail] = useState(false);
+  const [hotelPayment, setHotelPayment] = useState(false);
+  const [chosenHotel, setChosenHotel] = useState("");
   useEffect(() => {
     axios
       .get("http://localhost:5000/hotels/")
@@ -21,6 +24,10 @@ const HotelsDetails = () => {
         console.log(err);
       });
   }, []);
+  const bookNow = (hotels) => {
+    setSelectedHotel(hotels);
+    setShowDetail(true);
+  };
   return (
     <>
       {/* <div>HotelsDetails</div> */}
@@ -104,34 +111,3 @@ const HotelsDetails = () => {
 };
 
 export default HotelsDetails;
-
-/* <>
-    
-      <div>HotelsDetails</div>
-      <div className="slider">
-        <Carousel className="img">
-          <Carousel.Item interval={5000}>
-            <img
-              src="https://images.pexels.com/photos/164595/pexels-photo-164595.jpeg?auto=compress&cs=tinysrgb&w=400"
-              alt="First slide"
-              className="d-block w-100"
-            />
-          </Carousel.Item>
-
-          <Carousel.Item interval={5000}>
-            <img
-              src="https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?auto=compress&cs=tinysrgb&w=400"
-              alt="Second slide"
-              className="d-block w-100"
-            />
-          </Carousel.Item>
-
-          <Carousel.Item interval={5000}>
-            <img
-              src="https://images.pexels.com/photos/261169/pexels-photo-261169.jpeg?auto=compress&cs=tinysrgb&w=400"
-              className="d-block w-100"
-            />
-          </Carousel.Item>
-        </Carousel>
-      </div>
-      <> */
