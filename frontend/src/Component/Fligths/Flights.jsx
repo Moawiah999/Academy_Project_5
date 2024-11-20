@@ -17,6 +17,7 @@ const Flights = () => {
     departure_date: "",
   });
   const [showModal, setShowModal] = useState(false);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [selectedFlight, setSelectedFlight] = useState(null);
   useEffect(() => {
     axios
@@ -32,6 +33,15 @@ const Flights = () => {
   const handleBookNow = (flight) => {
     setSelectedFlight(flight);
     setShowModal(true);
+  };
+  const handleConfirmBooking = () => {
+    setShowModal(false);
+    setShowPaymentModal(true);
+  };
+
+  const handlePayment = (e) => {
+    e.preventDefault();
+    setShowPaymentModal(false);
   };
   return (
     <Container>
@@ -195,7 +205,51 @@ const Flights = () => {
           )}
         </Modal.Body>
         <Modal.Footer className="d-flex justify-content-center">
-          <Button variant="danger">Confirm Booking</Button>
+          <Button variant="danger" onClick={handleConfirmBooking}>
+            Confirm Booking
+          </Button>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      <Modal show={showPaymentModal} onHide={() => setShowPaymentModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Payment Information</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={handlePayment}>
+            <Form.Group>
+              <Form.Label>Card Number</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter card number"
+                required
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Expiration Date</Form.Label>
+              <Form.Control type="text" placeholder="MM/YY" required />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>CVV</Form.Label>
+              <Form.Control type="text" placeholder="Enter CVV" required />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Cardholder Name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter cardholder name"
+                required
+              />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer className="d-flex justify-content-center">
+          <Button variant="danger" onClick={handleConfirmBooking}>
+            Confirm Payment
+          </Button>
           <Button variant="secondary" onClick={() => setShowModal(false)}>
             Close
           </Button>
