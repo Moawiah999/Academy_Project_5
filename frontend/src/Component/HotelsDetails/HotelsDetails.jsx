@@ -83,31 +83,55 @@ const HotelsDetails = () => {
       <div className="packages-container" style={{ fontFamily: 'Roboto, sans-serif' }}>
       <div className="d-flex justify-content-center align-items-center flex-column" style={{ minHeight: '80vh' }}>
         <Row
-          xs={3}
+          xs={1}
+          sm={2}
           md={3}
-          className="g-4"
-          style={({ margin: "15px" }, { padding: "10px" })}
+          lg={4}
+          className="g-4 justify-content-center" style={{ gap: '70px' }}
         >
           {hotelDetails.map((ele, i) => (
-            <Col key={i}>
-              <Card className="card">
-                <Card.Img className="img2" variant="top" src={ele.image_url} />
-                <Card.Body>
-                  <Card.Title>{ele.name}</Card.Title>
-                  <Card.Text>
-                    <h4>{ele.price_per_night} $</h4>
-                    <h4>City : {ele.location}</h4>
-                  </Card.Text>
-                  <Button variant="primary" onClick={() => bookNow(ele)}>
+            <Col key={i} className="d-flex justify-content-center">
+            <div
+              className="package-item"
+              onClick={() => bookNow(item)}
+              style={{
+                cursor: "pointer",
+                maxWidth: "350px",
+                margin: "0 auto",
+                marginBottom: "-30px",
+                background: "#fff",
+                border: "1px solid #ddd",
+                borderRadius: "8px",
+                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)"
+              }}
+            >
+              <img
+                src={ele.image_url}
+                // alt={item.destination}
+                style={{
+                  width: "100%",
+                  height: "200px",
+                  objectFit: "cover",
+                  borderTopLeftRadius: "8px",
+                  borderTopRightRadius: "8px"
+                }}
+              />
+              <div style={{ padding: "16px", background: "#f8f9fa" }}>
+                  <h5 className="text-success">{ele.name}</h5>
+                  <p className="text-muted">
+                    <br />
+                    <strong>Price: </strong>
+                    <span className="text-success">${ele.price_per_night}</span>
+                  <Button variant="danger" onClick={() => bookNow(ele)}>
                     Book Now
                   </Button>
-                </Card.Body>
-              </Card>
+                </p>
               </div>
             </div>
           </Col>
           ))}
         </Row>
+        </div>
         <Modal show={showDetail} onHide={() => setShowDetail(false)}>
           <Modal.Header closeButton>
             <Modal.Title>Hotel Information</Modal.Title>
@@ -249,9 +273,11 @@ const HotelsDetails = () => {
             </Button>
           </Modal.Footer>
         </Modal>
+      </div>
       </>
     </>
   );
 };
+
 
 export default HotelsDetails;
