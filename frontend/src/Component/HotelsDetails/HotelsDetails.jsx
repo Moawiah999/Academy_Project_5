@@ -80,28 +80,8 @@ const HotelsDetails = () => {
         </Carousel>
       </div>
       <>
-        {/*  {hotelDetails.map((ele, i) => {
-          return (
-            <>
-            <div>
-              
-              <Card style={{ width: "18rem", display: "grid" }}>
-                <Card.Img variant="top" src={ele.image_url} />
-                <Card.Body>
-                  <Card.Title>{ele.name}</Card.Title>
-                  <Card.Text>
-                    <h3>{ele.location}</h3>
-                    <h3>{ele.price_per_night} $</h3>
-                  </Card.Text>
-                  <Button variant="primary">Book Now</Button>
-                </Card.Body>
-              </Card>
-            </div> 
-             
-            </>
-            
-          );
-        })} */}
+      <div className="packages-container" style={{ fontFamily: 'Roboto, sans-serif' }}>
+      <div className="d-flex justify-content-center align-items-center flex-column" style={{ minHeight: '80vh' }}>
         <Row
           xs={3}
           md={3}
@@ -123,7 +103,9 @@ const HotelsDetails = () => {
                   </Button>
                 </Card.Body>
               </Card>
-            </Col>
+              </div>
+            </div>
+          </Col>
           ))}
         </Row>
         <Modal show={showDetail} onHide={() => setShowDetail(false)}>
