@@ -45,5 +45,5 @@ app.use('/reservations',reservationsRoute)
 
 
 app.listen(PORT, () => {
-  console.log(`Server is run at https://localhost:${PORT}`);
+  console.log(`Server is run at http://localhost:${PORT}`);
 });

@@ -15,6 +15,7 @@ const login = () => {
       .post(`http://localhost:5000/user/login`, { email, password })
       .then((result) => {
         dispatch(userToken(result.data.token));
+        console.log(result.data.token);
         dispatch(user_id(result.data.userId));
         navigate("/home");
       })
