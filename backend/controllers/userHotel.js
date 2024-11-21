@@ -32,10 +32,25 @@ const getMyHotels = (req, res) => {
 const cancelHotel = (req, res) => {
   const user_id = req.token.userId;
   const hotel_id = req.params;
-  pool.query("DELETE FROM userhotel WHERE user_id = $1 AND hotel_id = $2", [
-    user_id,
-    hotel_id,
-  ]);
+  pool
+    .query(
+      "UPDATE userhotel SET is_deleted = 1 WHERE user_id = $1 AND hotel_id = $2",
+      [user_id, hotel_id]
+    )
+    .then((result) => {
+      res.status(201).json({
+        success: true,
+        message: "Reserve Canceled",
+        result: result.rows,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: "Server error",
+        err: err.message,
+      });
+    });
 };
 
-module.exports = { reserveHotelById };
+module.exports = { reserveHotelById, cancelHotel };

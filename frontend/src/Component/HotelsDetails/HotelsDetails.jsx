@@ -12,12 +12,16 @@ const HotelsDetails = () => {
   const [hotelDetails, setHotelDetails] = useState([]);
   const [showDetail, setShowDetail] = useState(false);
   const [hotelPayment, setHotelPayment] = useState(false);
-  const [chosenHotel, setChosenHotel] = useState(null);
+  const [chosenHotel, setChosenHotel] = useState("");
+  const [hotel_id, setHotel_id] = useState("");
+  const [fromDate, setFromDate] = useState(Date);
+  const [toDate, setToDate] = useState(Date);
+
   useEffect(() => {
     axios
       .get("http://localhost:5000/hotels/")
       .then((result) => {
-        console.log(result.data.result);
+        // console.log(result.data.result);
         setHotelDetails(result.data.result);
         // console.log("ahmad", hotelDetails);
       })
@@ -125,18 +129,34 @@ const HotelsDetails = () => {
             {chosenHotel && (
               <>
                 <p>
-                  <strong>Hotel Name:</strong> {chosenHotel.name}
+                  <strong>Hotel Name:</strong> {chosenHotel.name},
+                  {/* {setHotel_id(chosenHotel.hotel_id)} */}
                 </p>
                 <p>
                   <strong>City :</strong> {chosenHotel.location}
                 </p>
                 <p>
-                  <strong>From :</strong>{" "}
-                  {new Date(chosenHotel).toLocaleString()}
+                  <strong>From Date :</strong>{" "}
+                  <Col md={2}>
+                    <Form.Group>
+                      <Form.Control
+                        type="date"
+                        onChange={(e) => setFromDate(e.target.value)}
+                      />
+                    </Form.Group>
+                  </Col>
                 </p>
                 <p>
-                  <strong>To :</strong>{" "}
-                  {new Date(chosenHotel.arrival_time).toLocaleString()}
+                  <strong>To Date :</strong>{" "}
+                  {/* {new Date(chosenHotel.arrival_time).toLocaleString()} */}
+                  <Col md={2}>
+                    <Form.Group>
+                      <Form.Control
+                        type="date"
+                        onChange={(e) => setToDate(e.target.value)}
+                      />
+                    </Form.Group>
+                  </Col>
                 </p>
                 <p>
                   <strong>Price Per Night :</strong> $
@@ -187,14 +207,22 @@ const HotelsDetails = () => {
             </Form>
           </Modal.Body>
           <Modal.Footer className="d-flex justify-content-center">
-            <Button variant="danger" onClick={confirmBooking}>
+            <Button
+              variant="danger"
+              onClick={
+                (confirmBooking,
+                () => {
+                  axios.post("https://localhost:5000",[fromDate,toDate])
+                })
+              }
+            >
               Confirm Payment
             </Button>
             <Button
               variant="secondary"
               onClick={() => {
                 setHotelPayment(false);
-                // console.log(10);
+                console.log(10);
               }}
             >
               Close
