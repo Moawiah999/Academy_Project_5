@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import emailjs from "@emailjs/browser";
 import {
   Container,
   Row,
@@ -41,6 +42,37 @@ const Flights = () => {
 
   const handlePayment = (e) => {
     e.preventDefault();
+    const emailParams = {
+      user_name: "moawiah omar",
+      user_email: "aldwiriymoaweah@gmail.com",
+      flight_company: selectedFlight.flight_company,
+      flight_number: selectedFlight.flight_number,
+      origin: selectedFlight.origin,
+      destination: selectedFlight.destination,
+      departure_time: new Date(selectedFlight.departure_time).toLocaleString(),
+      arrival_time: new Date(selectedFlight.arrival_time).toLocaleString(),
+      price: selectedFlight.price,
+    };
+
+    emailjs
+      .send(
+        "service_p457vuu",
+        "template_sa12q69",
+        emailParams,
+        "qhHVuA73PnQhBzNcG"
+      )
+      .then(
+        (result) => {
+          console.log("Email sent successfully:", result.text);
+          alert("Payment successful, and confirmation email has been sent!");
+        },
+        (error) => {
+          console.error("Error sending email:", error.text);
+          alert(
+            "Payment successful, but there was an issue sending the email."
+          );
+        }
+      );
     setShowPaymentModal(false);
   };
   return (
