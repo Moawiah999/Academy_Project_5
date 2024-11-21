@@ -125,8 +125,7 @@ const HotelsDetails = () => {
             {chosenHotel && (
               <>
                 <p>
-                  <strong>Hotel Name:{console.log(chosenHotel)}</strong>{" "}
-                  {chosenHotel.name}
+                  <strong>Hotel Name:</strong> {chosenHotel.name}
                 </p>
                 <p>
                   <strong>City :</strong> {chosenHotel.location}
