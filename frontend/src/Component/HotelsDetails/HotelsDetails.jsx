@@ -231,6 +231,22 @@ const HotelsDetails = () => {
                     )
                     .then((result) => {
                       console.log(result);
+                      axios
+                        .put(
+                          `http://localhost:5000/reservations`,
+                          {
+                            hotel_id: hotel_id,
+                          },
+                          {
+                            headers: { Authorization: `Bearer ${token} ` },
+                          }
+                        )
+                        .then((response) => {
+                          console.log(response);
+                        })
+                        .catch((error) => {
+                          console.log(error);
+                        });
                     })
                     .catch((err) => {
                       console.log(err);
