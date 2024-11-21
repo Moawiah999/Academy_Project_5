@@ -45,8 +45,7 @@ const Flights = () => {
   };
   return (
     <Container>
-      <h2>Search for Flights</h2>
-      <Form>
+      <Form style={{ marginTop: "50px" }}>
         <Row className="align-items-end">
           <Col md={3}>
             <Form.Group>
