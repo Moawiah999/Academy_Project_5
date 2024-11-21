@@ -80,204 +80,219 @@ const HotelsDetails = () => {
         </Carousel>
       </div>
       <>
-      <div className="packages-container" style={{ fontFamily: 'Roboto, sans-serif' }}>
-      <div className="d-flex justify-content-center align-items-center flex-column" style={{ minHeight: '80vh' }}>
-        <Row
-          xs={1}
-          sm={2}
-          md={3}
-          lg={4}
-          className="g-4 justify-content-center" style={{ gap: '70px' }}
+        <div
+          className="packages-container"
+          style={{ fontFamily: "Roboto, sans-serif" }}
         >
-          {hotelDetails.map((ele, i) => (
-            <Col key={i} className="d-flex justify-content-center">
-            <div
-              className="package-item"
-              onClick={() => bookNow(item)}
-              style={{
-                cursor: "pointer",
-                maxWidth: "350px",
-                margin: "0 auto",
-                marginBottom: "-30px",
-                background: "#fff",
-                border: "1px solid #ddd",
-                borderRadius: "8px",
-                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)"
-              }}
+          <div
+            className="d-flex justify-content-center align-items-center flex-column"
+            style={{ minHeight: "80vh" }}
+          >
+            <Row
+              xs={1}
+              sm={2}
+              md={3}
+              lg={4}
+              className="g-4 justify-content-center"
+              style={{ gap: "70px" }}
             >
-              <img
-                src={ele.image_url}
-                // alt={item.destination}
-                style={{
-                  width: "100%",
-                  height: "200px",
-                  objectFit: "cover",
-                  borderTopLeftRadius: "8px",
-                  borderTopRightRadius: "8px"
-                }}
-              />
-              <div style={{ padding: "16px", background: "#f8f9fa" }}>
-                  <h5 className="text-success">{ele.name}</h5>
-                  <p className="text-muted">
-                    <br />
-                    <strong>Price: </strong>
-                    <span className="text-success">${ele.price_per_night}</span>
-                  <Button variant="danger" onClick={() => bookNow(ele)}>
-                    Book Now
-                  </Button>
-                </p>
-              </div>
-            </div>
-          </Col>
-          ))}
-        </Row>
-        </div>
-        <Modal show={showDetail} onHide={() => setShowDetail(false)}>
-          <Modal.Header closeButton>
-            <Modal.Title>Hotel Information</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            {chosenHotel && (
-              <>
-                <p>
-                  <strong>Hotel Name:</strong> {chosenHotel.name},
-                  {/* {setHotel_id(chosenHotel.hotel_id)} */}
-                </p>
-                <p>
-                  <strong>City :</strong> {chosenHotel.location}
-                </p>
-                <p>
-                  <strong>From Date :</strong>{" "}
-                  <Col md={2}>
-                    <Form.Group>
-                      <Form.Control
-                        type="date"
-                        onChange={(e) => setFromDate(e.target.value)}
-                      />
-                    </Form.Group>
-                  </Col>
-                </p>
-                <p>
-                  <strong>To Date :</strong>{" "}
-                  {/* {new Date(chosenHotel.arrival_time).toLocaleString()} */}
-                  <Col md={2}>
-                    <Form.Group>
-                      <Form.Control
-                        type="date"
-                        onChange={(e) => setToDate(e.target.value)}
-                      />
-                    </Form.Group>
-                  </Col>
-                </p>
-                <p>
-                  <strong>Price Per Night :</strong> $
-                  {chosenHotel.price_per_night}
-                </p>
-              </>
-            )}
-          </Modal.Body>
-          <Modal.Footer className="d-flex justify-content-center">
-            <Button variant="primary" onClick={confirmBooking}>
-              Confirm Booking
-            </Button>
-            <Button variant="secondary" onClick={() => setShowDetail(false)}>
-              Close
-            </Button>
-          </Modal.Footer>
-        </Modal>
-        <Modal show={hotelPayment} onHide={() => setHotelPayment(false)}>
-          <Modal.Header closeButton>
-            <Modal.Title>Payment Information</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Form onSubmit={handlePayment}>
-              <Form.Group>
-                <Form.Label>Card Number</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter card number"
-                  required
-                />
-              </Form.Group>
-              <Form.Group>
-                <Form.Label>Expiration Date</Form.Label>
-                <Form.Control type="text" placeholder="MM/YY" required />
-              </Form.Group>
-              <Form.Group>
-                <Form.Label>CVV</Form.Label>
-                <Form.Control type="text" placeholder="Enter CVV" required />
-              </Form.Group>
-              <Form.Group>
-                <Form.Label>Cardholder Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter cardholder name"
-                  required
-                />
-              </Form.Group>
-            </Form>
-          </Modal.Body>
-          <Modal.Footer className="d-flex justify-content-center">
-            <Button
-              variant="danger"
-              onClick={
-                (confirmBooking,
-                () => {
-                  const hotel_id = chosenHotel.hotel_id;
-                  /* console.log(fromDate, toDate);
+              {hotelDetails.map((ele, i) => (
+                <Col key={i} className="d-flex justify-content-center">
+                  <div
+                    className="package-item"
+                    onClick={() => bookNow(item)}
+                    style={{
+                      cursor: "pointer",
+                      maxWidth: "350px",
+                      margin: "0 auto",
+                      marginBottom: "-30px",
+                      background: "#fff",
+                      border: "1px solid #ddd",
+                      borderRadius: "8px",
+                      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                    }}
+                  >
+                    <img
+                      src={ele.image_url}
+                      // alt={item.destination}
+                      style={{
+                        width: "100%",
+                        height: "200px",
+                        objectFit: "cover",
+                        borderTopLeftRadius: "8px",
+                        borderTopRightRadius: "8px",
+                      }}
+                    />
+                    <div style={{ padding: "16px", background: "#f8f9fa" }}>
+                      <h5 className="text-success">{ele.name}</h5>
+                      <p className="text-muted">
+                        <strong>City : </strong>
+                        <span className="text-success">{ele.location}</span>
+                        <br />
+                        <strong>Price: </strong>
+                        <span className="text-success">
+                          ${ele.price_per_night}
+                        </span>
+                        <br />
+
+                        <Button
+                          variant="danger"
+                          onClick={() => bookNow(ele)}
+                        >
+                          Book Now
+                        </Button>
+                      </p>
+                    </div>
+                  </div>
+                </Col>
+              ))}
+            </Row>
+          </div>
+          <Modal show={showDetail} onHide={() => setShowDetail(false)}>
+            <Modal.Header closeButton>
+              <Modal.Title>Hotel Information</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              {chosenHotel && (
+                <>
+                  <p>
+                    <strong>Hotel Name:</strong> {chosenHotel.name},
+                    {/* {setHotel_id(chosenHotel.hotel_id)} */}
+                  </p>
+                  <p>
+                    <strong>City :</strong> {chosenHotel.location}
+                  </p>
+                  <p>
+                    <strong>From Date :</strong>{" "}
+                    <Col md={2}>
+                      <Form.Group>
+                        <Form.Control
+                          type="date"
+                          onChange={(e) => setFromDate(e.target.value)}
+                        />
+                      </Form.Group>
+                    </Col>
+                  </p>
+                  <p>
+                    <strong>To Date :</strong>{" "}
+                    {/* {new Date(chosenHotel.arrival_time).toLocaleString()} */}
+                    <Col md={2}>
+                      <Form.Group>
+                        <Form.Control
+                          type="date"
+                          onChange={(e) => setToDate(e.target.value)}
+                        />
+                      </Form.Group>
+                    </Col>
+                  </p>
+                  <p>
+                    <strong>Price Per Night :</strong> $
+                    {chosenHotel.price_per_night}
+                  </p>
+                </>
+              )}
+            </Modal.Body>
+            <Modal.Footer className="d-flex justify-content-center">
+              <Button variant="primary" onClick={confirmBooking}>
+                Confirm Booking
+              </Button>
+              <Button variant="secondary" onClick={() => setShowDetail(false)}>
+                Close
+              </Button>
+            </Modal.Footer>
+          </Modal>
+          <Modal show={hotelPayment} onHide={() => setHotelPayment(false)}>
+            <Modal.Header closeButton>
+              <Modal.Title>Payment Information</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <Form onSubmit={handlePayment}>
+                <Form.Group>
+                  <Form.Label>Card Number</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter card number"
+                    required
+                  />
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>Expiration Date</Form.Label>
+                  <Form.Control type="text" placeholder="MM/YY" required />
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>CVV</Form.Label>
+                  <Form.Control type="text" placeholder="Enter CVV" required />
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>Cardholder Name</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter cardholder name"
+                    required
+                  />
+                </Form.Group>
+              </Form>
+            </Modal.Body>
+            <Modal.Footer className="d-flex justify-content-center">
+              <Button
+                variant="danger"
+                onClick={
+                  (confirmBooking,
+                  () => {
+                    const hotel_id = chosenHotel.hotel_id;
+                    /* console.log(fromDate, toDate);
                   console.log(token);
                   console.log(hotel_id); */
-                  axios
-                    .post(
-                      `http://localhost:5000/userHotel/${hotel_id}`,
-                      { from_date: fromDate, to_date: toDate },
-                      {
-                        headers: { Authorization: `Bearer ${token} ` },
-                      }
-                    )
-                    .then((result) => {
-                      console.log(result);
-                      axios
-                        .put(
-                          `http://localhost:5000/reservations`,
-                          {
-                            hotel_id: hotel_id,
-                          },
-                          {
-                            headers: { Authorization: `Bearer ${token} ` },
-                          }
-                        )
-                        .then((response) => {
-                          console.log(response);
-                        })
-                        .catch((error) => {
-                          console.log(error);
-                        });
-                    })
-                    .catch((err) => {
-                      console.log(err);
-                    });
-                })
-              }
-            >
-              Confirm Payment
-            </Button>
-            <Button
-              variant="secondary"
-              onClick={() => {
-                setHotelPayment(false);
-                console.log(10);
-              }}
-            >
-              Close
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      </div>
+                    axios
+                      .post(
+                        `http://localhost:5000/userHotel/${hotel_id}`,
+                        { from_date: fromDate, to_date: toDate },
+                        {
+                          headers: { Authorization: `Bearer ${token} ` },
+                        }
+                      )
+                      .then((result) => {
+                        console.log(result);
+                        axios
+                          .put(
+                            `http://localhost:5000/reservations`,
+                            {
+                              hotel_id: hotel_id,
+                            },
+                            {
+                              headers: { Authorization: `Bearer ${token} ` },
+                            }
+                          )
+                          .then((response) => {
+                            console.log(response);
+                          })
+                          .catch((error) => {
+                            console.log(error);
+                          });
+                      })
+                      .catch((err) => {
+                        console.log(err);
+                      });
+                  })
+                }
+              >
+                Confirm Payment
+              </Button>
+              <Button
+                variant="secondary"
+                onClick={() => {
+                  setHotelPayment(false);
+                  console.log(10);
+                }}
+              >
+                Close
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        </div>
       </>
     </>
   );
 };
-
 
 export default HotelsDetails;
