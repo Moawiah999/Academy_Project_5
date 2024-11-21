@@ -12,7 +12,7 @@ const HotelsDetails = () => {
   const [hotelDetails, setHotelDetails] = useState([]);
   const [showDetail, setShowDetail] = useState(false);
   const [hotelPayment, setHotelPayment] = useState(false);
-  const [chosenHotel, setChosenHotel] = useState("");
+  const [chosenHotel, setChosenHotel] = useState(null);
   useEffect(() => {
     axios
       .get("http://localhost:5000/hotels/")
@@ -109,10 +109,7 @@ const HotelsDetails = () => {
                     <h4>{ele.price_per_night} $</h4>
                     <h4>City : {ele.location}</h4>
                   </Card.Text>
-                  <Button
-                    variant="primary"
-                    onClick={() => bookNow(hotelDetails)}
-                  >
+                  <Button variant="primary" onClick={() => bookNow(ele)}>
                     Book Now
                   </Button>
                 </Card.Body>
@@ -128,21 +125,23 @@ const HotelsDetails = () => {
             {chosenHotel && (
               <>
                 <p>
-                  <strong>Hotel Name:</strong> {chosenHotel.name}
-                </p>
-                {/* <p>
-                  <strong>Destination:</strong> {selectedFlight.destination}
+                  <strong>Hotel Name:{console.log(chosenHotel)}</strong>{" "}
+                  {chosenHotel.name}
                 </p>
                 <p>
-                  <strong>Departure Time:</strong>{" "}
-                  {new Date(selectedFlight.departure_time).toLocaleString()}
+                  <strong>City :</strong> {chosenHotel.location}
                 </p>
                 <p>
-                  <strong>Arrival Time:</strong>{" "}
-                  {new Date(selectedFlight.arrival_time).toLocaleString()}
-                </p> */}
+                  <strong>From :</strong>{" "}
+                  {new Date(chosenHotel).toLocaleString()}
+                </p>
                 <p>
-                  <strong>Price:</strong> ${chosenHotel.price}
+                  <strong>To :</strong>{" "}
+                  {new Date(chosenHotel.arrival_time).toLocaleString()}
+                </p>
+                <p>
+                  <strong>Price Per Night :</strong> $
+                  {chosenHotel.price_per_night}
                 </p>
               </>
             )}
@@ -196,7 +195,7 @@ const HotelsDetails = () => {
               variant="secondary"
               onClick={() => {
                 setHotelPayment(false);
-                console.log(10);
+                // console.log(10);
               }}
             >
               Close
