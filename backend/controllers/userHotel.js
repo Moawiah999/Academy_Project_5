@@ -31,7 +31,7 @@ const getMyHotels = (req, res) => {
 
 const cancelHotel = (req, res) => {
   const user_id = req.token.userId;
-  const hotel_id = req.params;
+  const hotel_id = req.params.id;
   pool
     .query(
       "UPDATE userhotel SET is_deleted = 1 WHERE user_id = $1 AND hotel_id = $2",

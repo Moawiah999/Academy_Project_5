@@ -7,8 +7,13 @@ import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import { Modal, Form } from "react-bootstrap";
+import { useSelector } from "react-redux";
 
 const HotelsDetails = () => {
+  const { token } = useSelector((state) => {
+    return { token: state.user.token };
+  });
+  // console.log(token);
   const [hotelDetails, setHotelDetails] = useState([]);
   const [showDetail, setShowDetail] = useState(false);
   const [hotelPayment, setHotelPayment] = useState(false);
@@ -212,7 +217,24 @@ const HotelsDetails = () => {
               onClick={
                 (confirmBooking,
                 () => {
-                  axios.post("https://localhost:5000",[fromDate,toDate])
+                  const hotel_id = chosenHotel.hotel_id;
+                  /* console.log(fromDate, toDate);
+                  console.log(token);
+                  console.log(hotel_id); */
+                  axios
+                    .post(
+                      `http://localhost:5000/userHotel/${hotel_id}`,
+                      { from_date: fromDate, to_date: toDate },
+                      {
+                        headers: { Authorization: `Bearer ${token} ` },
+                      }
+                    )
+                    .then((result) => {
+                      console.log(result);
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
                 })
               }
             >
