@@ -5,7 +5,6 @@ const AboutUs = () => {
   return (
     <Container className="my-5">
       <Row className="align-items-center">
-        {/* Left Column (Text Section) */}
         <Col md={6}>
           <h1
             style={{
@@ -35,19 +34,13 @@ const AboutUs = () => {
             for all involved.
           </p>
           <Button
-            style={{
-              backgroundColor: "#000",
-              color: "#fff",
-              border: "none",
-              padding: "10px 20px",
-              fontSize: "1rem",
-            }}
+           
+            variant="danger"
           >
             Read More
           </Button>
         </Col>
 
-        {/* Right Column (Image Section) */}
         <Col md={6}>
           <div>
             <img
