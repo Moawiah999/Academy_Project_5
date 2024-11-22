@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
 import emailjs from "@emailjs/browser";
+import "./contactUs.css";
 
 const ContactUs = () => {
   const form = useRef();
@@ -13,8 +14,8 @@ const ContactUs = () => {
         publicKey: "S_6zovI0Rev-_0aTg",
       })
       .then(() => {
-        console.log("Message Sent Successfully")
-        e.target.reset()
+        console.log("Message Sent Successfully");
+        e.target.reset();
       })
       .catch((err) => {
         console.log(err);
@@ -97,15 +98,39 @@ const ContactUs = () => {
       >
         CONTACT <span style={{ color: "red" }}>US</span>
       </h1>
-      <div>
-        <form ref={form} onSubmit={sendEmail}>
-          <label>Name</label>
-          <input type="text" name="user_name" />
-          <label>Email</label>
-          <input type="email" name="user_email" />
-          <label>Message</label>
-          <textarea name="message" />
-          <input type="submit" value="Send" />
+      <div className="form-container">
+        <form ref={form} onSubmit={sendEmail} className="contact-form">
+          <label for="user_name">Name</label>
+          <input
+            type="text"
+            id="user_name"
+            name="user_name"
+            placeholder="Enter your name"
+            required
+          />
+          <br />
+          <label for="user_email">Email</label>
+          <input
+            type="email"
+            id="user_email"
+            name="user_email"
+            placeholder="Enter your email"
+            required
+          />
+          <br />
+          <label for="message">Message</label>
+          <textarea
+            id="message"
+            name="message"
+            placeholder="Enter your message"
+            required
+          />
+          <br />
+          <Button variant="danger" type="submit" value="Send" className="mt-3">
+            Send
+          </Button>
+          {/* <input type="submit" value="Send" className="submit-btn" /> */}
+          <br />
         </form>
       </div>
       <Row>
