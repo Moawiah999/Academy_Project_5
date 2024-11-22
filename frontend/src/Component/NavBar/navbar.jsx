@@ -69,9 +69,9 @@ const NavbarPage = () => {
                   </Nav.Link>
 
                   <Nav.Link onClick={() => {
-                      navigate("/packages")
+                      navigate("/login")
                     }}>
-                    PACKAGES
+                    LOGIN
                   </Nav.Link>
                   <Nav.Link onClick={() => {
                       navigate("/Register")
