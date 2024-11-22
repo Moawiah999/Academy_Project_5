@@ -1,30 +1,47 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
+import emailjs from "@emailjs/browser";
 
 const ContactUs = () => {
+  const form = useRef();
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs
+      .sendForm("service_he7ozdz", "template_2mi6de8", form.current, {
+        publicKey: "S_6zovI0Rev-_0aTg",
+      })
+      .then(() => {
+        console.log("Message Sent Successfully")
+        e.target.reset()
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
 
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    message: ''
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
   });
 
   const [formErrors, setFormErrors] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    message: ''
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
   });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
   };
 
@@ -43,10 +60,10 @@ const ContactUs = () => {
     if (Object.keys(errors).length === 0) {
       toast.success("Thanks for your opinion!");
       setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        message: ''
+        name: "",
+        email: "",
+        phone: "",
+        message: "",
       });
     } else {
       toast.error("Please fill all required fields.");
@@ -80,6 +97,17 @@ const ContactUs = () => {
       >
         CONTACT <span style={{ color: "red" }}>US</span>
       </h1>
+      <div>
+        <form ref={form} onSubmit={sendEmail}>
+          <label>Name</label>
+          <input type="text" name="user_name" />
+          <label>Email</label>
+          <input type="email" name="user_email" />
+          <label>Message</label>
+          <textarea name="message" />
+          <input type="submit" value="Send" />
+        </form>
+      </div>
       <Row>
         <Col md={6}>
           <Form onSubmit={handleFormSubmit}>
@@ -92,7 +120,7 @@ const ContactUs = () => {
                 onChange={handleInputChange}
                 placeholder="Enter your name"
                 style={{ height: "50px" }}
-                isInvalid={!!formErrors.name} 
+                isInvalid={!!formErrors.name}
               />
               <Form.Control.Feedback type="invalid">
                 {formErrors.name}
