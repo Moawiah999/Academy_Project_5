@@ -22,4 +22,4 @@ const authorization = (string) => {
   };
 };
 
-module.exports = authorization;
+module.exports = {authorization};

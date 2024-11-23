@@ -8,10 +8,16 @@ const {
   getAllFlight,
 } = require("../controllers/flights");
 const { authentication } = require("../middlewares/authentication");
+const { authorization } = require("../middlewares/authorization");
 const flightsRouter = express.Router();
 flightsRouter.get("/", getAllFlight);
-flightsRouter.post("/", createFlights);
+flightsRouter.post(
+  "/",
+  authentication,
+  authorization("createFlights"),
+  createFlights
+);
 flightsRouter.post("/bookFlight", authentication, bookFlight);
 flightsRouter.get("/findAtrip", findAtrip);
-flightsRouter.delete("/cancelFlight", cancelFlight);
+flightsRouter.delete("/cancelFlight", authentication, cancelFlight);
 module.exports = flightsRouter;
