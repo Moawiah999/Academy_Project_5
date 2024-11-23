@@ -115,7 +115,7 @@ const createTables = () => {
           end_date DATE NOT NULL,
           hotel_name VARCHAR(255) NOT NULL,
           price INT NOT NULL,
-          description VARCHAR(255) NOT NULL,
+          description VARCHAR(1000) NOT NULL,
           user_id INT,
           image_url VARCHAR(255) NOT NULL,
           is_deleted SMALLINT DEFAULT 0,
