@@ -74,7 +74,12 @@ const findAtrip = (req, res) => {
   WHERE origin = $1 OR destination = $2 OR CAST(departure_time AS date) = $3;
 `;
 
-  const values = [origin, destination, departure_date];
+  const values = [
+    origin.toLowerCase(),
+    destination.toLowerCase(),
+    departure_date.toLowerCase(),
+  ];
+  console.log(values);
   db.query(query, values)
     .then((result) => {
       res.status(200).json({
