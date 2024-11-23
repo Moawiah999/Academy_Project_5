@@ -25,6 +25,8 @@ function Register() {
       .then((response) => {
         setMessage(response.data.message);
         setMessageType("success");
+        console.log(response.data);
+        
       })
       .catch((err) => {
         setMessage("An error occurred. Please try again.");
@@ -83,7 +85,7 @@ function Register() {
                       placeholder="First Name"
                       required
                       onChange={(e) =>
-                        setUserInfo({ ...userInfo, first_name: e.target.value })
+                        setUserInfo({ ...userInfo, first_name: e.target.value , role_id : 2})
                       }
                     />
                   </InputGroup>
@@ -191,6 +193,7 @@ function Register() {
             src="https://img.freepik.com/premium-photo/flying-around-world-concept-white-jet-passenger-s-airplane-near-earth-globe-white-background-3d-rendering_476612-7043.jpg?ga=GA1.1.579175181.1731767932&semt=ais_hybrid"
             alt="Registration Illustration"
             style={{
+              marginRight:"-190px",
               width: "105%",
               height: "500px",
               borderRadius: "10px",

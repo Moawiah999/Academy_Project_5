@@ -53,6 +53,7 @@ const Hotels = () => {
           <Button variant="primary">See More</Button>
         </Card.Body>
       </Card> */}
+
     </div>
   );
 };

@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { userToken, user_id, setErrorMessage, setEmail, setPassword, clearErrorMessage } from "../Redux/Reducers/userSlice";
+import { setUserToken,setUserId} from "../Redux/Reducers/userSlice";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useGoogleLogin } from "@react-oauth/google";
@@ -15,20 +15,26 @@ import "./login.css";
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const { email, password, errorMessage } = useSelector(state => state.user);
+const [email , setEmail] = useState();
+const [password , setPassword] = useState();
+  const {token,userId} = useSelector((state)=>{
+    return{
+      token : state.user.token,
+      userId: state.user.userId,
+   }
+   })
 
   const handleLogin = () => {
 
     axios
       .post("http://localhost:5000/user/login", { email, password })
       .then((result) => {
-        dispatch(userToken(result.data.token));
-        dispatch(user_id(result.data.userId));
+        dispatch(setUserToken(result.data.token));
+        dispatch(setUserId(result.data.userId));
         navigate("/home");
       })
       .catch((err) => {
-        dispatch(setErrorMessage("Invalid email or password."));
+        console.log(err);
       });
   };
 
@@ -83,7 +89,7 @@ const Login = () => {
         <Col xs={12} md={6} lg={4} className="offset-lg-2">
           <div className="login-form ms-5">
             <h2 className="text-center mb-3">Login</h2>
-            {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
+           
 
             <Form>
               <animated.div style={trailProps[0]}>
@@ -161,6 +167,7 @@ const Login = () => {
             style={{
               width: "105%",
               height: "500px",
+               marginRight:"-190px",
               borderRadius: "10px",
               transform: "translateX(30px)",
               ...imageAnimation,
