@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import emailjs from "@emailjs/browser";
 import {
   Container,
   Row,
@@ -17,9 +16,6 @@ const Flights = () => {
     destination: "",
     departure_date: "",
   });
-  const [showModal, setShowModal] = useState(false);
-  const [showPaymentModal, setShowPaymentModal] = useState(false);
-  const [selectedFlight, setSelectedFlight] = useState(null);
   useEffect(() => {
     axios
       .get("http://localhost:5000/flights/")
@@ -31,52 +27,65 @@ const Flights = () => {
       });
   }, []);
 
-  const handleBookNow = (flight) => {
-    setSelectedFlight(flight);
-    setShowModal(true);
-  };
-  const handleConfirmBooking = () => {
-    setShowModal(false);
-    setShowPaymentModal(true);
-  };
-
-  const handlePayment = (e) => {
-    e.preventDefault();
-    const emailParams = {
-      user_name: "moawiah omar",
-      user_email: "aldwiriymoaweah@gmail.com",
-      flight_company: selectedFlight.flight_company,
-      flight_number: selectedFlight.flight_number,
-      origin: selectedFlight.origin,
-      destination: selectedFlight.destination,
-      departure_time: new Date(selectedFlight.departure_time).toLocaleString(),
-      arrival_time: new Date(selectedFlight.arrival_time).toLocaleString(),
-      price: selectedFlight.price,
-    };
-
-    emailjs
-      .send(
-        "service_p457vuu",
-        "template_sa12q69",
-        emailParams,
-        "qhHVuA73PnQhBzNcG"
-      )
-      .then(
-        (result) => {
-          console.log("Email sent successfully:", result.text);
-          alert("Payment successful, and confirmation email has been sent!");
-        },
-        (error) => {
-          console.error("Error sending email:", error.text);
-          alert(
-            "Payment successful, but there was an issue sending the email."
-          );
-        }
-      );
-    setShowPaymentModal(false);
-  };
   return (
     <Container>
+      <Form className="mb-4">
+        <h3>New Trip</h3>
+        <Row className="mb-3">
+          <Col md={4}>
+            <Form.Group>
+              <Form.Label>Flight Company</Form.Label>
+              <Form.Control type="text" placeholder="Enter flight company" />
+            </Form.Group>
+          </Col>
+          <Col md={4}>
+            <Form.Group>
+              <Form.Label>Flight Number</Form.Label>
+              <Form.Control type="text" placeholder="Enter flight number" />
+            </Form.Group>
+          </Col>
+          <Col md={4}>
+            <Form.Group>
+              <Form.Label>Origin</Form.Label>
+              <Form.Control type="text" placeholder="Enter origin" />
+            </Form.Group>
+          </Col>
+        </Row>
+        <Row className="mb-3">
+          <Col md={4}>
+            <Form.Group>
+              <Form.Label>Destination</Form.Label>
+              <Form.Control type="text" placeholder="Enter destination" />
+            </Form.Group>
+          </Col>
+          <Col md={4}>
+            <Form.Group>
+              <Form.Label>Departure Date</Form.Label>
+              <Form.Control type="date" />
+            </Form.Group>
+          </Col>
+          <Col md={4}>
+            <Form.Group>
+              <Form.Label>Arrival Date</Form.Label>
+              <Form.Control type="date" />
+            </Form.Group>
+          </Col>
+        </Row>
+        <Row className="mb-3">
+          <Col md={4}>
+            <Form.Group>
+              <Form.Label>Price</Form.Label>
+              <Form.Control type="number" placeholder="Enter price in USD" />
+            </Form.Group>
+          </Col>
+          <Col md={4}>
+            <Button variant="danger" className="mt-4 w-50">
+              Create a flight
+            </Button>
+          </Col>
+        </Row>
+      </Form>
+
       <Form style={{ marginTop: "50px" }}>
         <Row className="align-items-end">
           <Col md={3}>
@@ -162,13 +171,11 @@ const Flights = () => {
                       {flight.flight_number}
                     </Card.Subtitle>
                   </Col>
-
                   <Col xs={2} className="text-center">
                     <Card.Text>
                       <strong>Price:</strong> ${flight.price}
                     </Card.Text>
                   </Col>
-
                   <Col xs={3}>
                     <Card.Text>
                       <strong>Origin:</strong>{" "}
@@ -181,7 +188,6 @@ const Flights = () => {
                         flight.destination.slice(1)}
                     </Card.Text>
                   </Col>
-
                   <Col xs={3}>
                     <Card.Text>
                       <strong>Departure:</strong>{" "}
@@ -192,14 +198,8 @@ const Flights = () => {
                       {new Date(flight.arrival_time).toLocaleString()}
                     </Card.Text>
                   </Col>
-
                   <Col xs={2} className="text-center">
-                    <Button
-                      variant="danger"
-                      onClick={() => handleBookNow(flight)}
-                    >
-                      Book Now
-                    </Button>
+                    <Button variant="danger">Book Now</Button>
                   </Col>
                 </Row>
               </Card.Body>
@@ -207,90 +207,6 @@ const Flights = () => {
           </Col>
         ))}
       </Row>
-      <Modal show={showModal} onHide={() => setShowModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Flight Information</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {selectedFlight && (
-            <>
-              <p>
-                <strong>Flight Company:</strong> {selectedFlight.flight_company}
-              </p>
-              <p>
-                <strong>Flight Number:</strong> {selectedFlight.flight_number}
-              </p>
-              <p>
-                <strong>Origin:</strong> {selectedFlight.origin}
-              </p>
-              <p>
-                <strong>Destination:</strong> {selectedFlight.destination}
-              </p>
-              <p>
-                <strong>Departure Time:</strong>{" "}
-                {new Date(selectedFlight.departure_time).toLocaleString()}
-              </p>
-              <p>
-                <strong>Arrival Time:</strong>{" "}
-                {new Date(selectedFlight.arrival_time).toLocaleString()}
-              </p>
-              <p>
-                <strong>Price:</strong> ${selectedFlight.price}
-              </p>
-            </>
-          )}
-        </Modal.Body>
-        <Modal.Footer className="d-flex justify-content-center">
-          <Button variant="danger" onClick={handleConfirmBooking}>
-            Confirm Booking
-          </Button>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
-
-      <Modal show={showPaymentModal} onHide={() => setShowPaymentModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Payment Information</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form onSubmit={handlePayment}>
-            <Form.Group>
-              <Form.Label>Card Number</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter card number"
-                required
-              />
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Expiration Date</Form.Label>
-              <Form.Control type="text" placeholder="MM/YY" required />
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>CVV</Form.Label>
-              <Form.Control type="text" placeholder="Enter CVV" required />
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Cardholder Name</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter cardholder name"
-                required
-              />
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer className="d-flex justify-content-center">
-          <Button variant="danger" onClick={handleConfirmBooking}>
-            Confirm Payment
-          </Button>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
     </Container>
   );
 };
