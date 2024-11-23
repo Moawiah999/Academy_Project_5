@@ -10,7 +10,7 @@ import Packages from "./Component/Packages/Packages";
 import HotelsDetails from "./Component/HotelsDetails/HotelsDetails";
 import Login from "./Component/Login/login";
 import Register from "./Component/Login/Register"; 
-
+import Footer from "./Component/Footer/Footer";
 const App = () => {
   const navigate = useNavigate();
 
@@ -29,6 +29,8 @@ const App = () => {
         <Route path="/hotelsPage" element={<HotelsDetails />} />
         <Route path="/register" element={<Register />} /> 
       </Routes>
+      <Footer />
+
     </>
   );
 };
