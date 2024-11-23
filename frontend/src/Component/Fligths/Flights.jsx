@@ -171,10 +171,14 @@ const Flights = () => {
 
                   <Col xs={3}>
                     <Card.Text>
-                      <strong>Origin:</strong> {flight.origin}
+                      <strong>Origin:</strong>{" "}
+                      {flight.origin.charAt(0).toUpperCase() +
+                        flight.origin.slice(1)}
                     </Card.Text>
                     <Card.Text>
-                      <strong>Destination:</strong> {flight.destination}
+                      <strong>Destination:</strong>{" "}
+                      {flight.destination.charAt(0).toUpperCase() +
+                        flight.destination.slice(1)}
                     </Card.Text>
                   </Col>
 
