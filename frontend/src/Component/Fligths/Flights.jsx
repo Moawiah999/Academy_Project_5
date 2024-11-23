@@ -111,6 +111,7 @@ const Flights = () => {
               <Form.Label>Departure Date</Form.Label>
               <Form.Control
                 type="date"
+                min={new Date().toISOString().split("T")[0]}
                 onChange={(e) =>
                   setFindeFlight({
                     ...findeFlight,
