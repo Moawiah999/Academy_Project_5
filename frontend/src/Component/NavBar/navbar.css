@@ -35,4 +35,7 @@ max-width: 50%;
   .navbar .nav-link:hover {
     color: red; 
   }
- 
+  .navbar .nav-link:visited {
+    text-decoration: underline;
+  text-decoration-color: red;
+}
