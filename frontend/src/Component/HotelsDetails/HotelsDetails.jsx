@@ -8,6 +8,7 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import { Modal, Form } from "react-bootstrap";
 import { useSelector } from "react-redux";
+import { ToastContainer, toast } from "react-toastify";
 
 const HotelsDetails = () => {
   const { token } = useSelector((state) => {
@@ -44,6 +45,7 @@ const HotelsDetails = () => {
   };
   const handlePayment = (e) => {
     e.preventDefault();
+    toast.success("Payment Confirmed! Thank you for booking.");
     setHotelPayment(false);
   };
 
@@ -55,7 +57,7 @@ const HotelsDetails = () => {
           <Carousel.Item interval={5000}>
             <img
               className="img"
-              src="https://images.pexels.com/photos/164595/pexels-photo-164595.jpeg?auto=compress&cs=tinysrgb&w=400"
+              src="https://media.istockphoto.com/id/487042276/photo/hotel-sign.jpg?s=612x612&w=0&k=20&c=DjEVAoFnjB2cWwX28cxSKWkxsbze7o9jgkYrhyfmq9E="
               alt="First slide"
               // className="d-block w-100"
             />
@@ -64,7 +66,7 @@ const HotelsDetails = () => {
           <Carousel.Item interval={5000}>
             <img
               className="img"
-              src="https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?auto=compress&cs=tinysrgb&w=400"
+              src="https://media.istockphoto.com/id/591821200/photo/3d-rendering-luxury-hotel-reception-and-lounge.jpg?s=612x612&w=0&k=20&c=ujKL3aloZrbd87Q8fI8L6vTGJ_eAmfipVGxak-c4RTc="
               alt="Second slide"
               // className="d-block w-100"
             />
@@ -73,7 +75,7 @@ const HotelsDetails = () => {
           <Carousel.Item interval={5000}>
             <img
               className="img"
-              src="https://images.pexels.com/photos/261169/pexels-photo-261169.jpeg?auto=compress&cs=tinysrgb&w=400"
+              src="https://images.pexels.com/photos/261169/pexels-photo-261169.jpeg?auto=compress&cs=tinysrgb&w=600"
               // className="d-block w-100"
             />
           </Carousel.Item>
@@ -103,9 +105,10 @@ const HotelsDetails = () => {
                     onClick={() => bookNow(item)}
                     style={{
                       cursor: "pointer",
+                      width: "100%",
                       maxWidth: "350px",
                       margin: "0 auto",
-                      marginBottom: "-30px",
+                      marginBottom: "30px",
                       background: "#fff",
                       border: "1px solid #ddd",
                       borderRadius: "8px",
@@ -135,10 +138,7 @@ const HotelsDetails = () => {
                         </span>
                         <br />
 
-                        <Button
-                          variant="danger"
-                          onClick={() => bookNow(ele)}
-                        >
+                        <Button variant="danger" onClick={() => bookNow(ele)}>
                           Book Now
                         </Button>
                       </p>
@@ -163,8 +163,8 @@ const HotelsDetails = () => {
                     <strong>City :</strong> {chosenHotel.location}
                   </p>
                   <p>
-                    <strong>From Date :</strong>{" "}
-                    <Col md={2}>
+                    <strong>From Date :</strong>
+                    <Col lg={10}>
                       <Form.Group>
                         <Form.Control
                           type="date"
@@ -176,7 +176,7 @@ const HotelsDetails = () => {
                   <p>
                     <strong>To Date :</strong>{" "}
                     {/* {new Date(chosenHotel.arrival_time).toLocaleString()} */}
-                    <Col md={2}>
+                    <Col lg={10}>
                       <Form.Group>
                         <Form.Control
                           type="date"
@@ -193,7 +193,7 @@ const HotelsDetails = () => {
               )}
             </Modal.Body>
             <Modal.Footer className="d-flex justify-content-center">
-              <Button variant="primary" onClick={confirmBooking}>
+              <Button variant="danger" onClick={confirmBooking}>
                 Confirm Booking
               </Button>
               <Button variant="secondary" onClick={() => setShowDetail(false)}>
@@ -265,6 +265,10 @@ const HotelsDetails = () => {
                           )
                           .then((response) => {
                             console.log(response);
+
+                            {handlePayment}
+                            setHotelPayment(false);
+                            toast.success("Payment Confirmed! Thank you for booking.");
                           })
                           .catch((error) => {
                             console.log(error);
@@ -289,6 +293,7 @@ const HotelsDetails = () => {
               </Button>
             </Modal.Footer>
           </Modal>
+          <ToastContainer />
         </div>
       </>
     </>
