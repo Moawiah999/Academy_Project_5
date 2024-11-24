@@ -149,10 +149,31 @@ const getAllFlight = (req, res) => {
       });
     });
 };
+const deleteFlights = (req, res) => {
+  const { flight_number } = req.body;
+  const values = [flight_number];
+  const query = "DELETE FROM flights WHERE flight_number = $1";
+  db.query(query, values)
+    .then((result) => {
+      res.status(200).json({
+        success: true,
+        message: "DELETE Flight successfully",
+        result: result,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: "No flights",
+        err: err,
+      });
+    });
+};
 module.exports = {
   createFlights,
   bookFlight,
   findAtrip,
   cancelFlight,
   getAllFlight,
+  deleteFlights,
 };
