@@ -8,6 +8,7 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import { Modal, Form } from "react-bootstrap";
 import { useSelector } from "react-redux";
+import { ToastContainer, toast } from "react-toastify";
 
 const HotelsDetails = () => {
   const { token } = useSelector((state) => {
@@ -44,6 +45,7 @@ const HotelsDetails = () => {
   };
   const handlePayment = (e) => {
     e.preventDefault();
+    toast.success("Payment Confirmed! Thank you for booking.");
     setHotelPayment(false);
   };
 
@@ -103,9 +105,10 @@ const HotelsDetails = () => {
                     onClick={() => bookNow(item)}
                     style={{
                       cursor: "pointer",
+                      width: "100%",
                       maxWidth: "350px",
                       margin: "0 auto",
-                      marginBottom: "-30px",
+                      marginBottom: "30px",
                       background: "#fff",
                       border: "1px solid #ddd",
                       borderRadius: "8px",
@@ -135,10 +138,7 @@ const HotelsDetails = () => {
                         </span>
                         <br />
 
-                        <Button
-                          variant="danger"
-                          onClick={() => bookNow(ele)}
-                        >
+                        <Button variant="danger" onClick={() => bookNow(ele)}>
                           Book Now
                         </Button>
                       </p>
@@ -163,8 +163,8 @@ const HotelsDetails = () => {
                     <strong>City :</strong> {chosenHotel.location}
                   </p>
                   <p>
-                    <strong>From Date :</strong>{" "}
-                    <Col md={2}>
+                    <strong>From Date :</strong>
+                    <Col lg={10}>
                       <Form.Group>
                         <Form.Control
                           type="date"
@@ -176,7 +176,7 @@ const HotelsDetails = () => {
                   <p>
                     <strong>To Date :</strong>{" "}
                     {/* {new Date(chosenHotel.arrival_time).toLocaleString()} */}
-                    <Col md={2}>
+                    <Col lg={10}>
                       <Form.Group>
                         <Form.Control
                           type="date"
@@ -193,7 +193,7 @@ const HotelsDetails = () => {
               )}
             </Modal.Body>
             <Modal.Footer className="d-flex justify-content-center">
-              <Button variant="primary" onClick={confirmBooking}>
+              <Button variant="danger" onClick={confirmBooking}>
                 Confirm Booking
               </Button>
               <Button variant="secondary" onClick={() => setShowDetail(false)}>
@@ -289,6 +289,7 @@ const HotelsDetails = () => {
               </Button>
             </Modal.Footer>
           </Modal>
+          <ToastContainer />
         </div>
       </>
     </>

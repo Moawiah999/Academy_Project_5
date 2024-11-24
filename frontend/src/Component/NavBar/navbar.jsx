@@ -23,9 +23,7 @@ const NavbarPage = () => {
             </Navbar.Brand>
             <img className="logo" src="\images\updateLogo.png" alt="Logo" />
 
-            <Navbar.Toggle
-              aria-controls={`offcanvasNavbar-expand-${expand}`}
-            />
+            <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
             <Navbar.Offcanvas
               id={`offcanvasNavbar-expand-${expand}`}
               aria-labelledby={`offcanvasNavbarLabel-expand-${expand}`}
@@ -37,7 +35,11 @@ const NavbarPage = () => {
                   className="title"
                 >
                   QuickReservePro
-                  <img className="logo" src="\public\updateLogo.png" alt="Logo" />
+                  <img
+                    className="logo"
+                    src="\public\updateLogo.png"
+                    alt="Logo"
+                  />
                 </Offcanvas.Title>
               </Offcanvas.Header>
               <Offcanvas.Body>
@@ -58,27 +60,47 @@ const NavbarPage = () => {
                     HOTELS
                   </Nav.Link>
 
-                  <Nav.Link onClick={() => {
-                      navigate("/flight")
-                    }}>
+                  <Nav.Link
+                    onClick={() => {
+                      navigate("/flight");
+                    }}
+                  >
                     FLIGHTS
                   </Nav.Link>
-
-                  <Nav.Link onClick={() => {
-                      navigate("/login")
-                    }}>
-                    LOGIN
+                  <Nav.Link
+                    onClick={() => {
+                      navigate("/packages");
+                    }}
+                  >
+                    PACKAGES
                   </Nav.Link>
-                  <Nav.Link onClick={() => {
+                  {localStorage.getItem("token") ? (
+                    <Nav.Link
+                      onClick={() => {
+                        navigate("/myprofile");
+                      }}
+                    >
+                      MY PROFILE
+                    </Nav.Link>
+                  ) : (
+                    <Nav.Link
+                      onClick={() => {
+                        navigate("/login");
+                      }}
+                    >
+                      LOGIN
+                    </Nav.Link>
+                  )}
+                  {/* <Nav.Link onClick={() => {
                       navigate("/Register")
                     }}>
                     REGISTER
-                  </Nav.Link>
-                  <Nav.Link onClick={() => {
+                  </Nav.Link> */}
+                  {/* <Nav.Link onClick={() => {
                       navigate("/packages")
                     }}>
                     PACKAGES
-                  </Nav.Link>
+                  </Nav.Link> */}
                 </Nav>
                 <hr />
               </Offcanvas.Body>

@@ -13,8 +13,19 @@ const app = express();
 //==========Sokit io
 const io = new Server(8080, { cors: { origin: "*" } });
 const clients = {};
+
+// const users = io.of("/users");
+// const admin = io.of("/admin");
+// users.on("connection", (socket) => {
+//   console.log("from users");
+// });
+// admin.on("connection", (socket) => {
+//   console.log("from admin");
+// });
+
 io.use(auth);
 io.on("connection", (socket) => {
+  console.log("connected");
   // console.log(socket.id);
   // console.log(socket.handshake.headers);
   socket.use(example);
