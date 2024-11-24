@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import {
   Container,
   Row,
@@ -10,11 +11,23 @@ import {
 } from "react-bootstrap";
 import axios from "axios";
 const Flights = () => {
+  const { token } = useSelector((state) => {
+    return { token: state.user.token };
+  });
   const [flights, setFlights] = useState([]);
   const [findeFlight, setFindeFlight] = useState({
     origin: "",
     destination: "",
     departure_date: "",
+  });
+  const [flightInformation, setFlightInformation] = useState({
+    flight_Company: "",
+    flight_number: "",
+    origin: "",
+    destination: "",
+    departure_time: "",
+    arrival_time: "",
+    price: "",
   });
   useEffect(() => {
     axios
@@ -26,65 +39,146 @@ const Flights = () => {
         console.log("err: ", err);
       });
   }, []);
-
   return (
     <Container>
-      <Form className="mb-4">
-        <h3>New Trip</h3>
-        <Row className="mb-3">
-          <Col md={4}>
-            <Form.Group>
-              <Form.Label>Flight Company</Form.Label>
-              <Form.Control type="text" placeholder="Enter flight company" />
-            </Form.Group>
-          </Col>
-          <Col md={4}>
-            <Form.Group>
-              <Form.Label>Flight Number</Form.Label>
-              <Form.Control type="text" placeholder="Enter flight number" />
-            </Form.Group>
-          </Col>
-          <Col md={4}>
-            <Form.Group>
-              <Form.Label>Origin</Form.Label>
-              <Form.Control type="text" placeholder="Enter origin" />
-            </Form.Group>
-          </Col>
-        </Row>
-        <Row className="mb-3">
-          <Col md={4}>
-            <Form.Group>
-              <Form.Label>Destination</Form.Label>
-              <Form.Control type="text" placeholder="Enter destination" />
-            </Form.Group>
-          </Col>
-          <Col md={4}>
-            <Form.Group>
-              <Form.Label>Departure Date</Form.Label>
-              <Form.Control type="date" />
-            </Form.Group>
-          </Col>
-          <Col md={4}>
-            <Form.Group>
-              <Form.Label>Arrival Date</Form.Label>
-              <Form.Control type="date" />
-            </Form.Group>
-          </Col>
-        </Row>
-        <Row className="mb-3">
-          <Col md={4}>
-            <Form.Group>
-              <Form.Label>Price</Form.Label>
-              <Form.Control type="number" placeholder="Enter price in USD" />
-            </Form.Group>
-          </Col>
-          <Col md={4}>
-            <Button variant="danger" className="mt-4 w-50">
-              Create a flight
-            </Button>
-          </Col>
-        </Row>
-      </Form>
+      {
+        <Form className="mb-4">
+          <h3>New Trip</h3>
+          <Row className="mb-3">
+            <Col md={4}>
+              <Form.Group>
+                <Form.Label>Flight Company</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter flight company"
+                  onChange={(e) =>
+                    setFlightInformation({
+                      ...flightInformation,
+                      flight_Company: e.target.value,
+                    })
+                  }
+                />
+              </Form.Group>
+            </Col>
+            <Col md={4}>
+              <Form.Group>
+                <Form.Label>Flight Number</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter flight number"
+                  onChange={(e) =>
+                    setFlightInformation({
+                      ...flightInformation,
+                      flight_number: e.target.value,
+                    })
+                  }
+                />
+              </Form.Group>
+            </Col>
+            <Col md={4}>
+              <Form.Group>
+                <Form.Label>Origin</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter origin"
+                  onChange={(e) =>
+                    setFlightInformation({
+                      ...flightInformation,
+                      origin: e.target.value,
+                    })
+                  }
+                />
+              </Form.Group>
+            </Col>
+          </Row>
+          <Row className="mb-3">
+            <Col md={4}>
+              <Form.Group>
+                <Form.Label>Destination</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter destination"
+                  onChange={(e) =>
+                    setFlightInformation({
+                      ...flightInformation,
+                      destination: e.target.value,
+                    })
+                  }
+                />
+              </Form.Group>
+            </Col>
+            <Col md={4}>
+              <Form.Group>
+                <Form.Label>Departure Date</Form.Label>
+                <Form.Control
+                  type="date"
+                  onChange={(e) =>
+                    setFlightInformation({
+                      ...flightInformation,
+                      departure_time: e.target.value,
+                    })
+                  }
+                />
+              </Form.Group>
+            </Col>
+            <Col md={4}>
+              <Form.Group>
+                <Form.Label>Arrival Date</Form.Label>
+                <Form.Control
+                  type="date"
+                  onChange={(e) =>
+                    setFlightInformation({
+                      ...flightInformation,
+                      arrival_time: e.target.value,
+                    })
+                  }
+                />
+              </Form.Group>
+            </Col>
+          </Row>
+          <Row className="mb-3">
+            <Col md={4}>
+              <Form.Group>
+                <Form.Label>Price</Form.Label>
+                <Form.Control
+                  type="number"
+                  placeholder="Enter price in USD"
+                  onChange={(e) =>
+                    setFlightInformation({
+                      ...flightInformation,
+                      price: e.target.value,
+                    })
+                  }
+                />
+              </Form.Group>
+            </Col>
+            <Col md={4}>
+              <Button
+                variant="danger"
+                className="mt-4 w-50"
+                onClick={() => {
+                  axios
+                    .post(
+                      "http://localhost:5000/flights/",
+                      flightInformation,
+                      {
+                        headers: { Authorization: `Bearer ${token}` },
+                      }
+                    )
+                    .then((result) => {
+                      console.log("Flight created successfully:", result);
+                    })
+                    .catch((err) => {
+                      console.log("Error while creating flight:", err);
+                    });
+                }}
+              >
+                Create a flight
+              </Button>
+            </Col>
+          </Row>
+        </Form>
+      }
 
       <Form style={{ marginTop: "50px" }}>
         <Row className="align-items-end">
