@@ -45,7 +45,6 @@ const bookFlight = (req, res) => {
   const user_id = req.token.userId;
   const { flights_id } = req.body;
 
-
   const query = `
       INSERT INTO userFlight (user_id, flights_id)
       VALUES ($1, $2) RETURNING *;
@@ -70,10 +69,17 @@ const bookFlight = (req, res) => {
 };
 const findAtrip = (req, res) => {
   const { origin, destination, departure_date } = req.query;
-  const query =
-    "SELECT * FROM flights WHERE origin=$1 and destination=$2 and CAST(departure_time AS date)=$3";
+  const query = `
+  SELECT * FROM flights 
+  WHERE origin = $1 OR destination = $2 OR CAST(departure_time AS date) = $3;
+`;
 
-  const values = [origin, destination, departure_date];
+  const values = [
+    origin.toLowerCase(),
+    destination.toLowerCase(),
+    departure_date.toLowerCase(),
+  ];
+  console.log(values);
   db.query(query, values)
     .then((result) => {
       res.status(200).json({
@@ -143,10 +149,31 @@ const getAllFlight = (req, res) => {
       });
     });
 };
+const deleteFlights = (req, res) => {
+  const { flight_number } = req.body;
+  const values = [flight_number];
+  const query = "DELETE FROM flights WHERE flight_number = $1";
+  db.query(query, values)
+    .then((result) => {
+      res.status(200).json({
+        success: true,
+        message: "DELETE Flight successfully",
+        result: result,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: "No flights",
+        err: err,
+      });
+    });
+};
 module.exports = {
   createFlights,
   bookFlight,
   findAtrip,
   cancelFlight,
   getAllFlight,
+  deleteFlights,
 };
