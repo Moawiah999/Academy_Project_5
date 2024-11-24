@@ -57,7 +57,7 @@ const HotelsDetails = () => {
           <Carousel.Item interval={5000}>
             <img
               className="img"
-              src="https://images.pexels.com/photos/164595/pexels-photo-164595.jpeg?auto=compress&cs=tinysrgb&w=400"
+              src="https://media.istockphoto.com/id/487042276/photo/hotel-sign.jpg?s=612x612&w=0&k=20&c=DjEVAoFnjB2cWwX28cxSKWkxsbze7o9jgkYrhyfmq9E="
               alt="First slide"
               // className="d-block w-100"
             />
@@ -66,7 +66,7 @@ const HotelsDetails = () => {
           <Carousel.Item interval={5000}>
             <img
               className="img"
-              src="https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?auto=compress&cs=tinysrgb&w=400"
+              src="https://media.istockphoto.com/id/591821200/photo/3d-rendering-luxury-hotel-reception-and-lounge.jpg?s=612x612&w=0&k=20&c=ujKL3aloZrbd87Q8fI8L6vTGJ_eAmfipVGxak-c4RTc="
               alt="Second slide"
               // className="d-block w-100"
             />
@@ -75,7 +75,7 @@ const HotelsDetails = () => {
           <Carousel.Item interval={5000}>
             <img
               className="img"
-              src="https://images.pexels.com/photos/261169/pexels-photo-261169.jpeg?auto=compress&cs=tinysrgb&w=400"
+              src="https://images.pexels.com/photos/261169/pexels-photo-261169.jpeg?auto=compress&cs=tinysrgb&w=600"
               // className="d-block w-100"
             />
           </Carousel.Item>
@@ -265,6 +265,10 @@ const HotelsDetails = () => {
                           )
                           .then((response) => {
                             console.log(response);
+
+                            {handlePayment}
+                            setHotelPayment(false);
+                            toast.success("Payment Confirmed! Thank you for booking.");
                           })
                           .catch((error) => {
                             console.log(error);
