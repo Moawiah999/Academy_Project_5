@@ -56,6 +56,11 @@ const Packages = () => {
     toast.success("Payment Confirmed! Thank you for booking.");
     handleClosePayment();
   };
+  const handlePaymentNotAuth = (event) => {
+    event.preventDefault();
+    toast.error("You must be login for Book .");
+    handleClosePayment();
+  };
 
   if (loading) {
     return (
@@ -64,7 +69,6 @@ const Packages = () => {
         style={{ height: "100vh" }}
       >
         <Spinner animation="border" variant="primary" />
-        
       </div>
     );
   }
@@ -72,7 +76,11 @@ const Packages = () => {
   return (
     <div
       className="packages-container"
-      style={{ fontFamily: "Roboto, sans-serif" , marginBottom : "70px",marginTop:"30px"}}
+      style={{
+        fontFamily: "Roboto, sans-serif",
+        marginBottom: "70px",
+        marginTop: "30px",
+      }}
     >
       <div
         className="d-flex justify-content-center align-items-center flex-column"
@@ -125,7 +133,14 @@ const Packages = () => {
                       <strong>Description:</strong>{" "}
                       {shortDescription(item.description)}
                     </p>
-                    <Button variant="danger" onClick={handleCardModal}>
+                    <Button
+                      variant="danger"
+                      onClick={() =>
+                        localStorage.getItem("token")
+                          ? handleCardModal()
+                          : handlePaymentNotAuth(event)
+                      }
+                    >
                       BookNow
                     </Button>
                   </p>
@@ -174,7 +189,14 @@ const Packages = () => {
         </Modal.Body>
 
         <Modal.Footer className="d-flex justify-content-center">
-          <Button variant="danger" onClick={handleCardModal}>
+          <Button
+            variant="danger"
+            onClick={() =>
+              localStorage.getItem("token")
+                ? handleCardModal()
+                : handlePaymentNotAuth(event)
+            }
+          >
             BookNow
           </Button>
           <Button variant="secondary" onClick={handleCloseModal}>
@@ -238,8 +260,15 @@ const Packages = () => {
               </div>
             </Form.Group>
             <Modal.Footer className="d-flex justify-content-center">
-              <Button variant="danger" type="submit">
-                Confirm Payment
+              <Button
+                variant="danger"
+                onClick={() =>
+                  localStorage.getItem("token")
+                    ? handleCardModal()
+                    : handlePaymentNotAuth(event)
+                }
+              >
+                Confirm Booking
               </Button>
               <Button variant="secondary" onClick={handleClosePayment}>
                 Close
