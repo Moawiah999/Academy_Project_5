@@ -42,7 +42,7 @@ const Flights = () => {
   }, []);
   return (
     <Container>
-       <ToastContainer />
+      <ToastContainer />
       {
         <Form className="mb-4">
           <h3>New Trip</h3>
@@ -159,14 +159,22 @@ const Flights = () => {
                 variant="danger"
                 className="mt-4 w-50"
                 onClick={() => {
+                  if (
+                    flightInformation.flight_Company.length === 0 &&
+                    flightInformation.flight_number.length === 0 &&
+                    flightInformation.origin.length === 0 &&
+                    flightInformation.destination.length === 0 &&
+                    flightInformation.departure_time.length === 0 &&
+                    flightInformation.arrival_time.length === 0 &&
+                    flightInformation.price.length === 0
+                  ) {
+                    toast.error("All these fields are required.");
+                  }
+
                   axios
-                    .post(
-                      "http://localhost:5000/flights/",
-                      flightInformation,
-                      {
-                        headers: { Authorization: `Bearer ${token}` },
-                      }
-                    )
+                    .post("http://localhost:5000/flights/", flightInformation, {
+                      headers: { Authorization: `Bearer ${token}` },
+                    })
                     .then((result) => {
                       toast.success("The flight was created successfully.");
                     })
