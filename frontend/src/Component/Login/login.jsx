@@ -37,7 +37,11 @@ const Login = () => {
       .post("http://localhost:5000/user/login", { email, password })
       .then((result) => {
         dispatch(setUserToken(result.data.token));
+        console.log("annnaa",setUserToken);
+        
         dispatch(setUserId(result.data.userId));
+        console.log("userId" , setUserId);
+        
         navigate("/home");
       })
       .catch((err) => {
@@ -53,6 +57,8 @@ const Login = () => {
         axios
           .post(`http://localhost:5000/user/login`, {
             token: tokenResponse.access_token,
+            email,
+            password,
           })
           .then((response) => {
             dispatch(setUserToken(response.data.token));

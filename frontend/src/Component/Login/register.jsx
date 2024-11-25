@@ -9,30 +9,72 @@ import {
   InputGroup,
   Alert,
 } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaUser, FaEnvelope, FaLock, FaGlobe } from "react-icons/fa";
 import { useSpring, animated, useTrail } from "@react-spring/web";
+import { useGoogleLogin } from "@react-oauth/google";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import { setUserToken, setUserId } from "../Redux/Reducers/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 import "./login.css";
 
 function Register() {
   const [userInfo, setUserInfo] = useState({});
   const [message, setMessage] = useState("");
-  const [messageType, setMessageType] = useState("");
+  // const [messageType, setMessageType] = useState("");
+  const { token, userId } = useSelector((state) => {
+    return {
+      token: state.user.token,
+      userId: state.user.userId,
+    };
+  });
+  const navigate = useNavigate();
+
 
   const handleRegister = () => {
     axios
       .post("http://localhost:5000/user/register", userInfo)
       .then((response) => {
         setMessage(response.data.message);
-        setMessageType("success");
         console.log(response.data);
-        
       })
       .catch((err) => {
         setMessage("An error occurred. Please try again.");
-        setMessageType("error");
       });
   };
+
+  const loginWithGoogle = useGoogleLogin({
+    onSuccess: (tokenResponse) => {
+      console.log("tokenResponse", tokenResponse);
+      console.log("tokenResponse.access_token", tokenResponse.access_token);
+      console.log("tokenResponse.email", tokenResponse.email);
+
+
+      if (tokenResponse.access_token) {
+        axios
+          .post(`http://localhost:5000/user/register`, {
+            token: tokenResponse.access_token,
+            email : tokenResponse.email,
+          })
+          .then((response) => {
+            dispatch(setUserToken(response.data.token));
+            console.log(setUserToken);
+
+            dispatch(setUserId(response.data.userId));
+            console.log(setUserId);
+
+            navigate("/home");
+          })
+
+          .catch((err) => {
+            console.log("Google login failed", err);
+          });
+      }
+    },
+    onError: (error) => {
+      console.log("Google login Failed", error);
+    },
+  });
 
   const formAnimation = useSpring({
     opacity: 1,
@@ -57,20 +99,18 @@ function Register() {
   });
 
   return (
-    <Container
-      className="register-container"
-       >
-      <Row className="justify-content-center align-items-center" >
+    <Container className="register-container">
+      <Row className="justify-content-center align-items-center">
         <Col xs={12} md={6} lg={4}>
           <div className="text-center mb-4">
             <h3>Sign Up</h3>
           </div>
 
-          {message && (
+          {/* {message && (
             <Alert variant={messageType === "success" ? "success" : "danger"}>
               {message}
             </Alert>
-          )}
+          )} */}
 
           <animated.div style={formAnimation}>
             <Form>
@@ -85,7 +125,11 @@ function Register() {
                       placeholder="First Name"
                       required
                       onChange={(e) =>
-                        setUserInfo({ ...userInfo, first_name: e.target.value , role_id : 2})
+                        setUserInfo({
+                          ...userInfo,
+                          first_name: e.target.value,
+                          role_id: 2,
+                        })
                       }
                     />
                   </InputGroup>
@@ -154,7 +198,6 @@ function Register() {
                     </InputGroup.Text>
                     <Form.Control
                       type="text"
-
                       placeholder="Country"
                       required
                       onChange={(e) =>
@@ -172,6 +215,15 @@ function Register() {
               >
                 Submit
               </Button>
+              <animated.div>
+                <Button
+                  variant="outline-danger"
+                  className="w-100 mt-3"
+                  onClick={loginWithGoogle}
+                >
+                  Sign Up with Google 🚀
+                </Button>
+              </animated.div>
 
               <div className="text-center mt-3">
                 <p>Already have an account?</p>
@@ -193,7 +245,7 @@ function Register() {
             src="https://img.freepik.com/premium-photo/flying-around-world-concept-white-jet-passenger-s-airplane-near-earth-globe-white-background-3d-rendering_476612-7043.jpg?ga=GA1.1.579175181.1731767932&semt=ais_hybrid"
             alt="Registration Illustration"
             style={{
-              marginRight:"-190px",
+              marginRight: "-190px",
               width: "105%",
               height: "500px",
               borderRadius: "10px",
