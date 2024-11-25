@@ -16,6 +16,7 @@ const Flights = () => {
     return { token: state.user.token };
   });
   const [flights, setFlights] = useState([]);
+
   const [findeFlight, setFindeFlight] = useState({
     origin: "",
     destination: "",
@@ -318,6 +319,11 @@ const Flights = () => {
                           .then(() => {
                             console.log("Deletion succeeded");
                             toast.success("Deletion successful.");
+                            setFlights((previousFlights) =>
+                              previousFlights.filter(
+                                (f) => f.flight_number !== flight.flight_number
+                              )
+                            );
                           })
                           .catch(() => {
                             toast.error("Deletion failed");
