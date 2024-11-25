@@ -152,7 +152,7 @@ const getAllFlight = (req, res) => {
 const deleteFlights = (req, res) => {
   const { flight_number } = req.body;
   const values = [flight_number];
-  console.log("flight_number : ",flight_number);
+  console.log("flight_number : ", flight_number);
   const query = "DELETE FROM flights WHERE flight_number = $1 RETURNING *";
   db.query(query, values)
     .then((result) => {
@@ -170,6 +170,67 @@ const deleteFlights = (req, res) => {
       });
     });
 };
+const updateFlight = (req, res) => {
+  let id_flight = req.params.idFlights;
+  id_flight = Number(id_flight);
+  const {
+    flight_Company,
+    flight_number,
+    origin,
+    destination,
+    departure_time,
+    arrival_time,
+    price,
+  } = req.body;
+
+  const values = [
+    flight_Company,
+    flight_number,
+    origin,
+    destination,
+    departure_time,
+    arrival_time,
+    price,
+    id_flight,
+  ];
+
+  const query = `
+    UPDATE flights 
+    SET 
+      flight_Company = COALESCE($1, flight_Company),
+      flight_number = COALESCE($2, flight_number),
+      origin = COALESCE($3, origin),
+      destination = COALESCE($4, destination),
+      departure_time = COALESCE($5, departure_time),
+      arrival_time = COALESCE($6, arrival_time),
+      price = COALESCE($7, price)
+    WHERE flights_id = $8
+    RETURNING *;
+  `;
+
+  db.query(query, values)
+    .then((result) => {
+      if (result.rowCount === 0) {
+        res.status(404).json({
+          success: false,
+          message: "Flight not found",
+        });
+      } else {
+        res.status(200).json({
+          success: true,
+          message: "Flight updated successfully",
+          result: result.rows[0],
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: "Update failed",
+        err: err,
+      });
+    });
+};
 module.exports = {
   createFlights,
   bookFlight,
@@ -177,4 +238,5 @@ module.exports = {
   cancelFlight,
   getAllFlight,
   deleteFlights,
+  updateFlight,
 };

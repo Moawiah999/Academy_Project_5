@@ -7,6 +7,7 @@ const {
   cancelFlight,
   getAllFlight,
   deleteFlights,
+  updateFlight,
 } = require("../controllers/flights");
 const { authentication } = require("../middlewares/authentication");
 const { authorization } = require("../middlewares/authorization");
@@ -22,4 +23,5 @@ flightsRouter.post("/bookFlight", authentication, bookFlight);
 flightsRouter.get("/findAtrip", findAtrip);
 flightsRouter.delete("/cancelFlight", authentication, cancelFlight);
 flightsRouter.delete("/deleteFlights", deleteFlights);
+flightsRouter.put("/updateFlight/:idFlights", updateFlight);
 module.exports = flightsRouter;
