@@ -23,6 +23,7 @@ const HotelsDetails = () => {
   const [fromDate, setFromDate] = useState(Date);
   const [toDate, setToDate] = useState(Date);
 
+  console.log(localStorage.getItem("role_id"));
   useEffect(() => {
     axios
       .get("http://localhost:5000/hotels/")
@@ -82,7 +83,7 @@ const HotelsDetails = () => {
         </Carousel>
       </div>
       <>
-        {localStorage.getItem("role") !== 1 ? (
+        {localStorage.getItem("role_id") != 1 ? (
           <div
             className="packages-container"
             style={{ fontFamily: "Roboto, sans-serif" }}
