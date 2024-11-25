@@ -1,31 +1,38 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { setUserToken,setUserId} from "../Redux/Reducers/userSlice";
+import { setUserToken, setUserId } from "../Redux/Reducers/userSlice";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useGoogleLogin } from "@react-oauth/google";
-import { Form, Button, Container, Row, Col, InputGroup, Alert } from "react-bootstrap";
+import {
+  Form,
+  Button,
+  Container,
+  Row,
+  Col,
+  InputGroup,
+  Alert,
+} from "react-bootstrap";
 import { FaEnvelope, FaLock } from "react-icons/fa";
 import { useSpring, animated, useTrail } from "@react-spring/web";
-import { GoogleOAuthProvider } from '@react-oauth/google';
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 import "./login.css";
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-const [email , setEmail] = useState();
-const [password , setPassword] = useState();
-  const {token,userId} = useSelector((state)=>{
-    return{
-      token : state.user.token,
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const { token, userId } = useSelector((state) => {
+    return {
+      token: state.user.token,
       userId: state.user.userId,
-   }
-   })
+    };
+  });
 
   const handleLogin = () => {
-
     axios
       .post("http://localhost:5000/user/login", { email, password })
       .then((result) => {
@@ -40,14 +47,16 @@ const [password , setPassword] = useState();
 
   const loginWithGoogle = useGoogleLogin({
     onSuccess: (tokenResponse) => {
+      console.log("ahmad", tokenResponse);
+
       if (tokenResponse) {
         axios
-          .post(`http://localhost:5000/user/google-login`, {
+          .post(`http://localhost:5000/user/login`, {
             token: tokenResponse.access_token,
           })
           .then((response) => {
-            dispatch(userToken(response.data.token));
-            dispatch(user_id(response.data.userId));
+            dispatch(setUserToken(response.data.token));
+            dispatch(userId(response.data.userId));
             navigate("/home");
           })
           .catch((err) => {
@@ -89,7 +98,6 @@ const [password , setPassword] = useState();
         <Col xs={12} md={6} lg={4} className="offset-lg-2">
           <div className="login-form ms-5">
             <h2 className="text-center mb-3">Login</h2>
-           
 
             <Form>
               <animated.div style={trailProps[0]}>
@@ -150,8 +158,6 @@ const [password , setPassword] = useState();
                 <Link to="/register">Sign up</Link>
               </div>
             </animated.div>
-
-            
           </div>
         </Col>
 
@@ -167,7 +173,7 @@ const [password , setPassword] = useState();
             style={{
               width: "105%",
               height: "500px",
-               marginRight:"-190px",
+              marginRight: "-190px",
               borderRadius: "10px",
               transform: "translateX(30px)",
               ...imageAnimation,
