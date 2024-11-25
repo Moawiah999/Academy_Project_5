@@ -46,6 +46,7 @@ const Flights = () => {
   const handleShowModal = (flight) => {
     setSelectedFlight(flight);
     setFlightInformation({
+      flight_id: flight.flights_id,
       flight_Company: flight.flight_company,
       flight_number: flight.flight_number,
       origin: flight.origin,
@@ -317,6 +318,7 @@ const Flights = () => {
                       variant="danger"
                       onClick={() => {
                         handleShowModal(flight);
+                        console.log("flight : ", flight);
                       }}
                     >
                       Flight Update
@@ -477,29 +479,27 @@ const Flights = () => {
             <Button
               variant="primary"
               onClick={() => {
+                console.log("flightInformation:", flightInformation);
                 axios
                   .put(
-                    `http://localhost:5000/flights/${selectedFlight.flights_id}`,
-                    flightInformation,
-                    { headers: { Authorization: `Bearer ${token}` } }
+                    `http://localhost:5000/flights/updateFlight/${flightInformation.flight_id}`,
+                    flightInformation
                   )
-                  .then((response) => {
-                    toast.success("Flight updated successfully!");
+                  .then(() => {
+                    toast.success("The flight was updated successfully.");
                     setShowModal(false);
-                    setFlights(
-                      flights.map((flight) =>
-                        flight.flights_id === selectedFlight.flights_id
-                          ? { ...flight, ...flightInformation }
-                          : flight
-                      )
-                    );
+                    axios
+                      .get("http://localhost:5000/flights/")
+                      .then((result) => {
+                        setFlights(result.data.result);
+                      });
                   })
-                  .catch((err) => {
-                    console.log("Error updating flight:", err);
+                  .catch(() => {
+                    toast.error("Data update failed");
                   });
               }}
             >
-              Update Flight
+              Update
             </Button>
           </Form>
         </Modal.Body>
