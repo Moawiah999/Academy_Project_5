@@ -304,6 +304,27 @@ const Flights = () => {
                   </Col>
                   <Col xs={2} className="text-center">
                     <Button variant="danger">Book Now</Button>
+                    <Button
+                      variant="danger"
+                      style={{ marginTop: "10px" }}
+                      onClick={() => {
+                        axios
+                          .delete(
+                            "http://localhost:5000/flights/deleteFlights",
+                            {
+                              data: { flight_number: flight.flight_number },
+                            }
+                          )
+                          .then(() => {
+                            console.log("Deletion succeeded");
+                          })
+                          .catch(() => {
+                            console.log("Deletion failed");
+                          });
+                      }}
+                    >
+                      Deletion flights
+                    </Button>
                   </Col>
                 </Row>
               </Card.Body>

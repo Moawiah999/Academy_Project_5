@@ -152,7 +152,8 @@ const getAllFlight = (req, res) => {
 const deleteFlights = (req, res) => {
   const { flight_number } = req.body;
   const values = [flight_number];
-  const query = "DELETE FROM flights WHERE flight_number = $1";
+  console.log("flight_number : ",flight_number);
+  const query = "DELETE FROM flights WHERE flight_number = $1 RETURNING *";
   db.query(query, values)
     .then((result) => {
       res.status(200).json({
