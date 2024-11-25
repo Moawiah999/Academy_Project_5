@@ -317,9 +317,10 @@ const Flights = () => {
                           )
                           .then(() => {
                             console.log("Deletion succeeded");
+                            toast.success("Deletion successful.");
                           })
                           .catch(() => {
-                            console.log("Deletion failed");
+                            toast.error("Deletion failed");
                           });
                       }}
                     >
