@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { ToastContainer, toast } from "react-toastify";
 import {
   Container,
   Row,
@@ -41,6 +42,7 @@ const Flights = () => {
   }, []);
   return (
     <Container>
+       <ToastContainer />
       {
         <Form className="mb-4">
           <h3>New Trip</h3>
@@ -166,7 +168,7 @@ const Flights = () => {
                       }
                     )
                     .then((result) => {
-                      console.log("Flight created successfully:", result);
+                      toast.success("The flight was created successfully.");
                     })
                     .catch((err) => {
                       console.log("Error while creating flight:", err);
