@@ -9,6 +9,8 @@ import Row from "react-bootstrap/Row";
 import { Modal, Form } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
+import Dropdown from "react-bootstrap/Dropdown";
+import DropdownButton from "react-bootstrap/DropdownButton";
 
 const HotelsDetails = () => {
   const { token } = useSelector((state) => {
@@ -22,6 +24,8 @@ const HotelsDetails = () => {
   const [hotel_id, setHotel_id] = useState("");
   const [fromDate, setFromDate] = useState(Date);
   const [toDate, setToDate] = useState(Date);
+  const [stars, setStars] = useState("");
+  const [title, setTitle] = useState("");
   const [findHotel, setFindHotel] = useState({
     name: "",
     // rate: "",
@@ -101,7 +105,10 @@ const HotelsDetails = () => {
                       type="text"
                       placeholder="Enter Name"
                       onChange={(e) =>
-                        setFindHotel({ ...findHotel, name: e.target.value })
+                        setFindHotel({
+                          ...findHotel,
+                          name: e.target.value,
+                        })
                       }
                     />
                   </Form.Group>
@@ -133,6 +140,42 @@ const HotelsDetails = () => {
                     />
                   </Form.Group>
                 </Col>
+                {/* <Form.Label>Stars</Form.Label>
+                <DropdownButton
+                  id="dropdown-basic-button"
+                  variant="danger"
+                  title="Stars"
+                >
+                  <Dropdown.Item
+                    onClick={() => {
+                      setStars("");
+                    }}
+                  >
+                    All
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    onClick={() => {
+                      setStars("⭐️⭐️⭐️⭐️⭐️");
+                    }}
+                  >
+                    5 Stars⭐️⭐️⭐️⭐️⭐️
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    onClick={() => {
+                      setStars("⭐️⭐️⭐️⭐️☆");
+                      setTitle("5 stars");
+                    }}
+                  >
+                    4 Stars⭐️⭐️⭐️⭐️☆
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    onClick={() => {
+                      setStars("⭐️⭐️⭐️☆☆");
+                    }}
+                  >
+                    3 Stars⭐️⭐️⭐️☆☆
+                  </Dropdown.Item>
+                </DropdownButton> */}
                 <Col md={2}>
                   <Button
                     variant="danger"
@@ -140,9 +183,71 @@ const HotelsDetails = () => {
                     onClick={() => {
                       console.log(findHotel);
                       hotelDetails.map((ele, i) => {
-                        console.log(ele);
-                        if ((ele.name).includes(findHotel.name)) {
+                        // console.log(ele);
+                        if (
+                          ele.name.includes(findHotel.name) /* ||
+                          ele.name.includes(stars) */
+                        ) {
                           console.log(ele.name);
+                          <Col
+                            key={i}
+                            className="d-flex justify-content-center"
+                          >
+                            <div
+                              className="package-item"
+                              onClick={() => bookNow(item)}
+                              style={{
+                                cursor: "pointer",
+                                width: "100%",
+                                maxWidth: "350px",
+                                margin: "0 auto",
+                                marginBottom: "30px",
+                                background: "#fff",
+                                border: "1px solid #ddd",
+                                borderRadius: "8px",
+                                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                              }}
+                            >
+                              <img
+                                src={ele.image_url}
+                                // alt={item.destination}
+                                style={{
+                                  width: "100%",
+                                  height: "200px",
+                                  objectFit: "cover",
+                                  borderTopLeftRadius: "8px",
+                                  borderTopRightRadius: "8px",
+                                }}
+                              />
+                              <div
+                                style={{
+                                  padding: "16px",
+                                  background: "#f8f9fa",
+                                }}
+                              >
+                                <h5 className="text-success">{ele.name}</h5>
+                                <p className="text-muted">
+                                  <strong>City : </strong>
+                                  <span className="text-success">
+                                    {ele.location}
+                                  </span>
+                                  <br />
+                                  <strong>Price: </strong>
+                                  <span className="text-success">
+                                    ${ele.price_per_night}
+                                  </span>
+                                  <br />
+
+                                  <Button
+                                    variant="danger"
+                                    onClick={() => bookNow(ele)}
+                                  >
+                                    Book Now
+                                  </Button>
+                                </p>
+                              </div>
+                            </div>
+                          </Col>;
                         }
                       });
                     }}
@@ -152,6 +257,7 @@ const HotelsDetails = () => {
                 </Col>
               </Row>
             </Form>
+            <br />
             <div
               className="packages-container"
               style={{ fontFamily: "Roboto, sans-serif" }}
