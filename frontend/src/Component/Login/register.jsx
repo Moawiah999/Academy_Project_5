@@ -9,6 +9,10 @@ import {
   InputGroup,
   Alert,
 } from "react-bootstrap";
+import { GoogleLogin } from "@react-oauth/google";
+// import jwt from "jsonwebtoken"
+
+// import {decodeToken} from "react-jwt"
 import { Link, useNavigate } from "react-router-dom";
 import { FaUser, FaEnvelope, FaLock, FaGlobe } from "react-icons/fa";
 import { useSpring, animated, useTrail } from "@react-spring/web";
@@ -16,7 +20,9 @@ import { useGoogleLogin } from "@react-oauth/google";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { setUserToken, setUserId } from "../Redux/Reducers/userSlice";
 import { useDispatch, useSelector } from "react-redux";
+
 import "./login.css";
+// import { JsonWebTokenError } from "jsonwebtoken";
 
 function Register() {
   const [userInfo, setUserInfo] = useState({});
@@ -30,7 +36,6 @@ function Register() {
   });
   const navigate = useNavigate();
 
-
   const handleRegister = () => {
     axios
       .post("http://localhost:5000/user/register", userInfo)
@@ -42,39 +47,6 @@ function Register() {
         setMessage("An error occurred. Please try again.");
       });
   };
-
-  const loginWithGoogle = useGoogleLogin({
-    onSuccess: (tokenResponse) => {
-      console.log("tokenResponse", tokenResponse);
-      console.log("tokenResponse.access_token", tokenResponse.access_token);
-      console.log("tokenResponse.email", tokenResponse.email);
-
-
-      if (tokenResponse.access_token) {
-        axios
-          .post(`http://localhost:5000/user/register`, {
-            token: tokenResponse.access_token,
-            email : tokenResponse.email,
-          })
-          .then((response) => {
-            dispatch(setUserToken(response.data.token));
-            console.log(setUserToken);
-
-            dispatch(setUserId(response.data.userId));
-            console.log(setUserId);
-
-            navigate("/home");
-          })
-
-          .catch((err) => {
-            console.log("Google login failed", err);
-          });
-      }
-    },
-    onError: (error) => {
-      console.log("Google login Failed", error);
-    },
-  });
 
   const formAnimation = useSpring({
     opacity: 1,
@@ -105,12 +77,6 @@ function Register() {
           <div className="text-center mb-4">
             <h3>Sign Up</h3>
           </div>
-
-          {/* {message && (
-            <Alert variant={messageType === "success" ? "success" : "danger"}>
-              {message}
-            </Alert>
-          )} */}
 
           <animated.div style={formAnimation}>
             <Form>
@@ -211,18 +177,24 @@ function Register() {
               <Button
                 variant="danger"
                 className="w-100"
+                style={{ marginBottom: "20px" }}
                 onClick={handleRegister}
               >
                 Submit
               </Button>
               <animated.div>
-                <Button
-                  variant="outline-danger"
-                  className="w-100 mt-3"
-                  onClick={loginWithGoogle}
-                >
-                  Sign Up with Google 🚀
-                </Button>
+                <GoogleLogin
+                  style={{ marginTop: "20px" }}
+                  onSuccess={(credentialResponse) => {
+                    // const jwtDecode =
+                    navigate("/home")
+                    console.log(decode(credentialResponse));
+                  }}
+                  onError={() => {
+                    console.log("Login Failed");
+                  }}
+                />
+                ;
               </animated.div>
 
               <div className="text-center mt-3">

@@ -30,6 +30,9 @@ const Flights = () => {
     arrival_time: "",
     price: "",
   });
+  const [showModal, setShowModal] = useState(false);
+  const [selectedFlight, setSelectedFlight] = useState(null);
+
   useEffect(() => {
     axios
       .get("http://localhost:5000/flights/")
@@ -40,156 +43,170 @@ const Flights = () => {
         console.log("err: ", err);
       });
   }, []);
+  const handleShowModal = (flight) => {
+    setSelectedFlight(flight);
+    setFlightInformation({
+      flight_id: flight.flights_id,
+      flight_Company: flight.flight_company,
+      flight_number: flight.flight_number,
+      origin: flight.origin,
+      destination: flight.destination,
+      departure_time: flight.departure_time,
+      arrival_time: flight.arrival_time,
+      price: flight.price,
+    });
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => setShowModal(false);
+
   return (
     <Container>
       <ToastContainer />
-      {
-        <Form className="mb-4">
-          <h3>New Trip</h3>
-          <Row className="mb-3">
-            <Col md={4}>
-              <Form.Group>
-                <Form.Label>Flight Company</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter flight company"
-                  onChange={(e) =>
-                    setFlightInformation({
-                      ...flightInformation,
-                      flight_Company: e.target.value,
-                    })
-                  }
-                />
-              </Form.Group>
-            </Col>
-            <Col md={4}>
-              <Form.Group>
-                <Form.Label>Flight Number</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter flight number"
-                  onChange={(e) =>
-                    setFlightInformation({
-                      ...flightInformation,
-                      flight_number: e.target.value,
-                    })
-                  }
-                />
-              </Form.Group>
-            </Col>
-            <Col md={4}>
-              <Form.Group>
-                <Form.Label>Origin</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter origin"
-                  onChange={(e) =>
-                    setFlightInformation({
-                      ...flightInformation,
-                      origin: e.target.value,
-                    })
-                  }
-                />
-              </Form.Group>
-            </Col>
-          </Row>
-          <Row className="mb-3">
-            <Col md={4}>
-              <Form.Group>
-                <Form.Label>Destination</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter destination"
-                  onChange={(e) =>
-                    setFlightInformation({
-                      ...flightInformation,
-                      destination: e.target.value,
-                    })
-                  }
-                />
-              </Form.Group>
-            </Col>
-            <Col md={4}>
-              <Form.Group>
-                <Form.Label>Departure Date</Form.Label>
-                <Form.Control
-                  type="date"
-                  onChange={(e) =>
-                    setFlightInformation({
-                      ...flightInformation,
-                      departure_time: e.target.value,
-                    })
-                  }
-                />
-              </Form.Group>
-            </Col>
-            <Col md={4}>
-              <Form.Group>
-                <Form.Label>Arrival Date</Form.Label>
-                <Form.Control
-                  type="date"
-                  onChange={(e) =>
-                    setFlightInformation({
-                      ...flightInformation,
-                      arrival_time: e.target.value,
-                    })
-                  }
-                />
-              </Form.Group>
-            </Col>
-          </Row>
-          <Row className="mb-3">
-            <Col md={4}>
-              <Form.Group>
-                <Form.Label>Price</Form.Label>
-                <Form.Control
-                  type="number"
-                  placeholder="Enter price in USD"
-                  onChange={(e) =>
-                    setFlightInformation({
-                      ...flightInformation,
-                      price: e.target.value,
-                    })
-                  }
-                />
-              </Form.Group>
-            </Col>
-            <Col md={4}>
-              <Button
-                variant="danger"
-                className="mt-4 w-50"
-                onClick={() => {
-                  if (
-                    flightInformation.flight_Company.length === 0 &&
-                    flightInformation.flight_number.length === 0 &&
-                    flightInformation.origin.length === 0 &&
-                    flightInformation.destination.length === 0 &&
-                    flightInformation.departure_time.length === 0 &&
-                    flightInformation.arrival_time.length === 0 &&
-                    flightInformation.price.length === 0
-                  ) {
-                    toast.error("All these fields are required.");
-                  }
+      <Form className="mb-4">
+        <h3>New Trip</h3>
+        <Row className="mb-3">
+          <Col md={4}>
+            <Form.Group>
+              <Form.Label>Flight Company</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter flight company"
+                onChange={(e) =>
+                  setFlightInformation({
+                    ...flightInformation,
+                    flight_Company: e.target.value,
+                  })
+                }
+              />
+            </Form.Group>
+          </Col>
+          <Col md={4}>
+            <Form.Group>
+              <Form.Label>Flight Number</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter flight number"
+                onChange={(e) =>
+                  setFlightInformation({
+                    ...flightInformation,
+                    flight_number: e.target.value,
+                  })
+                }
+              />
+            </Form.Group>
+          </Col>
+          <Col md={4}>
+            <Form.Group>
+              <Form.Label>Origin</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter origin"
+                onChange={(e) =>
+                  setFlightInformation({
+                    ...flightInformation,
+                    origin: e.target.value,
+                  })
+                }
+              />
+            </Form.Group>
+          </Col>
+        </Row>
+        <Row className="mb-3">
+          <Col md={4}>
+            <Form.Group>
+              <Form.Label>Destination</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter destination"
+                onChange={(e) =>
+                  setFlightInformation({
+                    ...flightInformation,
+                    destination: e.target.value,
+                  })
+                }
+              />
+            </Form.Group>
+          </Col>
+          <Col md={4}>
+            <Form.Group>
+              <Form.Label>Departure Date</Form.Label>
+              <Form.Control
+                type="date"
+                onChange={(e) =>
+                  setFlightInformation({
+                    ...flightInformation,
+                    departure_time: e.target.value,
+                  })
+                }
+              />
+            </Form.Group>
+          </Col>
+          <Col md={4}>
+            <Form.Group>
+              <Form.Label>Arrival Date</Form.Label>
+              <Form.Control
+                type="date"
+                onChange={(e) =>
+                  setFlightInformation({
+                    ...flightInformation,
+                    arrival_time: e.target.value,
+                  })
+                }
+              />
+            </Form.Group>
+          </Col>
+        </Row>
+        <Row className="mb-3">
+          <Col md={4}>
+            <Form.Group>
+              <Form.Label>Price</Form.Label>
+              <Form.Control
+                type="number"
+                placeholder="Enter price in USD"
+                onChange={(e) =>
+                  setFlightInformation({
+                    ...flightInformation,
+                    price: e.target.value,
+                  })
+                }
+              />
+            </Form.Group>
+          </Col>
+          <Col md={4}>
+            <Button
+              variant="danger"
+              className="mt-4 w-50"
+              onClick={() => {
+                if (
+                  flightInformation.flight_Company.length === 0 &&
+                  flightInformation.flight_number.length === 0 &&
+                  flightInformation.origin.length === 0 &&
+                  flightInformation.destination.length === 0 &&
+                  flightInformation.departure_time.length === 0 &&
+                  flightInformation.arrival_time.length === 0 &&
+                  flightInformation.price.length === 0
+                ) {
+                  toast.error("All these fields are required.");
+                }
 
-                  axios
-                    .post("http://localhost:5000/flights/", flightInformation, {
-                      headers: { Authorization: `Bearer ${token}` },
-                    })
-                    .then((result) => {
-                      toast.success("The flight was created successfully.");
-                    })
-                    .catch((err) => {
-                      console.log("Error while creating flight:", err);
-                    });
-                }}
-              >
-                Create a flight
-              </Button>
-            </Col>
-          </Row>
-        </Form>
-      }
-
+                axios
+                  .post("http://localhost:5000/flights/", flightInformation, {
+                    headers: { Authorization: `Bearer ${token}` },
+                  })
+                  .then((result) => {
+                    toast.success("The flight was created successfully.");
+                  })
+                  .catch((err) => {
+                    console.log("Error while creating flight:", err);
+                  });
+              }}
+            >
+              Create a flight
+            </Button>
+          </Col>
+        </Row>
+      </Form>
       <Form style={{ marginTop: "50px" }}>
         <Row className="align-items-end">
           <Col md={3}>
@@ -249,7 +266,6 @@ const Flights = () => {
                     },
                   })
                   .then((result) => {
-                    console.log("result : ", result.data.result);
                     setFlights(result.data.result);
                   })
                   .catch((err) => {
@@ -262,8 +278,7 @@ const Flights = () => {
           </Col>
         </Row>
       </Form>
-      <div style={{ marginTop: "100px" }}></div>
-      <Row>
+      <Row style={{ marginTop: "80px" }}>
         {flights.map((flight) => (
           <Col key={flight.flights_id} xs={12} className="mb-4">
             <Card style={{ height: "150px" }}>
@@ -282,28 +297,82 @@ const Flights = () => {
                   </Col>
                   <Col xs={3}>
                     <Card.Text>
-                      <strong>Origin:</strong>{" "}
-                      {flight.origin.charAt(0).toUpperCase() +
-                        flight.origin.slice(1)}
+                      <strong>Origin:</strong> {flight.origin}
                     </Card.Text>
                     <Card.Text>
-                      <strong>Destination:</strong>{" "}
-                      {flight.destination.charAt(0).toUpperCase() +
-                        flight.destination.slice(1)}
+                      <strong>Destination:</strong> {flight.destination}
                     </Card.Text>
                   </Col>
                   <Col xs={3}>
                     <Card.Text>
-                      <strong>Departure:</strong>{" "}
-                      {new Date(flight.departure_time).toLocaleString()}
+                      <strong>Departure:</strong> {flight.departure_time}
                     </Card.Text>
                     <Card.Text>
-                      <strong>Arrival:</strong>{" "}
-                      {new Date(flight.arrival_time).toLocaleString()}
+                      <strong>Arrival:</strong> {flight.arrival_time}
                     </Card.Text>
                   </Col>
                   <Col xs={2} className="text-center">
-                    <Button variant="danger">Book Now</Button>
+                    <Button
+                      variant="danger"
+                      onClick={() => {
+                        axios
+                          .post(
+                            "http://localhost:5000/flights/bookFlight",
+                            {
+                              flights_id: flight.flights_id,
+                            },
+                            {
+                              headers: { Authorization: `Bearer ${token}` },
+                            }
+                          )
+                          .then(() => {
+                            toast.success("Successful booking process.");
+                          })
+                          .catch(() => {
+                            toast.error("The booking process failed.");
+                          });
+                      }}
+                    >
+                      Book Now
+                    </Button>
+
+                    <Button
+                      style={{ marginTop: "10px" }}
+                      variant="danger"
+                      onClick={() => {
+                        handleShowModal(flight);
+                        console.log("flight : ", flight);
+                      }}
+                    >
+                      Flight Update
+                    </Button>
+                    <Button
+                      variant="danger"
+                      style={{ marginTop: "10px" }}
+                      onClick={() => {
+                        axios
+                          .delete(
+                            "http://localhost:5000/flights/deleteFlights",
+                            {
+                              data: { flight_number: flight.flight_number },
+                            }
+                          )
+                          .then(() => {
+                            console.log("Deletion succeeded");
+                            toast.success("Deletion successful.");
+                            setFlights((previousFlights) =>
+                              previousFlights.filter(
+                                (f) => f.flight_number !== flight.flight_number
+                              )
+                            );
+                          })
+                          .catch(() => {
+                            toast.error("Deletion failed");
+                          });
+                      }}
+                    >
+                      Deletion flights
+                    </Button>
                   </Col>
                 </Row>
               </Card.Body>
@@ -311,6 +380,153 @@ const Flights = () => {
           </Col>
         ))}
       </Row>
+      <Modal show={showModal} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Update Flight</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Row className="mb-3">
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Flight Company</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={flightInformation.flight_Company}
+                    onChange={(e) =>
+                      setFlightInformation({
+                        ...flightInformation,
+                        flight_Company: e.target.value,
+                      })
+                    }
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Flight Number</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={flightInformation.flight_number}
+                    onChange={(e) =>
+                      setFlightInformation({
+                        ...flightInformation,
+                        flight_number: e.target.value,
+                      })
+                    }
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row className="mb-3">
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Origin</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={flightInformation.origin}
+                    onChange={(e) =>
+                      setFlightInformation({
+                        ...flightInformation,
+                        origin: e.target.value,
+                      })
+                    }
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Destination</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={flightInformation.destination}
+                    onChange={(e) =>
+                      setFlightInformation({
+                        ...flightInformation,
+                        destination: e.target.value,
+                      })
+                    }
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row className="mb-3">
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Departure Time</Form.Label>
+                  <Form.Control
+                    type="datetime-local"
+                    value={flightInformation.departure_time}
+                    onChange={(e) =>
+                      setFlightInformation({
+                        ...flightInformation,
+                        departure_time: e.target.value,
+                      })
+                    }
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Arrival Time</Form.Label>
+                  <Form.Control
+                    type="datetime-local"
+                    value={flightInformation.arrival_time}
+                    onChange={(e) =>
+                      setFlightInformation({
+                        ...flightInformation,
+                        arrival_time: e.target.value,
+                      })
+                    }
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row className="mb-3">
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Price</Form.Label>
+                  <Form.Control
+                    type="number"
+                    value={flightInformation.price}
+                    onChange={(e) =>
+                      setFlightInformation({
+                        ...flightInformation,
+                        price: e.target.value,
+                      })
+                    }
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+            <Button
+              variant="primary"
+              onClick={() => {
+                console.log("flightInformation:", flightInformation);
+                axios
+                  .put(
+                    `http://localhost:5000/flights/updateFlight/${flightInformation.flight_id}`,
+                    flightInformation
+                  )
+                  .then(() => {
+                    toast.success("The flight was updated successfully.");
+                    setShowModal(false);
+                    axios
+                      .get("http://localhost:5000/flights/")
+                      .then((result) => {
+                        setFlights(result.data.result);
+                      });
+                  })
+                  .catch(() => {
+                    toast.error("Data update failed");
+                  });
+              }}
+            >
+              Update
+            </Button>
+          </Form>
+        </Modal.Body>
+      </Modal>
     </Container>
   );
 };
