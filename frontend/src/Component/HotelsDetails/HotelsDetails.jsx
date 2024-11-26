@@ -37,6 +37,9 @@ const HotelsDetails = () => {
     price_per_night: "",
     image_url: "",
   });
+  const [showUpdate, setShowUpdate] = useState(false);
+  const handleCloseUpdate = () => setShowUpdate(false);
+  const handleShowUpdate = () => setShowUpdate(true);
 
   // console.log(localStorage.getItem("role_id"));
   useEffect(() => {
@@ -556,7 +559,7 @@ const HotelsDetails = () => {
                     <Col key={i} className="d-flex justify-content-center">
                       <div
                         className="package-item"
-                        onClick={() => bookNow(item)}
+                        onClick={() => bookNow(ele)}
                         style={{
                           cursor: "pointer",
                           width: "100%",
@@ -599,12 +602,25 @@ const HotelsDetails = () => {
                               Book Now
                             </Button>
                           </p>
+                          <Button
+                            variant="danger"
+                            onClick={() => {
+                              handleShowUpdate();
+                            }}
+                          >
+                            Edit Hotel
+                          </Button>
                         </div>
                       </div>
                     </Col>
                   ))}
                 </Row>
               </div>
+              <Modal show={showUpdate} onHide={() => setShowUpdate(false)}>
+                <Modal.Header closeButton>
+                  <Modal.Title>Hotel Information</Modal.Title>
+                </Modal.Header>
+              </Modal>
               <Modal show={showDetail} onHide={() => setShowDetail(false)}>
                 <Modal.Header closeButton>
                   <Modal.Title>Hotel Information</Modal.Title>
