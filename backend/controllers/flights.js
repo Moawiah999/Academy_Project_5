@@ -132,7 +132,7 @@ const cancelFlight = (req, res) => {
     });
 };
 const getAllFlight = (req, res) => {
-  const query = "SELECT * FROM flights";
+  const query = "SELECT * FROM flights WHERE is_deleted=0";
   db.query(query)
     .then((result) => {
       res.status(200).json({
