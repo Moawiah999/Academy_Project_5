@@ -116,7 +116,7 @@ const Login = () => {
                       type="email"
                       placeholder="Enter your email"
                       value={email}
-                      onChange={(e) => dispatch(setEmail(e.target.value))}
+                      onChange={(e) => (setEmail(e.target.value))}
                     />
                   </InputGroup>
                 </Form.Group>
@@ -132,7 +132,7 @@ const Login = () => {
                       type="password"
                       placeholder="Enter your password"
                       value={password}
-                      onChange={(e) => dispatch(setPassword(e.target.value))}
+                      onChange={(e) => (setPassword(e.target.value))}
                     />
                   </InputGroup>
                 </Form.Group>

@@ -1,12 +1,10 @@
 const db = require("../models/db");
 
 //create tour packages
-console.log("tesy");
 
 const createTourPackages = async (req, res) => {
+  const user_id = req.token.userId;
 
-  const user_id = req.token.user_id;
-  
   const {
     name,
     destination,
@@ -27,8 +25,9 @@ const createTourPackages = async (req, res) => {
     end_date,
     hotel_name,
     description,
+    user_id,
     price,
-    image_url,is_deleted) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,0) RETURNING *`;
+    image_url,is_deleted) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,0) RETURNING *`;
 
   const values = [
     name,
@@ -38,6 +37,7 @@ const createTourPackages = async (req, res) => {
     end_date,
     hotel_name,
     description,
+    user_id,
     price,
     image_url,
   ];
@@ -53,7 +53,7 @@ const createTourPackages = async (req, res) => {
 };
 //the get all tour packeges
 const getAllTourPakages = async (req, res) => {
-  const query = `SELECT  * FROM tour_packages `;
+  const query = `SELECT  * FROM tour_packages WHERE is_deleted = 0`;
 
   try {
     const result = await db.query(query);
@@ -88,6 +88,7 @@ const updateTourPackage = async (req, res) => {
     end_date,
     hotel_name,
     description,
+    user_id,
     price,
     image_url,
   } = req.body;
@@ -134,9 +135,9 @@ const updateTourPackage = async (req, res) => {
 };
 //This function delete tour By id
 const deletedById = async (req, res) => {
-  const tour_packages_id = req.token.tour_packages_id;
-  const query = `DELETE FROM tour_packages WHERE tour_packages_id = $1 RETURNING * `;
-  const values = tour_packages_id;
+  const tour_packages_id = req.params.tour_packages_id;
+  const query = ` FROM tour_packages WHERE tour_packages_id = $1 RETURNING * `;
+  const values = [tour_packages_id];
   try {
     const result = await db.query(query, values);
     res.status(200).json({
