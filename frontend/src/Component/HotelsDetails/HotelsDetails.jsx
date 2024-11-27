@@ -40,6 +40,14 @@ const HotelsDetails = () => {
     image_url: "",
   });
   const [showUpdate, setShowUpdate] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
+  const [deleteHotel, setDeleteHotel] = useState([]);
+  const [editHotel, setEditHotel] = useState({
+    name: "",
+    image_url: "",
+    location: "",
+    price: "",
+  });
 
   // console.log(localStorage.getItem("role_id"));
   useEffect(() => {
@@ -63,6 +71,14 @@ const HotelsDetails = () => {
   const handleShowUpdate = (hotelDetails) => {
     setUpdateHotel(hotelDetails);
     setShowUpdate(true);
+  };
+  const handleShowDelete = (hotelDetails) => {
+    setDeleteHotel(hotelDetails);
+    setShowDelete(true);
+  };
+  const handleCloseDelete = () => {
+    setShowDelete(false);
+    toast.success("Hotel Deleted Successfully");
   };
   const bookNow = (hotelDetails) => {
     setChosenHotel(hotelDetails);
@@ -640,12 +656,62 @@ const HotelsDetails = () => {
                           >
                             Edit Hotel
                           </Button>
+                          <br />
+                          <p></p>
+                          <Button
+                            variant="danger"
+                            onClick={() => {
+                              handleShowDelete(ele);
+                            }}
+                          >
+                            Delete Hotel
+                          </Button>
                         </div>
                       </div>
                     </Col>
                   ))}
                 </Row>
               </div>
+              <Modal
+                show={showDelete}
+                onHide={() => {
+                  setShowDelete(false);
+                }}
+              >
+                <Modal.Header closeButton>
+                  <Modal.Title style={{ textAlign: "center" }}>
+                    Warning
+                  </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  Are you sure you want to delete the hotel ?
+                </Modal.Body>
+                <Modal.Footer className="d-flex justify-content-center">
+                  <Button
+                    variant="danger"
+                    onClick={() =>
+                      axios
+                        .delete(
+                          `http://localhost:5000/hotels/${deleteHotel.hotel_id}`
+                        )
+                        .then((result) => {
+                          handleCloseDelete();
+                        })
+                        .catch((err) => {
+                          console.log(err);
+                        })
+                    }
+                  >
+                    Delete
+                  </Button>
+                  <Button
+                    variant="secondary"
+                    onClick={() => setShowDelete(false)}
+                  >
+                    Close
+                  </Button>
+                </Modal.Footer>
+              </Modal>
               <Modal
                 show={showUpdate}
                 onHide={() => {
@@ -659,26 +725,76 @@ const HotelsDetails = () => {
                   <div>
                     {updateHotel && (
                       <>
-                        <p>
-                          <strong>Hotel Name:</strong> {updateHotel.name},
-                        </p>
-
+                        <strong>Hotel Name:</strong>
+                        <input
+                          type="text"
+                          placeholder={updateHotel.name}
+                          onChange={(e) => {
+                            setEditHotel({
+                              ...editHotel,
+                              name: e.target.value,
+                            });
+                          }}
+                        />
+                        <br />
+                        <strong>Image</strong>
+                        <input
+                          type="text"
+                          placeholder={updateHotel.image_url}
+                          onChange={(e) => {
+                            setEditHotel({
+                              ...editHotel,
+                              image_url: e.target.value,
+                            });
+                          }}
+                        />
+                        <br />
                         <strong>City :</strong>
                         <input
                           type="text"
-                          placeholder:value={updateHotel.location}
-                          onChange={() => {
-                            console.log(10);
+                          placeholder={updateHotel.location}
+                          onChange={(e) => {
+                            setEditHotel({
+                              ...editHotel,
+                              location: e.target.value,
+                            });
                           }}
                         />
-
+                        <br />
                         <p>
-                          <strong>Price Per Night :</strong> $
-                          {updateHotel.price_per_night}
+                          <strong>Price Per Night :</strong>
+                          <input
+                            type="text"
+                            placeholder={updateHotel.price_per_night + "$"}
+                            onChange={(e) => {
+                              setEditHotel({
+                                ...editHotel,
+                                price_per_night: e.target.value,
+                              });
+                            }}
+                          />
                         </p>
                         <Modal.Footer className="d-flex justify-content-center">
-                          <Button variant="danger" onClick={handleCloseUpdate}>
-                            Confirm Booking
+                          <Button
+                            variant="danger"
+                            onClick={() => {
+                              axios
+                                .put(
+                                  `http://localhost:5000/hotels/${updateHotel.hotel_id}`,
+                                  editHotel
+                                )
+                                .then((result) => {
+                                  console.log(result);
+                                  {
+                                    handleCloseUpdate();
+                                  }
+                                })
+                                .catch((err) => {
+                                  console.log(err);
+                                });
+                            }}
+                          >
+                            Update Hotel
                           </Button>
                           <Button
                             variant="secondary"
@@ -692,7 +808,7 @@ const HotelsDetails = () => {
                   </div>
                 </Modal.Body>
               </Modal>
-              <Modal show={showDetail} onHide={() => setShowDetail(false)}>
+              <Modal show={showDetail} onHide={() => setShowDetail()}>
                 <Modal.Header closeButton>
                   <Modal.Title>Hotel Information</Modal.Title>
                 </Modal.Header>
