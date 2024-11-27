@@ -11,6 +11,8 @@ import { useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
+import { MdDeleteOutline } from "react-icons/md";
+import { GrUpdate } from "react-icons/gr";
 
 const HotelsDetails = () => {
   const { token } = useSelector((state) => {
@@ -112,7 +114,7 @@ const HotelsDetails = () => {
     <>
       {/* <div>HotelsDetails</div> */}
       <div className="slider">
-        <Carousel className="slider">
+        <Carousel className="slider p-3">
           <Carousel.Item interval={5000}>
             <img
               className="img"
@@ -140,14 +142,33 @@ const HotelsDetails = () => {
           </Carousel.Item>
         </Carousel>
       </div>
-      <Form style={{ marginTop: "50px" }}>
-        <Row className="align-items-end">
-          <Col md={3}>
+      <Form
+        className="mb-3"
+        style={{ marginLeft: "139px", marginBottom: "10px" }}
+      >
+        <p
+          style={{
+            fontFamily: "Arial, sans-serif",
+            fontWeight: "bold",
+            fontSize: "17px",
+            textTransform: "uppercase",
+            background: "linear-gradient(90deg, red, black)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            display: "inline-block",
+            letterSpacing: "1px",
+          }}
+        >
+          Search
+        </p>
+
+        <Row className="mb-3">
+          <Col md={2}>
             <Form.Group>
-              <Form.Label>Name</Form.Label>
+              <Form.Label>Hotel Name :</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Enter Name"
+                placeholder="Enter Hotel Name"
                 onChange={(e) =>
                   setFindHotel({
                     ...findHotel,
@@ -157,9 +178,9 @@ const HotelsDetails = () => {
               />
             </Form.Group>
           </Col>
-          <Col md={3}>
+          <Col md={2}>
             <Form.Group>
-              <Form.Label>Country</Form.Label>
+              <Form.Label>Country :</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Enter Country"
@@ -174,7 +195,7 @@ const HotelsDetails = () => {
           </Col>
           <Col md={2}>
             <Form.Group>
-              <Form.Label>Price Per Night</Form.Label>
+              <Form.Label>Price Per Night $ :</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Enter Price $"
@@ -184,6 +205,31 @@ const HotelsDetails = () => {
               />
             </Form.Group>
           </Col>
+          <Col md={2}>
+            <Button
+              variant="danger"
+              className="mt-4 w-50"
+              onClick={() => {
+                console.log(findHotel);
+                const detail = hotelDetails.filter((ele, i) => {
+                  /* console.log(
+                          ele.name.includes(findHotel.name) ||
+                            ele.name.includes(stars)
+                        ); */
+                  return ele.name.includes(findHotel.name);
+                });
+                // console.log(stars);
+                console.log(detail);
+                setHotelDetails(detail);
+              }}
+            >
+              Search
+            </Button>
+          </Col>
+        </Row>
+      </Form>
+      <Form style={{ marginTop: "50px" }}>
+        <Row className="align-items-end">
           {/*    <Form.Label>Stars</Form.Label>
         <DropdownButton
             id="dropdown-basic-button"
@@ -223,28 +269,6 @@ const HotelsDetails = () => {
               3 Stars⭐️⭐️⭐️☆☆
             </Dropdown.Item>
           </DropdownButton> */}
-
-          <Col md={2}>
-            <Button
-              variant="danger"
-              className="w-100"
-              onClick={() => {
-                console.log(findHotel);
-                const detail = hotelDetails.filter((ele, i) => {
-                  /* console.log(
-                          ele.name.includes(findHotel.name) ||
-                            ele.name.includes(stars)
-                        ); */
-                  return ele.name.includes(findHotel.name);
-                });
-                // console.log(stars);
-                console.log(detail);
-                setHotelDetails(detail);
-              }}
-            >
-              Search
-            </Button>
-          </Col>
         </Row>
       </Form>
       <>
@@ -483,10 +507,28 @@ const HotelsDetails = () => {
           </>
         ) : (
           <>
-            <Form className="mb-4">
-              <h3>Add New Hotel</h3>
+            <Form
+              className="mb-3"
+              style={{ marginLeft: "139px", marginBottom: "10px" }}
+            >
+              <p
+                style={{
+                  fontFamily: "Arial, sans-serif",
+                  fontWeight: "bold",
+                  fontSize: "17px",
+                  textTransform: "uppercase",
+                  background: "linear-gradient(90deg, red, black)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  display: "inline-block",
+                  letterSpacing: "1px",
+                }}
+              >
+                ADD NEW HOTEL
+              </p>
+
               <Row className="mb-3">
-                <Col md={4}>
+                <Col md={2}>
                   <Form.Group>
                     <Form.Label>Hotel Name</Form.Label>
                     <Form.Control
@@ -501,7 +543,7 @@ const HotelsDetails = () => {
                     />
                   </Form.Group>
                 </Col>
-                <Col md={4}>
+                <Col md={2}>
                   <Form.Group>
                     <Form.Label>Location</Form.Label>
                     <Form.Control
@@ -516,9 +558,9 @@ const HotelsDetails = () => {
                     />
                   </Form.Group>
                 </Col>
-                <Col md={4}>
+                <Col md={2}>
                   <Form.Group>
-                    <Form.Label>Price</Form.Label>
+                    <Form.Label>Price Per Night $</Form.Label>
                     <Form.Control
                       type="text"
                       placeholder="Enter Hotel Price $"
@@ -531,7 +573,7 @@ const HotelsDetails = () => {
                     />
                   </Form.Group>
                 </Col>
-                <Col md={4}>
+                <Col md={2}>
                   <Form.Group>
                     <Form.Label>Picture For The Hotel</Form.Label>
                     <Form.Control
@@ -546,16 +588,17 @@ const HotelsDetails = () => {
                     />
                   </Form.Group>
                 </Col>
-                <Col md={4}>
+                <Col md={2}>
                   <Button
                     variant="danger"
-                    className="mt-4 w-50"
+                    className="mt-4 w-60"
+                    
                     onClick={() => {
                       console.log(addHotel);
                       if (
-                        addHotel.name.length === 0 &&
-                        addHotel.location.length === 0 &&
-                        addHotel.price_per_night.length === 0 &&
+                        addHotel.name.length === 0 ||
+                        addHotel.location.length === 0 ||
+                        addHotel.price_per_night.length === 0 ||
                         addHotel.image_url.length === 0
                       ) {
                         toast.error("All these fields are required.");
@@ -571,7 +614,7 @@ const HotelsDetails = () => {
                         )
                         .then((result) => {
                           console.log(result);
-                          toast.success("The flight was created successfully.");
+                          toast.success("The hotel was created successfully.");
                         })
                         .catch((err) => {
                           // console.log(addHotel);
@@ -584,6 +627,7 @@ const HotelsDetails = () => {
                 </Col>
               </Row>
             </Form>
+
             <br />
             <div
               className="packages-container"
@@ -640,32 +684,34 @@ const HotelsDetails = () => {
                               ${ele.price_per_night}
                             </span>
                             <br />
-
-                            <Button
-                              variant="danger"
-                              onClick={() => bookNow(ele)}
-                            >
-                              Book Now
-                            </Button>
                           </p>
                           <Button
                             variant="danger"
+                            style={{ display: "inline" }}
+                            onClick={() => bookNow(ele)}
+                          >
+                            Book Now
+                          </Button>
+                          <GrUpdate
                             onClick={() => {
                               handleShowUpdate(ele);
                             }}
-                          >
-                            Edit Hotel
-                          </Button>
-                          <br />
-                          <p></p>
-                          <Button
-                            variant="danger"
+                            size={20}
+                            style={{
+                              marginLeft: "30px",
+                              display: "inline",
+                            }}
+                          />
+                          <MdDeleteOutline
+                            size={30}
+                            style={{
+                              marginLeft: "20px",
+                              display: "inline",
+                            }}
                             onClick={() => {
                               handleShowDelete(ele);
                             }}
-                          >
-                            Delete Hotel
-                          </Button>
+                          />
                         </div>
                       </div>
                     </Col>
@@ -725,55 +771,79 @@ const HotelsDetails = () => {
                   <div>
                     {updateHotel && (
                       <>
-                        <strong>Hotel Name:</strong>
-                        <input
-                          type="text"
-                          placeholder={updateHotel.name}
-                          onChange={(e) => {
-                            setEditHotel({
-                              ...editHotel,
-                              name: e.target.value,
-                            });
-                          }}
-                        />
-                        <br />
-                        <strong>Image</strong>
-                        <input
-                          type="text"
-                          placeholder={updateHotel.image_url}
-                          onChange={(e) => {
-                            setEditHotel({
-                              ...editHotel,
-                              image_url: e.target.value,
-                            });
-                          }}
-                        />
-                        <br />
-                        <strong>City :</strong>
-                        <input
-                          type="text"
-                          placeholder={updateHotel.location}
-                          onChange={(e) => {
-                            setEditHotel({
-                              ...editHotel,
-                              location: e.target.value,
-                            });
-                          }}
-                        />
-                        <br />
-                        <p>
-                          <strong>Price Per Night :</strong>
-                          <input
-                            type="text"
-                            placeholder={updateHotel.price_per_night + "$"}
-                            onChange={(e) => {
-                              setEditHotel({
-                                ...editHotel,
-                                price_per_night: e.target.value,
-                              });
-                            }}
-                          />
-                        </p>
+                        <Form>
+                          <Row className="mb-3">
+                            <Col md={6}>
+                              <Form.Group>
+                                <Form.Label>
+                                  <strong>Hotel Name:</strong>
+                                </Form.Label>
+                                <Form.Control
+                                  type="text"
+                                  value={updateHotel.name}
+                                  onChange={(e) => {
+                                    setEditHotel({
+                                      ...editHotel,
+                                      name: e.target.value,
+                                    });
+                                  }}
+                                />
+                              </Form.Group>
+                            </Col>
+                            <Col md={6}>
+                              <Form.Group>
+                                <Form.Label>
+                                  <strong>Image_url :</strong>
+                                </Form.Label>
+                                <Form.Control
+                                  type="text"
+                                  value={updateHotel.image_url}
+                                  onChange={(e) => {
+                                    setEditHotel({
+                                      ...editHotel,
+                                      image_url: e.target.value,
+                                    });
+                                  }}
+                                />
+                              </Form.Group>
+                            </Col>
+                            <Col md={6}>
+                              <Form.Group>
+                                <Form.Label>
+                                  <strong>City :</strong>
+                                </Form.Label>
+                                <Form.Control
+                                  type="text"
+                                  value={updateHotel.location}
+                                  onChange={(e) => {
+                                    setEditHotel({
+                                      ...editHotel,
+                                      location: e.target.value,
+                                    });
+                                  }}
+                                />
+                              </Form.Group>
+                            </Col>
+                            <Col md={6}>
+                              <Form.Group>
+                                <Form.Label>
+                                  <strong>Price Per Night :</strong>
+                                </Form.Label>
+                                <Form.Control
+                                  type="text"
+                                  value={updateHotel.price_per_night + "$"}
+                                  onChange={(e) => {
+                                    setEditHotel({
+                                      ...editHotel,
+                                      price_per_night: e.target.value,
+                                    });
+                                  }}
+                                />
+                              </Form.Group>
+                            </Col>
+                          </Row>
+                        </Form>
+
                         <Modal.Footer className="d-flex justify-content-center">
                           <Button
                             variant="danger"
