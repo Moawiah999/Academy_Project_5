@@ -1,11 +1,12 @@
 const pool = require("../models/db");
 
 const createHotel = (req, res) => {
-  const { name, location, price_per_night, image_url } = req.body;
+  const { name, location, price_per_night, image_url, description, rate } =
+    req.body;
   pool
     .query(
-      `INSERT INTO hotels (name ,location , price_per_night , image_url) VALUES ($1,$2,$3,$4) RETURNING *`,
-      [name, location, price_per_night, image_url]
+      `INSERT INTO hotels (name ,location , price_per_night , image_url,description,rate) VALUES ($1,$2,$3,$4,$5,$6) RETURNING *`,
+      [name, location, price_per_night, image_url, description, rate]
     )
     .then((result) => {
       res.status(200).json({
@@ -106,7 +107,9 @@ const getHotelById = (req, res) => {
 const getBestHotels = (req, res) => {
   // console.log(10);
   pool
-    .query(`SELECT * FROM hotels WHERE hotels.is_deleted=0 ORDER BY hotel_id LIMIT 6 OFFSET 0`)
+    .query(
+      `SELECT * FROM hotels WHERE hotels.is_deleted=0 ORDER BY hotel_id LIMIT 6 OFFSET 0`
+    )
     .then((result) => {
       res.status(200).json({
         success: true,

@@ -11,7 +11,7 @@ import { useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
-import { MdDeleteOutline } from "react-icons/md";
+import { MdDeleteOutline, MdDescription } from "react-icons/md";
 import { GrUpdate } from "react-icons/gr";
 
 const HotelsDetails = () => {
@@ -40,6 +40,8 @@ const HotelsDetails = () => {
     location: "",
     price_per_night: "",
     image_url: "",
+    rate: "",
+    description: "",
   });
   const [showUpdate, setShowUpdate] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
@@ -589,17 +591,48 @@ const HotelsDetails = () => {
                   </Form.Group>
                 </Col>
                 <Col md={2}>
+                  <Form.Group>
+                    <Form.Label>Rate</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Enter Rate For The Hotel"
+                      onChange={(e) =>
+                        setAddHotel({
+                          ...addHotel,
+                          rate: e.target.value,
+                        })
+                      }
+                    />
+                  </Form.Group>
+                </Col>
+                <Col md={2}>
+                  <Form.Group>
+                    <Form.Label>Description</Form.Label>
+                    <Form.Control
+                      as="textarea"
+                      placeholder="Enter Description For The Hotel"
+                      onChange={(e) =>
+                        setAddHotel({
+                          ...addHotel,
+                          description: e.target.value,
+                        })
+                      }
+                    />
+                  </Form.Group>
+                </Col>
+                <Col md={2}>
                   <Button
                     variant="danger"
                     className="mt-4 w-60"
-                    
                     onClick={() => {
                       console.log(addHotel);
                       if (
                         addHotel.name.length === 0 ||
                         addHotel.location.length === 0 ||
                         addHotel.price_per_night.length === 0 ||
-                        addHotel.image_url.length === 0
+                        addHotel.image_url.length === 0 ||
+                        addHotel.rate.length === 0 ||
+                        addHotel.description.length === 0
                       ) {
                         toast.error("All these fields are required.");
                       }
@@ -614,6 +647,7 @@ const HotelsDetails = () => {
                         )
                         .then((result) => {
                           console.log(result);
+F
                           toast.success("The hotel was created successfully.");
                         })
                         .catch((err) => {
@@ -683,6 +717,8 @@ const HotelsDetails = () => {
                             <span className="text-success">
                               ${ele.price_per_night}
                             </span>
+                            <br />
+                            <strong>Rate : {ele.rate}</strong>
                             <br />
                           </p>
                           <Button
