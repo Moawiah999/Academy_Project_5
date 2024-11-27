@@ -32,7 +32,7 @@ const Flights = () => {
   });
   const [showModal, setShowModal] = useState(false);
   const [selectedFlight, setSelectedFlight] = useState(null);
-
+  const [ShowDeleteModal, setShowDeleteModal] = useState(false);
   useEffect(() => {
     axios
       .get("http://localhost:5000/flights/")
@@ -132,7 +132,7 @@ const Flights = () => {
             <Form.Group>
               <Form.Label>Departure Date</Form.Label>
               <Form.Control
-                type="date"
+                type="datetime-local"
                 onChange={(e) =>
                   setFlightInformation({
                     ...flightInformation,
@@ -146,7 +146,7 @@ const Flights = () => {
             <Form.Group>
               <Form.Label>Arrival Date</Form.Label>
               <Form.Control
-                type="date"
+                type="datetime-local"
                 onChange={(e) =>
                   setFlightInformation({
                     ...flightInformation,
@@ -336,17 +336,18 @@ const Flights = () => {
                       Book Now
                     </Button>
 
-                    <Button
-                      style={{ marginTop: "10px" }}
-                      variant="danger"
+                    {/* <GrUpdate
                       onClick={() => {
                         handleShowModal(flight);
-                        console.log("flight : ", flight);
                       }}
-                    >
-                      Flight Update
-                    </Button>
-                    <Button
+                      size={20}
+                      style={{
+                        marginTop: "10px",
+                        marginLeft: "70px",
+                        display: "block",
+                      }}
+                    /> */}
+                    {/* <Button
                       variant="danger"
                       style={{ marginTop: "10px" }}
                       onClick={() => {
@@ -372,7 +373,35 @@ const Flights = () => {
                       }}
                     >
                       Deletion flights
-                    </Button>
+                    </Button> */}
+                    {/* <MdDeleteOutline
+                      size={30}
+                      style={{ marginTop: "10px" }}
+                      onClick={() => {
+                        setShowDeleteModal(true);
+                      }}
+                      // onClick={() => {
+                      //   axios
+                      //     .delete(
+                      //       "http://localhost:5000/flights/deleteFlights",
+                      //       {
+                      //         data: { flight_number: flight.flight_number },
+                      //       }
+                      //     )
+                      //     .then(() => {
+                      //       console.log("Deletion succeeded");
+                      //       toast.success("Deletion successful.");
+                      //       setFlights((previousFlights) =>
+                      //         previousFlights.filter(
+                      //           (f) => f.flight_number !== flight.flight_number
+                      //         )
+                      //       );
+                      //     })
+                      //     .catch(() => {
+                      //       toast.error("Deletion failed");
+                      //     });
+                      // }}
+                    /> */}
                   </Col>
                 </Row>
               </Card.Body>
