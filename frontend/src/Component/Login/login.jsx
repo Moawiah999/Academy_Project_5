@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { setUserToken, setUserId } from "../Redux/Reducers/userSlice";
+import {
+  setUserToken,
+  setUserId,
+  setRole_id,
+} from "../Redux/Reducers/userSlice";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useGoogleLogin } from "@react-oauth/google";
@@ -27,10 +31,11 @@ const Login = () => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-  const { token, userId } = useSelector((state) => {
+  const { token, userId, role } = useSelector((state) => {
     return {
       token: state.user.token,
       userId: state.user.userId,
+      role: state.user.role_id,
     };
   });
 
@@ -38,11 +43,16 @@ const Login = () => {
     axios
       .post("http://localhost:5000/user/login", { email, password })
       .then((result) => {
+        console.log(result.data);
         dispatch(setUserToken(result.data.token));
         console.log("annnaa", setUserToken);
 
         dispatch(setUserId(result.data.userId));
-        console.log("userId", setUserId);
+
+        dispatch(setRole_id(result.data.role));
+
+     
+
 
         navigate("/home");
       })

@@ -11,6 +11,8 @@ const MyProfile = () => {
         variant="danger"
         onClick={() => {
           localStorage.removeItem("token");
+          localStorage.removeItem("userId");
+          localStorage.removeItem("role_id");
           navigate("/login");
         }}
       >
