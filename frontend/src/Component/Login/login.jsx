@@ -5,6 +5,8 @@ import { setUserToken, setUserId } from "../Redux/Reducers/userSlice";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useGoogleLogin } from "@react-oauth/google";
+import { GoogleLogin } from "@react-oauth/google";
+
 import {
   Form,
   Button,
@@ -37,7 +39,11 @@ const Login = () => {
       .post("http://localhost:5000/user/login", { email, password })
       .then((result) => {
         dispatch(setUserToken(result.data.token));
+        console.log("annnaa", setUserToken);
+
         dispatch(setUserId(result.data.userId));
+        console.log("userId", setUserId);
+
         navigate("/home");
       })
       .catch((err) => {
@@ -45,29 +51,31 @@ const Login = () => {
       });
   };
 
-  const loginWithGoogle = useGoogleLogin({
-    onSuccess: (tokenResponse) => {
-      console.log("ahmad", tokenResponse);
+  // const loginWithGoogle = useGoogleLogin({
+  //   onSuccess: (tokenResponse) => {
+  //     console.log("ahmad", tokenResponse);
 
-      if (tokenResponse) {
-        axios
-          .post(`http://localhost:5000/user/login`, {
-            token: tokenResponse.access_token,
-          })
-          .then((response) => {
-            dispatch(setUserToken(response.data.token));
-            dispatch(userId(response.data.userId));
-            navigate("/home");
-          })
-          .catch((err) => {
-            console.log("Google login failed", err);
-          });
-      }
-    },
-    onError: (error) => {
-      console.log("Google login Failed", error);
-    },
-  });
+  //     if (tokenResponse) {
+  //       axios
+  //         .post(`http://localhost:5000/user/login`, {
+  //           token: tokenResponse.access_token,
+  //           email,
+  //           password,
+  //         })
+  //         .then((response) => {
+  //           dispatch(setUserToken(response.data.token));
+  //           dispatch(userId(response.data.userId));
+  //           navigate("/home");
+  //         })
+  //         .catch((err) => {
+  //           console.log("Google login failed", err);
+  //         });
+  //     }
+  //   },
+  //   onError: (error) => {
+  //     console.log("Google login Failed", error);
+  //   },
+  // });
 
   const containerProps = useSpring({
     opacity: 1,
@@ -110,7 +118,7 @@ const Login = () => {
                       type="email"
                       placeholder="Enter your email"
                       value={email}
-                      onChange={(e) => dispatch(setEmail(e.target.value))}
+                      onChange={(e) => setEmail(e.target.value)}
                     />
                   </InputGroup>
                 </Form.Group>
@@ -126,7 +134,7 @@ const Login = () => {
                       type="password"
                       placeholder="Enter your password"
                       value={password}
-                      onChange={(e) => dispatch(setPassword(e.target.value))}
+                      onChange={(e) => setPassword(e.target.value)}
                     />
                   </InputGroup>
                 </Form.Group>
@@ -136,20 +144,26 @@ const Login = () => {
                 <Button
                   variant="danger"
                   className="w-100 mt-4"
+                  style={{ marginBottom: "10px" }}
                   onClick={handleLogin}
                 >
                   Login
                 </Button>
               </animated.div>
             </Form>
-            <animated.div style={trailProps[4]}>
-              <Button
-                variant="outline-danger"
-                className="w-100 mt-3"
-                onClick={loginWithGoogle}
-              >
-                Sign in with Google 🚀
-              </Button>
+            <animated.div>
+              <GoogleLogin
+                style={{ marginTop: "20px" }}
+                onSuccess={(credentialResponse) => {
+                  // const jwtDecode =
+                  navigate("/home");
+                  console.log(decode(credentialResponse));
+                }}
+                onError={() => {
+                  console.log("Login Failed");
+                }}
+              />
+              ;
             </animated.div>
 
             <animated.div style={trailProps[3]}>

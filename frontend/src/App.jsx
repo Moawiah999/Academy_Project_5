@@ -11,7 +11,7 @@ import MyProfile from "./Component/MyProfile/MyProfile";
 import HotelsDetails from "./Component/HotelsDetails/HotelsDetails";
 import Socket_message from "./Component/Socket_Server/socket_message";
 import Login from "./Component/Login/login";
-import Register from "./Component/Login/Register";
+import Register from "./Component/Login/register";
 import Footer from "./Component/Footer/Footer";
 
 const App = () => {
