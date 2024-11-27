@@ -19,7 +19,12 @@ flightsRouter.post(
   authorization("createFlights"),
   createFlights
 );
-flightsRouter.post("/bookFlight", authentication, bookFlight);
+flightsRouter.post(
+  "/bookFlight",
+  authentication,
+  authorization("bookFlight"),
+  bookFlight
+);
 flightsRouter.get("/findAtrip", findAtrip);
 flightsRouter.delete("/cancelFlight", authentication, cancelFlight);
 flightsRouter.delete("/deleteFlights", deleteFlights);
