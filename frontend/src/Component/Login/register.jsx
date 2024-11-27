@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import { FaLockOpen } from "react-icons/fa6";
 import {
   Form,
   Button,
@@ -27,7 +29,7 @@ import "./login.css";
 function Register() {
   const [userInfo, setUserInfo] = useState({});
   const [message, setMessage] = useState("");
-  // const [messageType, setMessageType] = useState("");
+  const [lockedLock, setLockedLock] = useState(true);
   const { token, userId } = useSelector((state) => {
     return {
       token: state.user.token,
@@ -41,7 +43,9 @@ function Register() {
       .post("http://localhost:5000/user/register", userInfo)
       .then((response) => {
         setMessage(response.data.message);
-        console.log(response.data);
+        toast.success(
+          "Account registration successful , You need to log in now."
+        );
       })
       .catch((err) => {
         setMessage("An error occurred. Please try again.");
@@ -72,6 +76,7 @@ function Register() {
 
   return (
     <Container className="register-container">
+      <ToastContainer />
       <Row className="justify-content-center align-items-center">
         <Col xs={12} md={6} lg={4}>
           <div className="text-center mb-4">
@@ -142,10 +147,22 @@ function Register() {
                 <Form.Group className="mb-3">
                   <InputGroup>
                     <InputGroup.Text>
-                      <FaLock />
+                      {lockedLock === true ? (
+                        <FaLock
+                          onClick={() => {
+                            setLockedLock(false);
+                          }}
+                        />
+                      ) : (
+                        <FaLockOpen
+                          onClick={() => {
+                            setLockedLock(true);
+                          }}
+                        />
+                      )}
                     </InputGroup.Text>
                     <Form.Control
-                      type="password"
+                      type={lockedLock ? "password" : "text"}
                       placeholder="Password"
                       required
                       onChange={(e) =>
@@ -187,7 +204,7 @@ function Register() {
                   style={{ marginTop: "20px" }}
                   onSuccess={(credentialResponse) => {
                     // const jwtDecode =
-                    navigate("/home")
+                    navigate("/home");
                     console.log(decode(credentialResponse));
                   }}
                   onError={() => {
