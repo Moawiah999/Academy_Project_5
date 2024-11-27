@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
+import { GrUpdate } from "react-icons/gr";
+import { MdDeleteOutline } from "react-icons/md";
 import {
   Container,
   Row,
@@ -336,7 +338,7 @@ const Flights = () => {
                       Book Now
                     </Button>
 
-                    {/* <GrUpdate
+                    <GrUpdate
                       onClick={() => {
                         handleShowModal(flight);
                       }}
@@ -346,62 +348,14 @@ const Flights = () => {
                         marginLeft: "70px",
                         display: "block",
                       }}
-                    /> */}
-                    {/* <Button
-                      variant="danger"
-                      style={{ marginTop: "10px" }}
-                      onClick={() => {
-                        axios
-                          .delete(
-                            "http://localhost:5000/flights/deleteFlights",
-                            {
-                              data: { flight_number: flight.flight_number },
-                            }
-                          )
-                          .then(() => {
-                            console.log("Deletion succeeded");
-                            toast.success("Deletion successful.");
-                            setFlights((previousFlights) =>
-                              previousFlights.filter(
-                                (f) => f.flight_number !== flight.flight_number
-                              )
-                            );
-                          })
-                          .catch(() => {
-                            toast.error("Deletion failed");
-                          });
-                      }}
-                    >
-                      Deletion flights
-                    </Button> */}
-                    {/* <MdDeleteOutline
+                    />
+                    <MdDeleteOutline
                       size={30}
                       style={{ marginTop: "10px" }}
                       onClick={() => {
                         setShowDeleteModal(true);
                       }}
-                      // onClick={() => {
-                      //   axios
-                      //     .delete(
-                      //       "http://localhost:5000/flights/deleteFlights",
-                      //       {
-                      //         data: { flight_number: flight.flight_number },
-                      //       }
-                      //     )
-                      //     .then(() => {
-                      //       console.log("Deletion succeeded");
-                      //       toast.success("Deletion successful.");
-                      //       setFlights((previousFlights) =>
-                      //         previousFlights.filter(
-                      //           (f) => f.flight_number !== flight.flight_number
-                      //         )
-                      //       );
-                      //     })
-                      //     .catch(() => {
-                      //       toast.error("Deletion failed");
-                      //     });
-                      // }}
-                    /> */}
+                    />
                   </Col>
                 </Row>
               </Card.Body>
@@ -529,7 +483,7 @@ const Flights = () => {
               </Col>
             </Row>
             <Button
-              variant="primary"
+              variant="danger"
               onClick={() => {
                 console.log("flightInformation:", flightInformation);
                 axios
