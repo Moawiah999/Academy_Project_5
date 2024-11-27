@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
+import { FaLockOpen } from "react-icons/fa6";
 import {
   setUserToken,
   setUserId,
@@ -31,6 +32,7 @@ const Login = () => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [lockedLock, setLockedLock] = useState(true);
   const { token, userId, role } = useSelector((state) => {
     return {
       token: state.user.token,
@@ -138,10 +140,22 @@ const Login = () => {
                 <Form.Group controlId="password" className="mt-3">
                   <InputGroup>
                     <InputGroup.Text>
-                      <FaLock />
+                    {lockedLock === true ? (
+                        <FaLock
+                          onClick={() => {
+                            setLockedLock(false);
+                          }}
+                        />
+                      ) : (
+                        <FaLockOpen
+                          onClick={() => {
+                            setLockedLock(true);
+                          }}
+                        />
+                      )}
                     </InputGroup.Text>
                     <Form.Control
-                      type="password"
+                      type={lockedLock ? "password" : "text"}
                       placeholder="Enter your password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
