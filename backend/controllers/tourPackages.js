@@ -78,7 +78,7 @@ const getAllTourPakages = async (req, res) => {
 
 //add put to Admin
 const updateTourPackage = async (req, res) => {
-  const tour_packages_id = req.token.tour_packages_id;
+  const tour_packages_id = req.params.tour_packages_id;
 
   const {
     name,
@@ -136,20 +136,22 @@ const updateTourPackage = async (req, res) => {
 //This function delete tour By id
 const deletedById = async (req, res) => {
   const tour_packages_id = req.params.tour_packages_id;
-  const query = ` FROM tour_packages WHERE tour_packages_id = $1 RETURNING * `;
+  const query = `UPDATE tour_packages SET is_deleted = 1 WHERE tour_packages_id = $1 RETURNING *`;
   const values = [tour_packages_id];
+
   try {
     const result = await db.query(query, values);
+
     res.status(200).json({
       success: true,
-      message: `deleted is sucsessfully ${tour_packages_id}`,
+      message: `successfully delete Package .`,
+      data: result.rows[0],
     });
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ success: false, error: error });
+    console.error("Error deleting package:", error);
+    res.status(500).json({ success: false, error: error.message });
   }
 };
-
 module.exports = {
   createTourPackages,
   getAllTourPakages,

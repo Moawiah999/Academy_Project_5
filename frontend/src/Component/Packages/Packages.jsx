@@ -14,15 +14,17 @@ const Packages = () => {
   const [error, setError] = useState(null);
   const [showPayment, setShowPayment] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [selectedPackage, setSelectedPackage] = useState(null);
+  const [selectedPackage, setSelectedPackage] = useState({});
   const [packagesInfo, setPackagesInfo] = useState({});
-  // const [CheckDeleted, setCheckDeleted] = useState(false);
+  const [checkId, setCheckId] = useState(false);
+  const [updateModal, setUpdateModal] = useState(false);
   const [ShowDeleteModal, setShowDeleteModal] = useState(false);
-
-  const { token, userId } = useSelector((state) => {
+const dispatch = useDispatch();
+  const { token, userId ,role_id} = useSelector((state) => {
     return {
       token: state.user.token,
       userId: state.user.userId,
+      role_id:state.user.role_id
     };
   });
 
@@ -43,12 +45,6 @@ const Packages = () => {
     setSelectedPackage(packageData);
     setShowModal(true);
   };
-  // const handelShowCheck = (tour_packages_id) => {
-  //   setCheckDeleted(true);
-  // };
-  // const handleCloseCheck = () => {
-  //   setCheckDeleted(false);
-  // };
 
   const handleCloseModal = () => {
     setShowModal(false);
@@ -83,6 +79,7 @@ const Packages = () => {
       .post(`http://localhost:5000/Tour/createTour`, packagesInfo, {
         headers: { Authorization: `Bearer ${token}` },
       })
+
       .then((response) => {
         toast.success("Add new package successfully.").catch((err) => {
           console.log(err);
@@ -97,6 +94,8 @@ const Packages = () => {
         { headers: { Authorization: `Bearer ${token}` } }
       )
       .then((response) => {
+        console.log(tour_packages_id);
+
         toast.success("Deleted package successfully.");
         setTourPackages(
           tourPackages.filter(
@@ -105,10 +104,11 @@ const Packages = () => {
         );
       })
       .catch((err) => {
-        console.error(err);
+        console.log(err);
         toast.error("Error deleting package.");
       });
   };
+
   if (loading) {
     return (
       <div
@@ -122,6 +122,7 @@ const Packages = () => {
 
   return (
     <div
+  
       className="packages-container"
       style={{
         fontFamily: "Roboto, sans-serif",
@@ -129,9 +130,10 @@ const Packages = () => {
         marginTop: "30px",
       }}
     >
+      
       <Form
         className="mb-3"
-        style={{ marginLeft: "105px", marginBottom: "10px" }}
+        style={{ marginLeft: "144px", marginBottom: "10px" }}
       >
         <p
           style={{
@@ -306,7 +308,243 @@ const Packages = () => {
           </Col>
         </Row>
       </Form>
+      <Modal
+                  show={ShowDeleteModal}
+                  onHide={() => setShowDeleteModal(false)}
+                >
+                  <Modal.Header closeButton>
+                    <Modal.Title>Delete Package</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <p>Are you sure you want to delete this package ?</p>{" "}
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button
+                      variant="secondary"
+                      onClick={() => setShowDeleteModal(false)}
+                    >
+                      Close
+                    </Button>
+                    <Button
+                      variant="danger"
+                      onClick={() => {
+                        deletePackages(checkId);
+                        setShowDeleteModal(false);
+                      }}
+                    >
+                      Delete Package
+                    </Button>
+                  </Modal.Footer>
+                </Modal>
+                <Modal show={updateModal} onHide={() => setUpdateModal(false)}>
+                  <Modal.Header closeButton>
+                    <Modal.Title>Update Package</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <Form>
+                      <Row className="mb-3">
+                        <Col md={6}>
+                          <Form.Group>
+                            <Form.Label>
+                              <strong>Name of country</strong>
+                            </Form.Label>
+                            <Form.Control
+                              type="text"
+                              value={selectedPackage.name}
+                              onChange={(e) =>
+                                setSelectedPackage({
+                                  ...selectedPackage,
+                                  name: e.target.value,
+                                })
+                              }
+                            />
+                          </Form.Group>
+                        </Col>
+                        <Col md={6}>
+                          <Form.Group>
+                            <Form.Label>
+                              <strong>Destination</strong>
+                            </Form.Label>
+                            <Form.Control
+                              type="text"
+                              value={selectedPackage.destination}
+                              onChange={(e) =>
+                                setSelectedPackage({
+                                  ...selectedPackage,
+                                  destination: e.target.value,
+                                })
+                              }
+                            />
+                          </Form.Group>
+                        </Col>
+                      </Row>
 
+                      <Row className="mb-3">
+                        <Col md={6}>
+                          <Form.Group>
+                            <Form.Label>
+                              <strong>Duration days</strong>
+                            </Form.Label>
+                            <Form.Control
+                              type="text"
+                              value={selectedPackage.duration_days}
+                              onChange={(e) =>
+                                setSelectedPackage({
+                                  ...selectedPackage,
+                                  duration_days: e.target.value,
+                                })
+                              }
+                            />
+                          </Form.Group>
+                        </Col>
+                        <Col md={6}>
+                          <Form.Group>
+                            <Form.Label>
+                              <strong>Start date</strong>
+                            </Form.Label>
+                            <Form.Control
+                              type="datetime-local"
+                              value={selectedPackage.start_date}
+                              onChange={(e) =>
+                                setSelectedPackage({
+                                  ...selectedPackage,
+                                  start_date: e.target.value,
+                                })
+                              }
+                            />
+                          </Form.Group>
+                        </Col>
+                      </Row>
+
+                      <Row className="mb-3">
+                        <Col md={6}>
+                          <Form.Group>
+                            <Form.Label>
+                              <strong>End date</strong>
+                            </Form.Label>
+                            <Form.Control
+                              type="datetime-local"
+                              value={selectedPackage.end_date}
+                              onChange={(e) =>
+                                setSelectedPackage({
+                                  ...selectedPackage,
+                                  end_date: e.target.value,
+                                })
+                              }
+                            />
+                          </Form.Group>
+                        </Col>
+                        <Col md={6}>
+                          <Form.Group>
+                            <Form.Label>
+                              <strong>Hotel name</strong>
+                            </Form.Label>
+                            <Form.Control
+                              type="text"
+                              value={selectedPackage.hotel_name}
+                              onChange={(e) =>
+                                setSelectedPackage({
+                                  ...selectedPackage,
+                                  hotel_name: e.target.value,
+                                })
+                              }
+                            />
+                          </Form.Group>
+                        </Col>
+                      </Row>
+
+                      <Row className="mb-3">
+                        <Col md={6}>
+                          <Form.Group>
+                            <Form.Label>
+                              <strong>Price</strong>
+                            </Form.Label>
+                            <Form.Control
+                              type="number"
+                              value={selectedPackage.price}
+                              onChange={(e) =>
+                                setSelectedPackage({
+                                  ...selectedPackage,
+                                  price: e.target.value,
+                                })
+                              }
+                            />
+                          </Form.Group>
+                        </Col>
+                        <Col md={6}>
+                          <Form.Group>
+                            <Form.Label>
+                              <strong>Description</strong>
+                            </Form.Label>
+                            <Form.Control
+                              type="text"
+                              value={selectedPackage.description}
+                              onChange={(e) =>
+                                setSelectedPackage({
+                                  ...selectedPackage,
+                                  description: e.target.value,
+                                })
+                              }
+                            />
+                          </Form.Group>
+                        </Col>
+                      </Row>
+
+                      <Row className="mb-3">
+                        <Col md={6}>
+                          <Form.Group>
+                            <Form.Label>
+                              <strong>Image url</strong>
+                            </Form.Label>
+                            <Form.Control
+                              type="text"
+                              value={selectedPackage.image_url}
+                              onChange={(e) =>
+                                setSelectedPackage({
+                                  ...selectedPackage,
+                                  image_url: e.target.value,
+                                })
+                              }
+                            />
+                          </Form.Group>
+                        </Col>
+                      </Row>
+
+                      <Button
+                        variant="danger"
+                        onClick={() => {
+                          axios
+                            .put(
+                              `http://localhost:5000/Tour/update/${selectedPackage.tour_packages_id}`,
+                              selectedPackage,
+                              {
+                                headers: {
+                                  Authorization: `Bearer ${token}`,
+                                },
+                              }
+                            )
+                            .then(() => {
+                              toast.success(
+                                "The package was updated successfully."
+                              );
+
+                              setUpdateModal(false);
+                              axios
+                                .get("http://localhost:5000/Tour/all")
+                                .then((response) => {
+                                  setTourPackages(response.data.result);
+                                });
+                            })
+                            .catch(() => {
+                              toast.error("Data update failed");
+                            });
+                        }}
+                      >
+                        Update
+                      </Button>
+                    </Form>
+                  </Modal.Body>
+                </Modal>
       <div
         className="d-flex justify-content-center align-items-center flex-column"
         style={{ minHeight: "80vh" }}
@@ -334,9 +572,14 @@ const Packages = () => {
                   boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
                 }}
               >
+                
+
                 <img
                   src={item.image_url}
-                  onClick={() => handleCardClick(item)}
+                  onClick={() => {
+                    handleCardClick(item);
+                    console.log(item.tour_packages_id);
+                  }}
                   alt={item.destination}
                   style={{
                     width: "100%",
@@ -368,14 +611,34 @@ const Packages = () => {
                     >
                       BookNow
                     </Button>
+                    {
+  localStorage.getItem("token") && dispatch(role_id === 1) ? (
+    <Button
+      variant="danger"
+      style={{ marginLeft: "10px" }}
+      onClick={() => {
+        setShowDeleteModal(true);
+        setCheckId(item.tour_packages_id);
+      }}
+    >
+      Delete
+    </Button>
+  ) : (
+    <></> 
+  )
+}
+                    
                     <Button
                       variant="danger"
                       style={{ marginLeft: "10px" }}
                       onClick={() => {
-                        setShowDeleteModal(true);
+                        setSelectedPackage(item.checkId);
+                        setUpdateModal(true);
+                        console.log("Update", checkId);
+                        console.log(setSelectedPackage(item));
                       }}
                     >
-                      Delete
+                      Update
                     </Button>
                   </p>
                 </div>
@@ -519,27 +782,6 @@ const Packages = () => {
             </Modal.Footer>
           </Form>
         </Modal.Body>
-      </Modal>
-      <Modal show={ShowDeleteModal} onHide={() => setShowDeleteModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Delete Package</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <p>Are you sure you want to delete this package ?</p>{" "}
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>
-            Close
-          </Button>
-          <Button
-            variant="danger"
-            onClick={() => {
-              deletePackages(item.tour_packages_id);
-            }}
-          >
-            Delete Package
-          </Button>
-        </Modal.Footer>
       </Modal>
       <ToastContainer />
     </div>
