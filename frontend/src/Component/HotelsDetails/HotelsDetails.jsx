@@ -6,7 +6,7 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import { Modal, Form } from "react-bootstrap";
+import { Modal, Form, Spinner } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import Dropdown from "react-bootstrap/Dropdown";
@@ -17,16 +17,18 @@ const HotelsDetails = () => {
     return { token: state.user.token };
   });
   // console.log(token);
+  const [loading, setLoading] = useState(true);
   const [hotelDetails, setHotelDetails] = useState([]);
   const [showDetail, setShowDetail] = useState(false);
   const [hotelPayment, setHotelPayment] = useState(false);
-  const [chosenHotel, setChosenHotel] = useState("");
+  const [chosenHotel, setChosenHotel] = useState([]);
+  const [updateHotel, setUpdateHotel] = useState([]);
   const [fromDate, setFromDate] = useState(Date);
   const [toDate, setToDate] = useState(Date);
   const [stars, setStars] = useState("");
   const [title, setTitle] = useState("");
   const [findHotel, setFindHotel] = useState({
-    name: null,
+    name: "",
     // rate: "",
     city: "",
     price: "",
@@ -38,8 +40,6 @@ const HotelsDetails = () => {
     image_url: "",
   });
   const [showUpdate, setShowUpdate] = useState(false);
-  const handleCloseUpdate = () => setShowUpdate(false);
-  const handleShowUpdate = () => setShowUpdate(true);
 
   // console.log(localStorage.getItem("role_id"));
   useEffect(() => {
@@ -50,11 +50,20 @@ const HotelsDetails = () => {
         setHotelDetails(result.data.result);
         // console.log("ahmad", hotelDetails);
         // setFindHotel(result.data.result);
+        // setTitle(result.data.result);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
+  const handleCloseUpdate = () => {
+    setShowUpdate(false);
+    toast.success("Hotel Updated Successfully");
+  };
+  const handleShowUpdate = (hotelDetails) => {
+    setUpdateHotel(hotelDetails);
+    setShowUpdate(true);
+  };
   const bookNow = (hotelDetails) => {
     setChosenHotel(hotelDetails);
     setShowDetail(true);
@@ -68,7 +77,21 @@ const HotelsDetails = () => {
     toast.success("Payment Confirmed! Thank you for booking.");
     setHotelPayment(false);
   };
-
+  {
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  }
+  if (loading) {
+    return (
+      <div
+        className="d-flex justify-content-center align-items-center"
+        style={{ height: "100vh" }}
+      >
+        <Spinner animation="border" variant="primary" />
+      </div>
+    );
+  }
   return (
     <>
       {/* <div>HotelsDetails</div> */}
@@ -101,109 +124,116 @@ const HotelsDetails = () => {
           </Carousel.Item>
         </Carousel>
       </div>
+      <Form style={{ marginTop: "50px" }}>
+        <Row className="align-items-end">
+          <Col md={3}>
+            <Form.Group>
+              <Form.Label>Name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter Name"
+                onChange={(e) =>
+                  setFindHotel({
+                    ...findHotel,
+                    name: e.target.value,
+                  })
+                }
+              />
+            </Form.Group>
+          </Col>
+          <Col md={3}>
+            <Form.Group>
+              <Form.Label>Country</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter Country"
+                onChange={(e) =>
+                  setFindHotel({
+                    ...findHotel,
+                    city: e.target.value,
+                  })
+                }
+              />
+            </Form.Group>
+          </Col>
+          <Col md={2}>
+            <Form.Group>
+              <Form.Label>Price Per Night</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter Price $"
+                onChange={(e) =>
+                  setFindHotel({ ...findHotel, price: e.target.value })
+                }
+              />
+            </Form.Group>
+          </Col>
+          {/*    <Form.Label>Stars</Form.Label>
+        <DropdownButton
+            id="dropdown-basic-button"
+            variant="danger"
+            title="Stars"
+          >
+            <Dropdown.Item
+              onClick={() => {
+                setStars("");
+              }}
+            >
+              All
+            </Dropdown.Item>
+            <Dropdown.Item
+              value={"⭐️⭐️⭐️⭐️⭐️"}
+              onClick={() => {
+                setStars("⭐️⭐️⭐️⭐️⭐️");
+                console.log(stars);
+              }}
+            >
+              5 Stars⭐️⭐️⭐️⭐️⭐️
+            </Dropdown.Item>
+            <Dropdown.Item
+              onClick={() => {
+                setStars("⭐️⭐️⭐️⭐️☆");
+                // setTitle("5 stars");
+              }}
+            >
+              4 Stars⭐️⭐️⭐️⭐️☆
+            </Dropdown.Item>
+            <Dropdown.Item
+              onClick={() => {
+                setStars("⭐️⭐️⭐️☆☆");
+                console.log(stars);
+              }}
+            >
+              3 Stars⭐️⭐️⭐️☆☆
+            </Dropdown.Item>
+          </DropdownButton> */}
+
+          <Col md={2}>
+            <Button
+              variant="danger"
+              className="w-100"
+              onClick={() => {
+                console.log(findHotel);
+                const detail = hotelDetails.filter((ele, i) => {
+                  /* console.log(
+                          ele.name.includes(findHotel.name) ||
+                            ele.name.includes(stars)
+                        ); */
+                  return ele.name.includes(findHotel.name);
+                });
+                // console.log(stars);
+                console.log(detail);
+                setHotelDetails(detail);
+              }}
+            >
+              Search
+            </Button>
+          </Col>
+        </Row>
+      </Form>
       <>
         {localStorage.getItem("role_id") != 1 ? (
           <>
-            <Form style={{ marginTop: "50px" }}>
-              <Row className="align-items-end">
-                <Col md={3}>
-                  <Form.Group>
-                    <Form.Label>Name</Form.Label>
-                    <Form.Control
-                      type="text"
-                      placeholder="Enter Name"
-                      onChange={(e) =>
-                        setFindHotel({
-                          ...findHotel,
-                          name: e.target.value,
-                        })
-                      }
-                    />
-                  </Form.Group>
-                </Col>
-                <Col md={3}>
-                  <Form.Group>
-                    <Form.Label>Country</Form.Label>
-                    <Form.Control
-                      type="text"
-                      placeholder="Enter Country"
-                      onChange={(e) =>
-                        setFindHotel({
-                          ...findHotel,
-                          city: e.target.value,
-                        })
-                      }
-                    />
-                  </Form.Group>
-                </Col>
-                <Col md={2}>
-                  <Form.Group>
-                    <Form.Label>Price Per Night</Form.Label>
-                    <Form.Control
-                      type="text"
-                      placeholder="Enter Price $"
-                      onChange={(e) =>
-                        setFindHotel({ ...findHotel, price: e.target.value })
-                      }
-                    />
-                  </Form.Group>
-                </Col>
-                <Form.Label>Stars</Form.Label>
-                <DropdownButton
-                  id="dropdown-basic-button"
-                  variant="danger"
-                  title="Stars"
-                >
-                  <Dropdown.Item
-                    onClick={() => {
-                      setStars(null);
-                    }}
-                  >
-                    All
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    onClick={() => {
-                      setStars("⭐️⭐️⭐️⭐️⭐️");
-                    }}
-                  >
-                    5 Stars⭐️⭐️⭐️⭐️⭐️
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    onClick={() => {
-                      setStars("⭐️⭐️⭐️⭐️☆");
-                      setTitle("5 stars");
-                    }}
-                  >
-                    4 Stars⭐️⭐️⭐️⭐️☆
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    onClick={() => {
-                      setStars("⭐️⭐️⭐️☆☆");
-                    }}
-                  >
-                    3 Stars⭐️⭐️⭐️☆☆
-                  </Dropdown.Item>
-                </DropdownButton>
-                <Col md={2}>
-                  <Button
-                    variant="danger"
-                    className="w-100"
-                    onClick={() => {
-                      console.log(findHotel);
-                      hotelDetails.filter((ele, i) => {
-                        // console.log(ele);
-                        return (
-                          ele.name.includes(findHotel.name) ||
-                          ele.name.includes(stars)
-                        );
-                      });
-                    }}
-                  >
-                    Search
-                  </Button>
-                </Col>
-              </Row>
-            </Form>
             <br />
             <div
               className="packages-container"
@@ -559,7 +589,6 @@ const HotelsDetails = () => {
                     <Col key={i} className="d-flex justify-content-center">
                       <div
                         className="package-item"
-                        onClick={() => bookNow(ele)}
                         style={{
                           cursor: "pointer",
                           width: "100%",
@@ -573,6 +602,7 @@ const HotelsDetails = () => {
                         }}
                       >
                         <img
+                          onClick={() => bookNow(ele)}
                           src={ele.image_url}
                           // alt={item.destination}
                           style={{
@@ -605,7 +635,7 @@ const HotelsDetails = () => {
                           <Button
                             variant="danger"
                             onClick={() => {
-                              handleShowUpdate();
+                              handleShowUpdate(ele);
                             }}
                           >
                             Edit Hotel
@@ -616,10 +646,51 @@ const HotelsDetails = () => {
                   ))}
                 </Row>
               </div>
-              <Modal show={showUpdate} onHide={() => setShowUpdate(false)}>
+              <Modal
+                show={showUpdate}
+                onHide={() => {
+                  setShowUpdate(false);
+                }}
+              >
                 <Modal.Header closeButton>
                   <Modal.Title>Hotel Information</Modal.Title>
                 </Modal.Header>
+                <Modal.Body>
+                  <div>
+                    {updateHotel && (
+                      <>
+                        <p>
+                          <strong>Hotel Name:</strong> {updateHotel.name},
+                        </p>
+
+                        <strong>City :</strong>
+                        <input
+                          type="text"
+                          placeholder:value={updateHotel.location}
+                          onChange={() => {
+                            console.log(10);
+                          }}
+                        />
+
+                        <p>
+                          <strong>Price Per Night :</strong> $
+                          {updateHotel.price_per_night}
+                        </p>
+                        <Modal.Footer className="d-flex justify-content-center">
+                          <Button variant="danger" onClick={handleCloseUpdate}>
+                            Confirm Booking
+                          </Button>
+                          <Button
+                            variant="secondary"
+                            onClick={() => setShowUpdate(false)}
+                          >
+                            Close
+                          </Button>
+                        </Modal.Footer>
+                      </>
+                    )}
+                  </div>
+                </Modal.Body>
               </Modal>
               <Modal show={showDetail} onHide={() => setShowDetail(false)}>
                 <Modal.Header closeButton>
