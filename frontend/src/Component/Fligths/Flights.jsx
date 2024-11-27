@@ -326,22 +326,26 @@ const Flights = () => {
                     <Button
                       variant="danger"
                       onClick={() => {
-                        axios
-                          .post(
-                            "http://localhost:5000/flights/bookFlight",
-                            {
-                              flights_id: flight.flights_id,
-                            },
-                            {
-                              headers: { Authorization: `Bearer ${token}` },
-                            }
-                          )
-                          .then(() => {
-                            toast.success("Successful booking process.");
-                          })
-                          .catch(() => {
-                            toast.error("The booking process failed.");
-                          });
+                        if (token === null || token === undefined) {
+                          toast.error("You must log in.");
+                        } else {
+                          axios
+                            .post(
+                              "http://localhost:5000/flights/bookFlight",
+                              {
+                                flights_id: flight.flights_id,
+                              },
+                              {
+                                headers: { Authorization: `Bearer ${token}` },
+                              }
+                            )
+                            .then(() => {
+                              toast.success("Successful booking process.");
+                            })
+                            .catch(() => {
+                              toast.error("The booking process failed.");
+                            });
+                        }
                       }}
                     >
                       Book Now
