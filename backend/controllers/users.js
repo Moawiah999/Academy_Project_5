@@ -100,5 +100,25 @@ const login = async (req, res) => {
     });
   }
 };
-
-module.exports = { register, login };
+const getUserInfoById = (req, res) => {
+  const id = req.params.id;
+  // console.log(req.params.id);
+  db.query(
+    `SELECT * FROM users WHERE user_id='${id}' AND users.is_deleted=0`
+  )
+    .then((result) => {
+      res.status(200).json({
+        success: true,
+        message: `User ${id}`,
+        result: result.rows,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: "Server error",
+        err: err,
+      });
+    });
+};
+module.exports = { register, login, getUserInfoById };
