@@ -32,6 +32,20 @@ const register = async (req, res) => {
 
   db.query(query, values)
     .then((result) => {
+      console.log("result", result.rows[0].user_id);
+      db.query(`INSERT INTO reservations (user_id) VALUES ($1)`, [
+        result.rows[0].user_id,
+      ])
+        .then((result) => {
+          res.status(201).json({
+            success: true,
+            message: "Reservations created successfully",
+            user: result.rows[0],
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
       res.status(201).json({
         success: true,
         message: "Account created successfully",
@@ -103,9 +117,7 @@ const login = async (req, res) => {
 const getUserInfoById = (req, res) => {
   const id = req.params.id;
   // console.log(req.params.id);
-  db.query(
-    `SELECT * FROM users WHERE user_id='${id}' AND users.is_deleted=0`
-  )
+  db.query(`SELECT * FROM users WHERE user_id='${id}' AND users.is_deleted=0`)
     .then((result) => {
       res.status(200).json({
         success: true,

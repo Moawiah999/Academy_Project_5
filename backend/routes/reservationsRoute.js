@@ -5,11 +5,21 @@ const { authentication } = require("../middlewares/authentication");
 const {
   getReservationsById,
   updateReservation,
-  createReservation,
+  createFlightsReservation,
+  createHotelsReservation,
 } = require("../controllers/reservations");
 
 reservationsRoute.get("/allReservations/:user_id", getReservationsById);
-reservationsRoute.post("/", authentication, createReservation);
+reservationsRoute.post(
+  "/reservationFlight",
+  authentication,
+  createFlightsReservation
+);
+reservationsRoute.post(
+  "/reservationHotel",
+  authentication,
+  createHotelsReservation
+);
 reservationsRoute.put("/", authentication, updateReservation);
 
 module.exports = reservationsRoute;

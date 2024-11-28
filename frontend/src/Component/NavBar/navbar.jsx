@@ -5,8 +5,7 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Offcanvas from "react-bootstrap/Offcanvas";
-import { IoMoonOutline } from "react-icons/io5";
-import { FaMoon } from "react-icons/fa";
+
 const NavbarPage = () => {
   const navigate = useNavigate();
   const [showMoonoutLine , setShowMoonoutLine] = useState(false);
@@ -85,13 +84,38 @@ const NavbarPage = () => {
                     PACKAGES
                   </Nav.Link>
                   {localStorage.getItem("token") ? (
-                    <Nav.Link
-                      onClick={() => {
-                        navigate("/myprofile");
-                      }}
-                    >
-                      MY PROFILE
-                    </Nav.Link>
+                    // <Nav.Link
+                    //   onClick={() => {
+                    //     navigate("/myprofile");
+                    //   }}
+                    // >
+                    //   MY PROFILE
+                    // </Nav.Link>
+                    <Nav>
+                      <NavDropdown
+                        id="nav-dropdown-dark-example"
+                        title="MY PROFILE"
+                        menuVariant="dark"
+                      >
+                        <NavDropdown.Item
+                          onClick={() => {
+                            navigate("/myprofile");
+                          }}
+                        >
+                          MY PROFILE
+                        </NavDropdown.Item>
+                        <NavDropdown.Item
+                          onClick={() => {
+                            localStorage.removeItem("token");
+                            localStorage.removeItem("userId");
+                            localStorage.removeItem("role_id");
+                            navigate("/login");
+                          }}
+                        >
+                          log out
+                        </NavDropdown.Item>
+                      </NavDropdown>
+                    </Nav>
                   ) : (
                     <Nav.Link
                       onClick={() => {
