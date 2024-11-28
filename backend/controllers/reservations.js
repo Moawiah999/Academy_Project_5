@@ -38,7 +38,6 @@ const createFlightsReservation = (req, res) => {
   const user_id = req.token.userId;
   const { flight_id } = req.body;
 
- 
   db.query(
     "INSERT INTO reservations (user_id,flight_id)  VALUES ($1,$2) RETURNING *",
     [user_id, flight_id]
@@ -47,6 +46,29 @@ const createFlightsReservation = (req, res) => {
       res.status(200).json({
         success: true,
         message: "Flights Reservation successfully",
+        result: result.rows,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: "Server error",
+        err: err.message,
+      });
+    });
+};
+const createHotelsReservation = (req, res) => {
+  console.log(" createHotelsReservation ");
+  const user_id = req.token.userId;
+  const { hotel_id } = req.body;
+  db.query(
+    "INSERT INTO reservations (user_id,hotel_id)  VALUES ($1,$2) RETURNING *",
+    [user_id, hotel_id]
+  )
+    .then((result) => {
+      res.status(200).json({
+        success: true,
+        message: "Hotel Reservation successfully",
         result: result.rows,
       });
     })
@@ -83,5 +105,6 @@ const updateReservation = (req, res) => {
 module.exports = {
   getReservationsById,
   createFlightsReservation,
+  createHotelsReservation,
   updateReservation,
 };

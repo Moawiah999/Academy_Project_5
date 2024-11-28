@@ -6,6 +6,7 @@ const {
   getReservationsById,
   updateReservation,
   createFlightsReservation,
+  createHotelsReservation,
 } = require("../controllers/reservations");
 
 reservationsRoute.get("/allReservations/:user_id", getReservationsById);
@@ -13,6 +14,11 @@ reservationsRoute.post(
   "/reservationFlight",
   authentication,
   createFlightsReservation
+);
+reservationsRoute.post(
+  "/reservationHotel",
+  authentication,
+  createHotelsReservation
 );
 reservationsRoute.put("/", authentication, updateReservation);
 
