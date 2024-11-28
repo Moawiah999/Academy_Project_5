@@ -44,10 +44,11 @@ const getAllHotels = (req, res) => {
 };
 const updateHotelById = (req, res) => {
   const id = req.params.id;
-  const { name, location, price_per_night, image_url } = req.body;
+  const { name, location, price_per_night, image_url, rate, description } =
+    req.body;
   pool
     .query(
-      `UPDATE hotels SET name='${name}',location='${location}',price_per_night='${price_per_night}',image_url='${image_url}' WHERE hotel_id='${id}' RETURNING *`
+      `UPDATE hotels SET name='${name}',location='${location}',price_per_night='${price_per_night}',image_url='${image_url}',rate='${rate}',description='${description}' WHERE hotel_id='${id}' RETURNING *`
     )
     .then((result) => {
       res.status(200).json({
