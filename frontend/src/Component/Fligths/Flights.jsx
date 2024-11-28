@@ -3,6 +3,8 @@ import { useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import { GrUpdate } from "react-icons/gr";
 import { MdDeleteOutline } from "react-icons/md";
+import { RiVisaFill } from "react-icons/ri";
+import { FaCreditCard, FaCalendarAlt, FaLock } from "react-icons/fa";
 import {
   Container,
   Row,
@@ -39,6 +41,14 @@ const Flights = () => {
   const [selectedFlight, setSelectedFlight] = useState(null);
   const [ShowDeleteModal, setShowDeleteModal] = useState(false);
   const [flightNumber, setFlightNumber] = useState("");
+
+  const [showPayment, setShowPayment] = useState(false);
+  const handleClosePayment = () => {
+    setShowPayment(false);
+  };
+  const handleCardModal = () => {
+    setShowPayment(true);
+  };
   useEffect(() => {
     console.log("role_id :", role_id);
     axios
@@ -187,12 +197,12 @@ const Flights = () => {
                 className="mt-4 w-50"
                 onClick={() => {
                   if (
-                    flightInformation.flight_Company.length === 0 &&
-                    flightInformation.flight_number.length === 0 &&
-                    flightInformation.origin.length === 0 &&
-                    flightInformation.destination.length === 0 &&
-                    flightInformation.departure_time.length === 0 &&
-                    flightInformation.arrival_time.length === 0 &&
+                    flightInformation.flight_Company.length === 0 ||
+                    flightInformation.flight_number.length === 0 ||
+                    flightInformation.origin.length === 0 ||
+                    flightInformation.destination.length === 0 ||
+                    flightInformation.departure_time.length === 0 ||
+                    flightInformation.arrival_time.length === 0 ||
                     flightInformation.price.length === 0
                   ) {
                     toast.error("All these fields are required.");
@@ -329,22 +339,23 @@ const Flights = () => {
                         if (token === null || token === undefined) {
                           toast.error("You must log in.");
                         } else {
-                          axios
-                            .post(
-                              "http://localhost:5000/flights/bookFlight",
-                              {
-                                flights_id: flight.flights_id,
-                              },
-                              {
-                                headers: { Authorization: `Bearer ${token}` },
-                              }
-                            )
-                            .then(() => {
-                              toast.success("Successful booking process.");
-                            })
-                            .catch(() => {
-                              toast.error("The booking process failed.");
-                            });
+                          handleCardModal();
+                          // axios
+                          //   .post(
+                          //     "http://localhost:5000/flights/bookFlight",
+                          //     {
+                          //       flights_id: flight.flights_id,
+                          //     },
+                          //     {
+                          //       headers: { Authorization: `Bearer ${token}` },
+                          //     }
+                          //   )
+                          //   .then(() => {
+                          //     toast.success("Successful booking process.");
+                          //   })
+                          //   .catch(() => {
+                          //     toast.error("The booking process failed.");
+                          //   });
                         }
                       }}
                     >
@@ -573,6 +584,77 @@ const Flights = () => {
             Confirm
           </Button>
         </Modal.Footer>
+      </Modal>
+      <Modal show={showPayment} onHide={handleClosePayment}>
+        <Modal.Header closeButton>
+          <Modal.Title>Payment Information</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group>
+              <Form.Label>Card Number</Form.Label>
+              <div className="d-flex align-items-center">
+                <FaCreditCard className="me-2" />
+                <Form.Control
+                  type="text"
+                  name="card_number"
+                  placeholder="Enter card number"
+                  required
+                />
+              </div>
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Expiration Date</Form.Label>
+              <div className="d-flex align-items-center">
+                <FaCalendarAlt className="me-2" />
+                <Form.Control
+                  type="text"
+                  name="expiration_date"
+                  placeholder="MM/YY"
+                  required
+                />
+              </div>
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>CVV</Form.Label>
+              <div className="d-flex align-items-center">
+                <FaLock className="me-2" />
+                <Form.Control
+                  type="text"
+                  name="cvv"
+                  placeholder="Enter CVV"
+                  required
+                />
+              </div>
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Cardholder Name</Form.Label>
+              <div className="d-flex align-items-center">
+                <RiVisaFill className="me-2" />
+                <Form.Control
+                  type="text"
+                  name="cardholder_name"
+                  placeholder="Enter cardholder name"
+                  required
+                />
+              </div>
+            </Form.Group>
+            <Modal.Footer className="d-flex justify-content-center">
+              <Button
+                variant="danger"
+                type="submit"
+                onClick={() => {
+                  toast.success("The flight has been booked successfully.");
+                }}
+              >
+                Confirm Booking
+              </Button>
+              <Button variant="secondary" onClick={handleClosePayment}>
+                Close
+              </Button>
+            </Modal.Footer>
+          </Form>
+        </Modal.Body>
       </Modal>
     </Container>
   );
