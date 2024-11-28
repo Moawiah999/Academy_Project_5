@@ -13,6 +13,8 @@ import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import { MdDeleteOutline, MdDescription } from "react-icons/md";
 import { GrUpdate } from "react-icons/gr";
+import { FaCalendarAlt, FaCreditCard, FaLock } from "react-icons/fa";
+import { RiVisaFill } from "react-icons/ri";
 
 const HotelsDetails = () => {
   const { token } = useSelector((state) => {
@@ -98,6 +100,10 @@ const HotelsDetails = () => {
     e.preventDefault();
     toast.success("Payment Confirmed! Thank you for booking.");
     setHotelPayment(false);
+  };
+  const shortDescription = (description) => {
+    const words = description.split(" ");
+    return words.slice(0, 4).join(" ") + " ...";
   };
   {
     setTimeout(() => {
@@ -481,29 +487,51 @@ const HotelsDetails = () => {
                       }}
                     />
                     <div style={{ padding: "16px", background: "#f8f9fa" }}>
-                      <h5 className="text-success">{ele.name}</h5>
+                      <h5
+                        className="text-success"
+                        // style={{ textAlign: "center" }}
+                      >
+                        {ele.name}
+                      </h5>
                       <p className="text-muted">
-                        <strong>City : </strong>
+                        <strong>City :</strong>
                         <span className="text-success">{ele.location}</span>
                         <br />
-                        <strong>Price: </strong>
-                        <span className="text-success">
-                          ${ele.price_per_night}
+                        <strong
+                          onClick={() => {
+                            bookNow(ele);
+                          }}
+                        >
+                          Description :
+                        </strong>
+                        <span
+                          className="text-success"
+                          onClick={() => {
+                            bookNow(ele);
+                          }}
+                        >
+                          {shortDescription(ele.description)}
                         </span>
-                        <br />
-                        <strong>Description :</strong>
-                        <span className="text-success">{ele.description}</span>
                         <br />
                         <strong>
                           Rate :{" "}
                           <span className="text-success">{ele.rate}</span>
                         </strong>
                         <br />
+                        <strong>Price : </strong>
+                        <span className="text-success">
+                          ${ele.price_per_night}
+                        </span>
+                        <br />
                       </p>
                       <Button
                         variant="danger"
                         style={{ display: "inline" }}
-                        onClick={() => bookNow(ele)}
+                        onClick={() => {
+                          localStorage.getItem("token")
+                            ? bookNow(ele)
+                            : toast.error("You must be login for Book .");
+                        }}
                       >
                         Book Now
                       </Button>
@@ -800,27 +828,50 @@ const HotelsDetails = () => {
               <Form onSubmit={handlePayment}>
                 <Form.Group>
                   <Form.Label>Card Number</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Enter card number"
-                    required
-                  />
+                  <div className="d-flex align-items-center">
+                    <FaCreditCard className="me-2" />
+                    <Form.Control
+                      type="text"
+                      placeholder="Enter card number"
+                      required
+                    />
+                  </div>
                 </Form.Group>
                 <Form.Group>
                   <Form.Label>Expiration Date</Form.Label>
-                  <Form.Control type="text" placeholder="MM/YY" required />
+                  <div className="d-flex align-items-center">
+                    <FaCalendarAlt className="me-2" />
+                    <Form.Control
+                      type="text"
+                      name="experinceDate"
+                      placeholder="MM/YY"
+                      required
+                    />
+                  </div>
                 </Form.Group>
                 <Form.Group>
                   <Form.Label>CVV</Form.Label>
-                  <Form.Control type="text" placeholder="Enter CVV" required />
+                  <div className="d-flex align-items-center">
+                    <FaLock className="me-2" />
+                    <Form.Control
+                      type="text"
+                      name="cvv"
+                      placeholder="Enter CVV"
+                      required
+                    />
+                  </div>
                 </Form.Group>
                 <Form.Group>
                   <Form.Label>Cardholder Name</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Enter cardholder name"
-                    required
-                  />
+                  <div className="d-flex align-items-center">
+                    <RiVisaFill className="me-2" />
+                    <Form.Control
+                      type="text"
+                      name="cardHolderName"
+                      placeholder="Enter cardholder name"
+                      required
+                    />
+                  </div>
                 </Form.Group>
               </Form>
             </Modal.Body>
@@ -883,7 +934,7 @@ const HotelsDetails = () => {
                 variant="secondary"
                 onClick={() => {
                   setHotelPayment(false);
-                  console.log(10);
+                  // console.log(10);
                 }}
               >
                 Close
