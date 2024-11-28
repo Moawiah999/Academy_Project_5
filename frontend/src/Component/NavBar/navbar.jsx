@@ -5,9 +5,19 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Offcanvas from "react-bootstrap/Offcanvas";
-
+import { IoMoonOutline } from "react-icons/io5";
+import { FaMoon } from "react-icons/fa";
 const NavbarPage = () => {
   const navigate = useNavigate();
+  const [showMoonoutLine , setShowMoonoutLine] = useState(false);
+  const [showMoonInLine , setShowMoonInLine] = useState(false);
+
+  const Dark = ()=>{
+    if(showMoonInLine){
+      setShowMoonoutLine(false);
+    }
+  }
+
   return (
     <>
       {["sm"].map((expand) => (
