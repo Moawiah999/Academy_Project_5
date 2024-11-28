@@ -34,15 +34,19 @@ const getReservationsById = async (req, res) => {
   }
 };
 
-const createReservation = (req, res) => {
+const createFlightsReservation = (req, res) => {
   const user_id = req.token.userId;
-  db.query("INSERT INTO reservations (user_id)  VALUES ($1) RETURNING *", [
-    user_id,
-  ])
+  const { flight_id } = req.body;
+
+ 
+  db.query(
+    "INSERT INTO reservations (user_id,flight_id)  VALUES ($1,$2) RETURNING *",
+    [user_id, flight_id]
+  )
     .then((result) => {
       res.status(200).json({
         success: true,
-        message: "My Reservation",
+        message: "Flights Reservation successfully",
         result: result.rows,
       });
     })
@@ -76,4 +80,8 @@ const updateReservation = (req, res) => {
       });
     });
 };
-module.exports = { getReservationsById, createReservation, updateReservation };
+module.exports = {
+  getReservationsById,
+  createFlightsReservation,
+  updateReservation,
+};
