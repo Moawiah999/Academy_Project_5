@@ -1,9 +1,23 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 const MyProfile = () => {
   const navigate = useNavigate();
+  const [userInfo, setUserInfo] = useState([]);
+  useEffect(() => {
+    const id = localStorage.getItem("userId");
+    axios
+      .get(`http://localhost:5000/user/${id}`)
+      .then((result) => {
+        console.log(result.data.result);
+        setUserInfo(result.data.result);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   return (
     <>
       <div>MyProfile</div>
