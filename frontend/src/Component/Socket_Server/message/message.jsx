@@ -20,7 +20,7 @@ const Message = ({ socket, user_id }) => {
   const [message, setMessage] = useState("");
   const [allMessages, setAllMessages] = useState([]);
   const [userInfo, setUserInfo] = useState([]);
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     const id = localStorage.getItem("userId");
     axios
@@ -51,12 +51,16 @@ const Message = ({ socket, user_id }) => {
 
     }
   } */
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
-  }
-  if(loading){
-     return (
+  setTimeout(() => {
+    setLoading(false);
+    {
+      localStorage.getItem("role_id") == 1 ? setTo(2) : setTo(1);
+    }
+    console.log(to);
+  }, 2000);
+
+  if (loading) {
+    return (
       <div
         className="d-flex justify-content-center align-items-center"
         style={{ height: "100vh" }}
@@ -67,7 +71,7 @@ const Message = ({ socket, user_id }) => {
   }
   return (
     <>
-     {/*  <div>
+      {/*  <div>
         <h2>Message</h2>
         <input
           type="text"

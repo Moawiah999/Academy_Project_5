@@ -32,7 +32,7 @@ const Socket_message = () => {
   }, [socket]);
   return (
     <>
-      <div>socket_message</div>
+      {/* <div>socket_message</div> */}
       {/* <input
         type="text"
         placeholder="user_id"
@@ -56,8 +56,9 @@ const Socket_message = () => {
           setUser_id(localStorage.getItem("userId"));
           setSocket(socketInit({ user_id, token }));
         }}
+        style={({ justifyContent : "center" })}
       >
-        Let's Chat
+        Click To Chat With QuickReservePro Team
       </Button>
       {isConnected && <Message socket={socket} user_id={user_id} />}
     </>

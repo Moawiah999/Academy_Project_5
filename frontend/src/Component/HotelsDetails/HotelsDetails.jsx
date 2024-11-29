@@ -633,7 +633,7 @@ const HotelsDetails = () => {
                             </Form.Label>
                             <Form.Control
                               type="text"
-                              value={updateHotel.name}
+                              placeholder={updateHotel.name}
                               onChange={(e) => {
                                 setEditHotel({
                                   ...editHotel,

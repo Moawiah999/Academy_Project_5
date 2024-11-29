@@ -33,7 +33,7 @@ const MyProfile = () => {
   }, []);
   return (
     <>
-      <Form
+      {/* <Form
         className="mb-3"
         style={{ marginLeft: "200px", marginBottom: "10px" }}
       >
@@ -52,7 +52,7 @@ const MyProfile = () => {
         >
           My Profile
         </div>
-      </Form>
+      </Form> */}
       {/* <Form
         className="mb-3"
         style={{ marginLeft: "150px", marginBottom: "10px" }}
