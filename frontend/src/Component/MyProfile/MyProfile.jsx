@@ -53,7 +53,7 @@ const MyProfile = () => {
           My Profile
         </div>
       </Form>
-      <Form
+      {/* <Form
         className="mb-3"
         style={{ marginLeft: "150px", marginBottom: "10px" }}
       >
@@ -134,19 +134,20 @@ const MyProfile = () => {
               </p>
             </div>
           );
-        })}
-        <Button
-          variant="danger"
-          onClick={() => {
-            localStorage.removeItem("token");
-            localStorage.removeItem("userId");
-            localStorage.removeItem("role_id");
-            navigate("/login");
-          }}
-        >
-          LogOut
-        </Button>
-      </Form>
+          })}
+          </Form>
+      <Button
+        variant="danger"
+        onClick={() => {
+          localStorage.removeItem("token");
+          localStorage.removeItem("userId");
+          localStorage.removeItem("role_id");
+          navigate("/login");
+        }}
+      >
+        LogOut
+      </Button>
+           */}
       {userInfo.map((ele, i) => {
         return (
           <>

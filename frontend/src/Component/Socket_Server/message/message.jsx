@@ -10,8 +10,9 @@ import {
   MDBIcon,
   MDBTextArea,
   MDBBtn,
+  MDBCardFooter,
 } from "mdb-react-ui-kit";
-
+import { Button } from "react-bootstrap";
 const Message = ({ socket, user_id }) => {
   const [to, setTo] = useState("");
   const [message, setMessage] = useState("");
@@ -66,7 +67,7 @@ const Message = ({ socket, user_id }) => {
           })}
       </div>
       <>
-        <MDBContainer className="py-5">
+        {/* <MDBContainer className="py-5">
           <MDBRow className="d-flex justify-content-center">
             <MDBCol md="8" lg="6" xl="4">
               <MDBCard id="chat1" style={{ borderRadius: "15px" }}>
@@ -122,12 +123,14 @@ const Message = ({ socket, user_id }) => {
                     />
                   </div>
 
-                  <MDBTextArea
-                    className="form-inline"
-                    placeholder="Type your message"
-                    id="textAreaExample"
-                    rows={3}
-                  />
+                  <MDBCardFooter className="text-muted d-flex justify-content-center align-items-center p-3">
+                    <MDBTextArea
+                      className="form-inline"
+                      placeholder="Type your message"
+                      id="textAreaExample"
+                      rows={2}
+                    />
+                  </MDBCardFooter>
                   <MDBBtn
                     color="danger"
                     size="md"
@@ -137,6 +140,74 @@ const Message = ({ socket, user_id }) => {
                     Send
                   </MDBBtn>
                 </MDBCardBody>
+              </MDBCard>
+            </MDBCol>
+          </MDBRow>
+        </MDBContainer> */}
+      </>
+      <>
+        <MDBContainer
+          fluid
+          className="py-5"
+          style={{ backgroundColor: "#eee" }}
+        >
+          <MDBRow className="d-flex justify-content-center">
+            <MDBCol md="10" lg="8" xl="6">
+              <MDBCard id="chat2" style={{ borderRadius: "15px" }}>
+                <MDBCardHeader className="d-flex justify-content-between align-items-center p-3">
+                  <h5 className="mb-0">Chat</h5>
+                  <Button variant="danger" size="sm" rippleColor="dark">
+                    {user_id}
+                  </Button>
+                </MDBCardHeader>
+
+                <MDBCardBody>
+                  <div className="d-flex flex-row justify-content-start">
+                    <img
+                      src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
+                      alt="avatar 1"
+                      style={{ width: "40px", height: "100%" }}
+                    />
+                    <div>
+                      <p
+                        className="small p-2 ms-3 mb-1 rounded-3"
+                        style={{ backgroundColor: "#f5f6f7" }}
+                      >
+                        Hi
+                      </p>
+                    </div>
+                  </div>
+
+                  {/*   <div className="divider d-flex align-items-center mb-4">
+                  </div> */}
+
+                  <div className="d-flex flex-row justify-content-end mb-4 pt-1">
+                    <div>
+                      <p className="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">
+                        Hiii, I'm good.
+                      </p>
+                    </div>
+                    <img
+                      src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava4-bg.webp"
+                      alt="avatar 1"
+                      style={{ width: "40px", height: "100%" }}
+                    />
+                  </div>
+                </MDBCardBody>
+
+                <MDBCardFooter className="text-muted d-flex justify-content-start align-items-center p-3">
+                  <img
+                    src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
+                    alt="avatar 3"
+                    style={{ width: "40px", height: "100%" }}
+                  />
+                  <input
+                    type="text"
+                    class="form-control form-control-lg"
+                    id="exampleFormControlInput1"
+                    placeholder="Type message"
+                  ></input>
+                </MDBCardFooter>
               </MDBCard>
             </MDBCol>
           </MDBRow>
