@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import socketInit from "./socket_server";
 import Message from "./message/message";
 import { useSelector } from "react-redux";
+import { Button } from "react-bootstrap";
 
 const Socket_message = () => {
   const [user_id, setUser_id] = useState("");
@@ -46,7 +47,8 @@ const Socket_message = () => {
           setToken(e.target.value);
         }}
       /> */}
-      <button
+      <Button
+        variant="danger"
         onClick={() => {
           {
             localStorage.getItem("token") ? setToken(true) : setToken(false);
@@ -55,8 +57,8 @@ const Socket_message = () => {
           setSocket(socketInit({ user_id, token }));
         }}
       >
-        Connect
-      </button>
+        Let's Chat
+      </Button>
       {isConnected && <Message socket={socket} user_id={user_id} />}
     </>
   );
