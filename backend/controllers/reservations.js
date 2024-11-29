@@ -1,7 +1,7 @@
 const db = require("../models/db");
 
 const getReservationsById = async (req, res) => {
-  const user_id = req.params.user_id;
+  const user_id = req.token.user_id;
 
   const query = `SELECT reservations.reservation_id , reservations.reservation_date,
     reservations.status ,

@@ -785,13 +785,10 @@ const Packages = () => {
                         }
                       )
                       .then((response) => {
-                        console.log("souri" , response);
-                        
+                        console.log("souri", response);
+
                         handlePayment();
-                        setShowPayment(false);
                         console.log(checkId);
-                        
-                    
                       })
                       .catch((err) => {
                         console.log(err);
