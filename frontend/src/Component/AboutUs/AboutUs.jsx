@@ -51,7 +51,7 @@ const AboutUs = () => {
                 height: "100%",
                 width: "100%",
                 objectFit: "cover",
-                borderRadius: "10px",
+                borderRadius: "25px",
               }}
             />
           </div>
