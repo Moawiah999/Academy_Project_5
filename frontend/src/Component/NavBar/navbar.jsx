@@ -106,7 +106,7 @@ const NavbarPage = () => {
                             navigate("/login");
                           }}
                         >
-                          log out
+                          LogOut
                         </NavDropdown.Item>
                       </NavDropdown>
                     </Nav>
