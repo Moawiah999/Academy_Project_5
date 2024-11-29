@@ -13,7 +13,9 @@ import {
   MDBBtn,
   MDBTypography,
   MDBIcon,
+  MDBCardHeader,
 } from "mdb-react-ui-kit";
+
 const MyProfile = () => {
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState([]);
@@ -230,3 +232,7 @@ const MyProfile = () => {
 };
 
 export default MyProfile;
+/* 
+<MDBBtn color="light" size="lg" rounded className="float-end">
+              Send
+            </MDBBtn> */
