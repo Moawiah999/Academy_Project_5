@@ -13,11 +13,26 @@ import {
   MDBCardFooter,
 } from "mdb-react-ui-kit";
 import { BsCursorFill } from "react-icons/bs";
-import { Button } from "react-bootstrap";
+import { Button, Dropdown, Nav, NavDropdown, Spinner } from "react-bootstrap";
+import axios from "axios";
 const Message = ({ socket, user_id }) => {
   const [to, setTo] = useState("");
   const [message, setMessage] = useState("");
   const [allMessages, setAllMessages] = useState([]);
+  const [userInfo, setUserInfo] = useState([]);
+  const [loading, setLoading] = useState(true); 
+  useEffect(() => {
+    const id = localStorage.getItem("userId");
+    axios
+      .get(`http://localhost:5000/user`)
+      .then((result) => {
+        // console.log(result.data.result);
+        setUserInfo(result.data.result);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   useEffect(() => {
     socket?.on("message", receivedMessage);
     return () => {
@@ -25,7 +40,7 @@ const Message = ({ socket, user_id }) => {
     };
   }, [allMessages]);
   const receivedMessage = (data) => {
-    console.log(data);
+    // console.log(data);
     setAllMessages([...allMessages, data]);
   };
   const sendMessage = () => {
@@ -36,15 +51,30 @@ const Message = ({ socket, user_id }) => {
 
     }
   } */
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  }
+  if(loading){
+     return (
+      <div
+        className="d-flex justify-content-center align-items-center"
+        style={{ height: "100vh" }}
+      >
+        <Spinner animation="border" variant="primary" />
+      </div>
+    );
+  }
   return (
     <>
-      <div>
+     {/*  <div>
         <h2>Message</h2>
         <input
           type="text"
           placeholder="Message"
           onChange={(e) => {
             setMessage(e.target.value);
+            console.log(user_id);
           }}
         />
         <input
@@ -71,7 +101,7 @@ const Message = ({ socket, user_id }) => {
               </p>
             );
           })}
-      </div>
+      </div> */}
 
       <>
         <MDBContainer
@@ -83,10 +113,48 @@ const Message = ({ socket, user_id }) => {
             <MDBCol md="10" lg="8" xl="6">
               <MDBCard id="chat2" style={{ borderRadius: "15px" }}>
                 <MDBCardHeader className="d-flex justify-content-between align-items-center p-3">
-                  <h5 className="mb-0">Chat</h5>
-                  <Button variant="danger" size="sm" rippleColor="dark">
-                    {user_id}
-                  </Button>
+                  <h5
+                    className="mb-0"
+                    style={{
+                      fontFamily: "Arial, sans-serif",
+                      fontWeight: "bold",
+                      fontSize: "17px",
+                      textTransform: "uppercase",
+                      background: "linear-gradient(90deg, red, black)",
+                      WebkitBackgroundClip: "text",
+                      WebkitTextFillColor: "transparent",
+                      display: "inline-block",
+                      letterSpacing: "1px",
+                    }}
+                  >
+                    Chat With QuickReservePro Team{" "}
+                  </h5>
+
+                  {/* <Dropdown>
+                    <Dropdown.Toggle variant="danger" id="dropdown-basic">
+                      Chat With
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu
+                      variant="danger"
+                      size="sm"
+                      rippleColor="dark"
+                    >
+                      {userInfo.map((ele, i) => {
+                        return (
+                          <>
+                            <Dropdown.Item
+                              onClick={() => {
+                                setTo(ele.user_id);
+                                console.log(ele.user_id);
+                              }}
+                            >
+                              {ele.first_name + " " + ele.last_name}
+                            </Dropdown.Item>
+                          </>
+                        );
+                      })}
+                    </Dropdown.Menu>
+                  </Dropdown> */}
                 </MDBCardHeader>
 
                 {allMessages.length > 0 &&
@@ -94,7 +162,20 @@ const Message = ({ socket, user_id }) => {
                     return (
                       <>
                         <MDBCardBody>
-                          {message.from == 1 ? (
+                          {message.from == user_id ? (
+                            <div className="d-flex flex-row justify-content-end mb-4 pt-1">
+                              <div>
+                                <span className="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">
+                                  {message.message}
+                                </span>
+                              </div>
+                              <img
+                                src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava4-bg.webp"
+                                alt="avatar 1"
+                                style={{ width: "40px", height: "100%" }}
+                              />
+                            </div>
+                          ) : (
                             <div className="d-flex flex-row justify-content-start">
                               <img
                                 src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
@@ -102,26 +183,13 @@ const Message = ({ socket, user_id }) => {
                                 style={{ width: "40px", height: "100%" }}
                               />
                               <div>
-                                <p
+                                <span
                                   className="small p-2 ms-3 mb-1 rounded-3"
                                   style={{ backgroundColor: "#f5f6f7" }}
                                 >
-                                  {message.from} : {message.message}
-                                </p>
-                              </div>
-                            </div>
-                          ) : (
-                            <div className="d-flex flex-row justify-content-end mb-4 pt-1">
-                              <div>
-                                <p className="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">
                                   {message.message}
-                                </p>
+                                </span>
                               </div>
-                              <img
-                                src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava4-bg.webp"
-                                alt="avatar 1"
-                                style={{ width: "40px", height: "100%" }}
-                              />
                             </div>
                           )}
                         </MDBCardBody>

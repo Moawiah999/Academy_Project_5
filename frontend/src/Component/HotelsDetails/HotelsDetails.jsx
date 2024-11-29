@@ -108,6 +108,10 @@ const HotelsDetails = () => {
   const starsRate = (rate) => {
     if (rate === "5") {
       return <span>⭐️⭐️⭐️⭐️⭐️</span>;
+    } else if (rate === "4") {
+      return <span>⭐️⭐️⭐️⭐️☆</span>;
+    } else if (rate === "3") {
+      return <span>⭐️⭐️⭐️☆☆</span>;
     }
   };
   {

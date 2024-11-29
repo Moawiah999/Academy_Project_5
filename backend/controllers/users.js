@@ -103,9 +103,7 @@ const login = async (req, res) => {
 const getUserInfoById = (req, res) => {
   const id = req.params.id;
   // console.log(req.params.id);
-  db.query(
-    `SELECT * FROM users WHERE user_id='${id}' AND users.is_deleted=0`
-  )
+  db.query(`SELECT * FROM users WHERE user_id='${id}' AND users.is_deleted=0`)
     .then((result) => {
       res.status(200).json({
         success: true,
@@ -121,4 +119,21 @@ const getUserInfoById = (req, res) => {
       });
     });
 };
-module.exports = { register, login, getUserInfoById };
+const getAllUsers = (req, res) => {
+  db.query(`SELECT * FROM users WHERE users.is_deleted=0`)
+    .then((result) => {
+      res.status(200).json({
+        success: true,
+        message: `All The Users`,
+        result: result.rows,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: "Server error",
+        err: err,
+      });
+    });
+};
+module.exports = { register, login, getUserInfoById,getAllUsers };
