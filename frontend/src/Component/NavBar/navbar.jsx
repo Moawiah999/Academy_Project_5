@@ -76,6 +76,12 @@ const NavbarPage = () => {
                   >
                     PACKAGES
                   </Nav.Link>
+                  <Nav.Link onClick={() => {
+                      navigate("/Reservation");
+
+                    }}>
+                    RESERVATION
+                  </Nav.Link>
                   {localStorage.getItem("token") ? (
                     // <Nav.Link
                     //   onClick={() => {
@@ -84,6 +90,7 @@ const NavbarPage = () => {
                     // >
                     //   MY PROFILE
                     // </Nav.Link>
+                    
                     <Nav>
                       <NavDropdown
                         id="nav-dropdown-dark-example"
@@ -118,11 +125,7 @@ const NavbarPage = () => {
                       LOGIN
                     </Nav.Link>
                   )}
-                  {/* <Nav.Link onClick={() => {
-                      navigate("/Register")
-                    }}>
-                    REGISTER
-                  </Nav.Link> */}
+                  
                   {/* <Nav.Link onClick={() => {
                       navigate("/packages")
                     }}>
