@@ -15,8 +15,10 @@ const Footer = () => {
   const navigate = useNavigate();
 
   return (
-    
-    <footer className="bg-dark text-white text-center py-5">
+    <footer
+      className="bg-dark text-white text-center py-5"
+      style={{ marginTop: "100px" }}
+    >
       <Container>
         <Row>
           <Col md={8} className="text-md-start">
@@ -87,7 +89,7 @@ const Footer = () => {
           </Col>
         </Row>
         <>
-          <p style={{ marginBottom: "-40px" }}>
+          <p style={{ marginBottom: "40px" }}>
             &copy; 2024 Quick Reserve Pro. All Rights Reserved.
           </p>
         </>

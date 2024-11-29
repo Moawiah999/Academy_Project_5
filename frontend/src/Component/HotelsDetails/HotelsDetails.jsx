@@ -105,6 +105,15 @@ const HotelsDetails = () => {
     const words = description.split(" ");
     return words.slice(0, 4).join(" ") + " ...";
   };
+  const starsRate = (rate) => {
+    if (rate === "5") {
+      return <span>⭐️⭐️⭐️⭐️⭐️</span>;
+    } else if (rate === "4") {
+      return <span>⭐️⭐️⭐️⭐️☆</span>;
+    } else if (rate === "3") {
+      return <span>⭐️⭐️⭐️☆☆</span>;
+    }
+  };
   {
     setTimeout(() => {
       setLoading(false);
@@ -124,7 +133,7 @@ const HotelsDetails = () => {
     <>
       {/* <div>HotelsDetails</div> */}
       <div className="slider">
-        <Carousel className="slider p-3">
+        <Carousel className="slider p-3" style={{ "border-radius": "60px" }}>
           <Carousel.Item interval={5000}>
             <img
               className="img"
@@ -515,7 +524,9 @@ const HotelsDetails = () => {
                         <br />
                         <strong>
                           Rate :{" "}
-                          <span className="text-success">{ele.rate}</span>
+                          <span className="text-success">
+                            {starsRate(ele.rate)}
+                          </span>
                         </strong>
                         <br />
                         <strong>Price : </strong>
@@ -622,7 +633,7 @@ const HotelsDetails = () => {
                             </Form.Label>
                             <Form.Control
                               type="text"
-                              value={updateHotel.name}
+                              placeholder={updateHotel.name}
                               onChange={(e) => {
                                 setEditHotel({
                                   ...editHotel,
@@ -802,7 +813,7 @@ const HotelsDetails = () => {
                     </Col>
                   </p>
                   <p>
-                    <strong>Rate :</strong> {chosenHotel.rate}-stars
+                    <strong>Rate :</strong> {starsRate(chosenHotel.rate)}
                   </p>
                   <p>
                     <strong>Price Per Night :</strong> $

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import socketInit from "./socket_server";
 import Message from "./message/message";
 import { useSelector } from "react-redux";
+import { Button } from "react-bootstrap";
 
 const Socket_message = () => {
   const [user_id, setUser_id] = useState("");
@@ -31,7 +32,7 @@ const Socket_message = () => {
   }, [socket]);
   return (
     <>
-      <div>socket_message</div>
+      {/* <div>socket_message</div> */}
       {/* <input
         type="text"
         placeholder="user_id"
@@ -46,7 +47,8 @@ const Socket_message = () => {
           setToken(e.target.value);
         }}
       /> */}
-      <button
+      <Button
+        variant="danger"
         onClick={() => {
           {
             localStorage.getItem("token") ? setToken(true) : setToken(false);
@@ -54,9 +56,10 @@ const Socket_message = () => {
           setUser_id(localStorage.getItem("userId"));
           setSocket(socketInit({ user_id, token }));
         }}
+        style={({ justifyContent : "center" })}
       >
-        Connect
-      </button>
+        Click To Chat With QuickReservePro Team
+      </Button>
       {isConnected && <Message socket={socket} user_id={user_id} />}
     </>
   );

@@ -12,7 +12,7 @@ import {
   Button,
   Form,
   Card,
-  Modal,
+  Modal,Spinner 
 } from "react-bootstrap";
 import axios from "axios";
 const Flights = () => {
@@ -23,6 +23,7 @@ const Flights = () => {
     return { role_id: state.user.role_id };
   });
   const [flights, setFlights] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [flightsId, setFlightsId] = useState(0);
   const handlePayment = (e) => {
     e.preventDefault();
@@ -60,9 +61,11 @@ const Flights = () => {
       .get("http://localhost:5000/flights/")
       .then((result) => {
         setFlights(result.data.result);
+        setLoading(false);
       })
       .catch((err) => {
         console.log("err: ", err);
+        setLoading(false);
       });
   }, []);
   const handleShowModal = (flight) => {
@@ -81,7 +84,16 @@ const Flights = () => {
   };
 
   const handleCloseModal = () => setShowModal(false);
-
+  if (loading) {
+    return (
+      <div
+        className="d-flex justify-content-center align-items-center"
+        style={{ height: "100vh" }}
+      >
+        <Spinner animation="border" variant="primary" />
+      </div>
+    );
+  }
   return (
     <Container>
       <ToastContainer />

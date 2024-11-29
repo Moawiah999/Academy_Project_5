@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import NavbarPage from "./Component/NavBar/navbar";
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import "./App.css";
 import Home from "./Component/Home/Home";
 import Hotels from "./Component/Hotels/Hotels";
 import Flights from "./Component/Fligths/Flights";
