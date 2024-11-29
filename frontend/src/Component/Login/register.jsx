@@ -46,6 +46,9 @@ function Register() {
         toast.success(
           "Account registration successful , You need to log in now."
         );
+        setTimeout(() => {
+          navigate("/login");
+        }, 1000);
       })
       .catch((err) => {
         setMessage("An error occurred. Please try again.");
@@ -197,7 +200,7 @@ function Register() {
                 style={{ marginBottom: "20px" }}
                 onClick={handleRegister}
               >
-                Submit
+                Create Account
               </Button>
               <animated.div>
                 <GoogleLogin
