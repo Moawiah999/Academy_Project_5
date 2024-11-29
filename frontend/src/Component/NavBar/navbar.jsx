@@ -6,6 +6,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import { IoMoonOutline } from "react-icons/io5";
+import { NavDropdown } from "react-bootstrap";
 
 const NavbarPage = () => {
   const navigate = useNavigate();
