@@ -5,8 +5,7 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Offcanvas from "react-bootstrap/Offcanvas";
-import { IoMoonOutline } from "react-icons/io5";
-import { NavDropdown } from "react-bootstrap";
+import NavDropdown from "react-bootstrap/NavDropdown";
 
 const NavbarPage = () => {
   const navigate = useNavigate();
@@ -77,6 +76,12 @@ const NavbarPage = () => {
                   >
                     PACKAGES
                   </Nav.Link>
+                  <Nav.Link onClick={() => {
+                      navigate("/Reservation");
+
+                    }}>
+                    RESERVATION
+                  </Nav.Link>
                   {localStorage.getItem("token") ? (
                     // <Nav.Link
                     //   onClick={() => {
@@ -85,6 +90,7 @@ const NavbarPage = () => {
                     // >
                     //   MY PROFILE
                     // </Nav.Link>
+                    
                     <Nav>
                       <NavDropdown
                         id="nav-dropdown-dark-example"
@@ -119,11 +125,7 @@ const NavbarPage = () => {
                       LOGIN
                     </Nav.Link>
                   )}
-                  {/* <Nav.Link onClick={() => {
-                      navigate("/Register")
-                    }}>
-                    REGISTER
-                  </Nav.Link> */}
+                  
                   {/* <Nav.Link onClick={() => {
                       navigate("/packages")
                     }}>

@@ -9,7 +9,7 @@ const {
   createHotelsReservation,
 } = require("../controllers/reservations");
 
-reservationsRoute.get("/allReservations/:user_id", getReservationsById);
+reservationsRoute.get("/allReservations/",authentication,getReservationsById);
 reservationsRoute.post(
   "/reservationFlight",
   authentication,

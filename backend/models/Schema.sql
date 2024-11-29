@@ -104,7 +104,7 @@ CREATE TABLE tour_packages (
   FOREIGN KEY (flights_id) REFERENCES flights(flights_id),
 
   PRIMARY KEY (tour_packages_id)
-);
+);  
 
 -- Create a table called **reservations** in the database
 CREATE TABLE reservations (

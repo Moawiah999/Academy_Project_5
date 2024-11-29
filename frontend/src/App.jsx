@@ -13,6 +13,7 @@ import Socket_message from "./Component/Socket_Server/socket_message";
 import Login from "./Component/Login/login";
 import Register from "./Component/Login/register";
 import Footer from "./Component/Footer/Footer";
+import Reservation from "./Component/reservation/Reservation";
 
 const App = () => {
   const navigate = useNavigate();
@@ -32,6 +33,8 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/message" element={<Socket_message />} />
         <Route path="/myprofile" element={<MyProfile />} />
+        <Route path="/Reservation" element={<Reservation />} />
+
       </Routes>
       <Footer />
     </>

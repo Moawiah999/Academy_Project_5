@@ -66,7 +66,7 @@ const Packages = () => {
   };
 
   const handlePayment = (event) => {
-    event.preventDefault();
+    // event.preventDefault();
     toast.success("Payment Confirmed! Thank you for booking.");
     handleClosePayment();
   };
@@ -110,7 +110,13 @@ const Packages = () => {
         toast.error("Error deleting package.");
       });
   };
-
+  const handleClick = (event) => {
+    if (localStorage.getItem("token")) {
+      handleCardModal();
+    } else {
+      handlePaymentNotAuth(event);
+    }
+  };
   if (loading) {
     return (
       <div
@@ -598,20 +604,21 @@ const Packages = () => {
                     </p>
                     <Button
                       variant="danger"
-                      onClick={() =>
-                        localStorage.getItem("token")
-                          ? handleCardModal()
-                          : handlePaymentNotAuth(event)
-                      }
+                      onClick={(event) => {
+                        if (localStorage.getItem("token")) {
+                          handleClick(event);
+                        } else {
+                          handlePaymentNotAuth(event);
+                        }
+                        setCheckId(item.tour_packages_id);
+                        console.log("payment", checkId);
+                      }}
                     >
                       BookNow
                     </Button>
                     {role_id === 1 ? (
                       <>
-                        
-                        {/* <MdDeleteForever style={{fontSize : "16.5px" , borderRight:"20px"}}/> */}
                         <Button
-                        
                           variant="danger"
                           style={{ marginLeft: "10px" }}
                           onClick={() => {
@@ -764,11 +771,35 @@ const Packages = () => {
             <Modal.Footer className="d-flex justify-content-center">
               <Button
                 variant="danger"
-                onClick={() =>
-                  localStorage.getItem("token")
-                    ? handlePayment(event)()
-                    : handlePaymentNotAuth(event)
-                }
+                onClick={() => {
+                  const token = localStorage.getItem("token");
+
+                  if (token) {
+                    axios
+                      .put(
+                        `http://localhost:5000/reservations`,
+                        {
+                          tour_packages_id: checkId,
+                        },
+                        {
+                          headers: {
+                            Authorization: `Bearer ${token}`,
+                          },
+                        }
+                      )
+                      .then((response) => {
+                        console.log("souri", response);
+
+                        handlePayment();
+                        console.log(checkId);
+                      })
+                      .catch((err) => {
+                        console.log(err);
+                      });
+                  } else {
+                    handlePaymentNotAuth();
+                  }
+                }}
               >
                 Confirm Booking
               </Button>
