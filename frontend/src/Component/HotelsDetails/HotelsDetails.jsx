@@ -125,17 +125,20 @@ const HotelsDetails = () => {
         className="d-flex justify-content-center align-items-center"
         style={{ height: "100vh" }}
       >
-        <Spinner animation="border" variant="primary" />
+        <Spinner
+          animation="border"
+          style={{ color: "#ff5733" }} 
+        />
       </div>
     );
-  }
+  }  
   return (
     <>
       {/* <div>HotelsDetails</div> */}
       <div className="slider">
-        <Carousel className="slider p-3" style={{ "border-radius": "60px" }}>
+        <Carousel className="slider p-3" >
           <Carousel.Item interval={5000}>
-            <img
+            <img style={{ "border-radius": "25px" }}
               className="img"
               src="https://media.istockphoto.com/id/487042276/photo/hotel-sign.jpg?s=612x612&w=0&k=20&c=DjEVAoFnjB2cWwX28cxSKWkxsbze7o9jgkYrhyfmq9E="
               alt="First slide"
@@ -144,7 +147,7 @@ const HotelsDetails = () => {
           </Carousel.Item>
 
           <Carousel.Item interval={5000}>
-            <img
+            <img style={{ "border-radius": "25px" }}
               className="img"
               src="https://media.istockphoto.com/id/591821200/photo/3d-rendering-luxury-hotel-reception-and-lounge.jpg?s=612x612&w=0&k=20&c=ujKL3aloZrbd87Q8fI8L6vTGJ_eAmfipVGxak-c4RTc="
               alt="Second slide"
@@ -153,7 +156,7 @@ const HotelsDetails = () => {
           </Carousel.Item>
 
           <Carousel.Item interval={5000}>
-            <img
+            <img style={{ "border-radius": "25px" }}
               className="img"
               src="https://images.pexels.com/photos/261169/pexels-photo-261169.jpeg?auto=compress&cs=tinysrgb&w=600"
               // className="d-block w-100"
