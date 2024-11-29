@@ -1,10 +1,29 @@
 const db = require("../models/db");
 
 const getReservationsById = async (req, res) => {
+  console.log("getReservationsById");
   const user_id = req.token.userId;
-
-  const query = `SELECT * FROM reservations WHERE user_id = $1`;
-
+  const query = `
+    SELECT 
+      reservations.reservation_id,
+      flights.flight_company,
+      flights.flight_number,
+      flights.origin,
+      flights.destination,
+      flights.departure_time,
+      flights.arrival_time,
+      flights.price,
+      hotels.name,
+      hotels.location,
+      hotels.price_per_night,
+      tour_packages.name,
+      tour_packages.price
+    FROM reservations
+    LEFT JOIN flights ON reservations.flight_id = flights.flights_id
+    LEFT JOIN hotels ON reservations.hotel_id = hotels.hotel_id
+    LEFT JOIN tour_packages ON reservations.tour_package_id = tour_packages.tour_packages_id
+    WHERE reservations.user_id = $1
+  `;
   const values = [user_id];
 
   try {
@@ -16,7 +35,6 @@ const getReservationsById = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-
     res.status(404).json({
       success: false,
       message:
@@ -24,6 +42,8 @@ const getReservationsById = async (req, res) => {
     });
   }
 };
+
+
 
 const createFlightsReservation = (req, res) => {
   const user_id = req.token.userId;
