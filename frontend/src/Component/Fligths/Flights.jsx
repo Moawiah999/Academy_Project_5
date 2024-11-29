@@ -90,10 +90,13 @@ const Flights = () => {
         className="d-flex justify-content-center align-items-center"
         style={{ height: "100vh" }}
       >
-        <Spinner animation="border" variant="primary" />
+        <Spinner
+          animation="border"
+          style={{ color: "#ff5733" }} 
+        />
       </div>
     );
-  }
+  }  
   return (
     <Container>
       <ToastContainer />
