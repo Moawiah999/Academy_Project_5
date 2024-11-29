@@ -23,6 +23,11 @@ const Flights = () => {
     return { role_id: state.user.role_id };
   });
   const [flights, setFlights] = useState([]);
+  const [flightsId, setFlightsId] = useState(0);
+  const handlePayment = (e) => {
+    e.preventDefault();
+    toast.success("Payment Confirmed! Thank you for booking.");
+  };
   const [findeFlight, setFindeFlight] = useState({
     origin: "",
     destination: "",
@@ -340,6 +345,7 @@ const Flights = () => {
                           toast.error("You must log in.");
                         } else {
                           handleCardModal();
+                          setFlightsId(flight.flights_id);
                           // axios
                           //   .post(
                           //     "http://localhost:5000/flights/bookFlight",
@@ -590,7 +596,7 @@ const Flights = () => {
           <Modal.Title>Payment Information</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form onSubmit={handlePayment}>
             <Form.Group>
               <Form.Label>Card Number</Form.Label>
               <div className="d-flex align-items-center">
@@ -644,7 +650,32 @@ const Flights = () => {
                 variant="danger"
                 type="submit"
                 onClick={() => {
-                  toast.success("The flight has been booked successfully.");
+                  axios
+                    .put(
+                      `http://localhost:5000/reservations`,
+                      {
+                        flight_id: flightsId,
+                      },
+                      {
+                        headers: {
+                          Authorization: `Bearer ${token} `,
+                        },
+                      }
+                    )
+                    .then((response) => {
+                      console.log(response);
+
+                      {
+                        handlePayment;
+                      }
+                      setHotelPayment(false);
+                      // toast.success(
+                      //   "Payment Confirmed! Thank you for booking."
+                      // );
+                    })
+                    .catch((error) => {
+                      console.log(error);
+                    });
                 }}
               >
                 Confirm Booking
