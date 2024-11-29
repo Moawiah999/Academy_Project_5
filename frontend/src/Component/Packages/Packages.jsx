@@ -8,6 +8,8 @@ import { FaCreditCard, FaCalendarAlt, FaLock } from "react-icons/fa";
 import "react-toastify/dist/ReactToastify.css";
 import { setUserToken, setUserId } from "../Redux/Reducers/userSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { MdDeleteForever } from "react-icons/md";
+
 const Packages = () => {
   const [tourPackages, setTourPackages] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -19,12 +21,12 @@ const Packages = () => {
   const [checkId, setCheckId] = useState(false);
   const [updateModal, setUpdateModal] = useState(false);
   const [ShowDeleteModal, setShowDeleteModal] = useState(false);
-const dispatch = useDispatch();
-  const { token, userId ,role_id} = useSelector((state) => {
+  const dispatch = useDispatch();
+  const { token, userId, role_id } = useSelector((state) => {
     return {
       token: state.user.token,
       userId: state.user.userId,
-      role_id:state.user.role_id
+      role_id: state.user.role_id,
     };
   });
 
@@ -122,7 +124,6 @@ const dispatch = useDispatch();
 
   return (
     <div
-  
       className="packages-container"
       style={{
         fontFamily: "Roboto, sans-serif",
@@ -130,421 +131,414 @@ const dispatch = useDispatch();
         marginTop: "30px",
       }}
     >
-      
-      <Form
-        className="mb-3"
-        style={{ marginLeft: "144px", marginBottom: "10px" }}
-      >
-        <p
-          style={{
-            fontFamily: "Arial, sans-serif",
-            fontWeight: "bold",
-            fontSize: "17px",
-            textTransform: "uppercase",
-            background: "linear-gradient(90deg, red, black)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            display: "inline-block",
-            letterSpacing: "1px",
-          }}
+      {role_id === 1 && (
+        <Form
+          className="mb-3"
+          style={{ marginLeft: "144px", marginBottom: "10px" }}
         >
-          ADD NEW PACKAGES
-        </p>
+          <p
+            style={{
+              fontFamily: "Arial, sans-serif",
+              fontWeight: "bold",
+              fontSize: "17px",
+              textTransform: "uppercase",
+              background: "linear-gradient(90deg, red, black)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              display: "inline-block",
+              letterSpacing: "1px",
+            }}
+          >
+            ADD NEW PACKAGES
+          </p>
+          <Row className="mb-3">
+            <Col md={2}>
+              <Form.Group>
+                <Form.Label>Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter name of company"
+                  onChange={(e) =>
+                    setPackagesInfo({
+                      ...packagesInfo,
+                      name: e.target.value,
+                    })
+                  }
+                />
+              </Form.Group>
+            </Col>
 
-        <Row className="mb-3">
-          <Col md={2}>
-            <Form.Group>
-              <Form.Label>Name</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter name of company"
-                onChange={(e) =>
-                  setPackagesInfo({
-                    ...packagesInfo,
-                    name: e.target.value,
-                  })
-                }
-              />
-            </Form.Group>
-          </Col>
+            <Col md={2}>
+              <Form.Group>
+                <Form.Label>Destination</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter destination"
+                  onChange={(e) =>
+                    setPackagesInfo({
+                      ...packagesInfo,
+                      destination: e.target.value,
+                    })
+                  }
+                />
+              </Form.Group>
+            </Col>
 
-          <Col md={2}>
-            <Form.Group>
-              <Form.Label>Destination</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter destination"
-                onChange={(e) =>
-                  setPackagesInfo({
-                    ...packagesInfo,
-                    destination: e.target.value,
-                  })
-                }
-              />
-            </Form.Group>
-          </Col>
+            <Col md={2}>
+              <Form.Group>
+                <Form.Label>Duration Days</Form.Label>
+                <Form.Control
+                  type="number"
+                  placeholder="Enter duration days"
+                  onChange={(e) =>
+                    setPackagesInfo({
+                      ...packagesInfo,
+                      duration_days: e.target.value,
+                    })
+                  }
+                />
+              </Form.Group>
+            </Col>
 
-          <Col md={2}>
-            <Form.Group>
-              <Form.Label>Duration Days</Form.Label>
-              <Form.Control
-                type="number"
-                placeholder="Enter duration days"
-                onChange={(e) =>
-                  setPackagesInfo({
-                    ...packagesInfo,
-                    duration_days: e.target.value,
-                  })
-                }
-              />
-            </Form.Group>
-          </Col>
+            <Col md={2}>
+              <Form.Group>
+                <Form.Label>Start Date</Form.Label>
+                <Form.Control
+                  type="datetime-local"
+                  onChange={(e) =>
+                    setPackagesInfo({
+                      ...packagesInfo,
+                      start_date: e.target.value,
+                    })
+                  }
+                />
+              </Form.Group>
+            </Col>
 
-          <Col md={2}>
-            <Form.Group>
-              <Form.Label>Start Date</Form.Label>
-              <Form.Control
-                type="datetime-local"
-                onChange={(e) =>
-                  setPackagesInfo({
-                    ...packagesInfo,
-                    start_date: e.target.value,
-                  })
-                }
-              />
-            </Form.Group>
-          </Col>
+            <Col md={2}>
+              <Form.Group>
+                <Form.Label>End Date</Form.Label>
+                <Form.Control
+                  type="datetime-local"
+                  onChange={(e) =>
+                    setPackagesInfo({
+                      ...packagesInfo,
+                      end_date: e.target.value,
+                    })
+                  }
+                />
+              </Form.Group>
+            </Col>
+          </Row>
 
-          <Col md={2}>
-            <Form.Group>
-              <Form.Label>End Date</Form.Label>
-              <Form.Control
-                type="datetime-local"
-                onChange={(e) =>
-                  setPackagesInfo({
-                    ...packagesInfo,
-                    end_date: e.target.value,
-                  })
-                }
-              />
-            </Form.Group>
-          </Col>
-        </Row>
+          <Row className="mb-3">
+            <Col md={2}>
+              <Form.Group>
+                <Form.Label>Hotel Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter hotel name"
+                  onChange={(e) =>
+                    setPackagesInfo({
+                      ...packagesInfo,
+                      hotel_name: e.target.value,
+                    })
+                  }
+                />
+              </Form.Group>
+            </Col>
 
-        <Row className="mb-3">
-          <Col md={2}>
-            <Form.Group>
-              <Form.Label>Hotel Name</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter hotel name"
-                onChange={(e) =>
-                  setPackagesInfo({
-                    ...packagesInfo,
-                    hotel_name: e.target.value,
-                  })
-                }
-              />
-            </Form.Group>
-          </Col>
+            <Col md={2}>
+              <Form.Group>
+                <Form.Label>Price</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter price"
+                  onChange={(e) =>
+                    setPackagesInfo({
+                      ...packagesInfo,
+                      price: e.target.value,
+                    })
+                  }
+                />
+              </Form.Group>
+            </Col>
 
-          <Col md={2}>
-            <Form.Group>
-              <Form.Label>Price</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter price"
-                onChange={(e) =>
-                  setPackagesInfo({
-                    ...packagesInfo,
-                    price: e.target.value,
-                  })
-                }
-              />
-            </Form.Group>
-          </Col>
+            <Col md={2}>
+              <Form.Group>
+                <Form.Label>Description</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  placeholder="Enter description"
+                  rows={3}
+                  onChange={(e) =>
+                    setPackagesInfo({
+                      ...packagesInfo,
+                      description: e.target.value,
+                    })
+                  }
+                />
+              </Form.Group>
+            </Col>
 
-          <Col md={2}>
-            <Form.Group>
-              <Form.Label>Description</Form.Label>
-              <Form.Control
-                as="textarea"
-                placeholder="Enter description"
-                rows={3}
-                onChange={(e) =>
-                  setPackagesInfo({
-                    ...packagesInfo,
-                    description: e.target.value,
-                  })
-                }
-              />
-            </Form.Group>
-          </Col>
+            <Col md={2}>
+              <Form.Group>
+                <Form.Label>Image URL</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter image URL"
+                  onChange={(e) =>
+                    setPackagesInfo({
+                      ...packagesInfo,
+                      image_url: e.target.value,
+                    })
+                  }
+                />
+              </Form.Group>
+            </Col>
 
-          <Col md={2}>
-            <Form.Group>
-              <Form.Label>Image URL</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter image URL"
-                onChange={(e) =>
-                  setPackagesInfo({
-                    ...packagesInfo,
-                    image_url: e.target.value,
-                  })
-                }
-              />
-            </Form.Group>
-          </Col>
+            <Col md={2}>
+              <Button
+                variant="danger"
+                className="mt-4 w-50"
+                onClick={() => createPackages()}
+              >
+                ADD
+              </Button>
+            </Col>
+          </Row>
+        </Form>
+      )}
 
-          <Col md={2}>
+      <Modal show={ShowDeleteModal} onHide={() => setShowDeleteModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Delete Package</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>Are you sure you want to delete this package ?</p>{" "}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>
+            Close
+          </Button>
+          <Button
+            variant="danger"
+            onClick={() => {
+              deletePackages(checkId);
+              setShowDeleteModal(false);
+            }}
+          >
+            Delete Package
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <Modal show={updateModal} onHide={() => setUpdateModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Update Package</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Row className="mb-3">
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>
+                    <strong>Name of country</strong>
+                  </Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={selectedPackage.name}
+                    onChange={(e) =>
+                      setSelectedPackage({
+                        ...selectedPackage,
+                        name: e.target.value,
+                      })
+                    }
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>
+                    <strong>Destination</strong>
+                  </Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={selectedPackage.destination}
+                    onChange={(e) =>
+                      setSelectedPackage({
+                        ...selectedPackage,
+                        destination: e.target.value,
+                      })
+                    }
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <Row className="mb-3">
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>
+                    <strong>Duration days</strong>
+                  </Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={selectedPackage.duration_days}
+                    onChange={(e) =>
+                      setSelectedPackage({
+                        ...selectedPackage,
+                        duration_days: e.target.value,
+                      })
+                    }
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>
+                    <strong>Start date</strong>
+                  </Form.Label>
+                  <Form.Control
+                    type="datetime-local"
+                    value={selectedPackage.start_date}
+                    onChange={(e) =>
+                      setSelectedPackage({
+                        ...selectedPackage,
+                        start_date: e.target.value,
+                      })
+                    }
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <Row className="mb-3">
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>
+                    <strong>End date</strong>
+                  </Form.Label>
+                  <Form.Control
+                    type="datetime-local"
+                    value={selectedPackage.end_date}
+                    onChange={(e) =>
+                      setSelectedPackage({
+                        ...selectedPackage,
+                        end_date: e.target.value,
+                      })
+                    }
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>
+                    <strong>Hotel name</strong>
+                  </Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={selectedPackage.hotel_name}
+                    onChange={(e) =>
+                      setSelectedPackage({
+                        ...selectedPackage,
+                        hotel_name: e.target.value,
+                      })
+                    }
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <Row className="mb-3">
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>
+                    <strong>Price</strong>
+                  </Form.Label>
+                  <Form.Control
+                    type="number"
+                    value={selectedPackage.price}
+                    onChange={(e) =>
+                      setSelectedPackage({
+                        ...selectedPackage,
+                        price: e.target.value,
+                      })
+                    }
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>
+                    <strong>Description</strong>
+                  </Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={selectedPackage.description}
+                    onChange={(e) =>
+                      setSelectedPackage({
+                        ...selectedPackage,
+                        description: e.target.value,
+                      })
+                    }
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <Row className="mb-3">
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>
+                    <strong>Image url</strong>
+                  </Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={selectedPackage.image_url}
+                    onChange={(e) =>
+                      setSelectedPackage({
+                        ...selectedPackage,
+                        image_url: e.target.value,
+                      })
+                    }
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+
             <Button
               variant="danger"
-              className="mt-4 w-50"
-              onClick={() => createPackages()}
+              onClick={() => {
+                axios
+                  .put(
+                    `http://localhost:5000/Tour/update/${selectedPackage.tour_packages_id}`,
+                    selectedPackage,
+                    {
+                      headers: {
+                        Authorization: `Bearer ${token}`,
+                      },
+                    }
+                  )
+                  .then(() => {
+                    toast.success("The package was updated successfully.");
+
+                    setUpdateModal(false);
+                    axios
+                      .get("http://localhost:5000/Tour/all")
+                      .then((response) => {
+                        setTourPackages(response.data.result);
+                      });
+                  })
+                  .catch(() => {
+                    toast.error("Data update failed");
+                  });
+              }}
             >
-              ADD
+              Update
             </Button>
-          </Col>
-        </Row>
-      </Form>
-      <Modal
-                  show={ShowDeleteModal}
-                  onHide={() => setShowDeleteModal(false)}
-                >
-                  <Modal.Header closeButton>
-                    <Modal.Title>Delete Package</Modal.Title>
-                  </Modal.Header>
-                  <Modal.Body>
-                    <p>Are you sure you want to delete this package ?</p>{" "}
-                  </Modal.Body>
-                  <Modal.Footer>
-                    <Button
-                      variant="secondary"
-                      onClick={() => setShowDeleteModal(false)}
-                    >
-                      Close
-                    </Button>
-                    <Button
-                      variant="danger"
-                      onClick={() => {
-                        deletePackages(checkId);
-                        setShowDeleteModal(false);
-                      }}
-                    >
-                      Delete Package
-                    </Button>
-                  </Modal.Footer>
-                </Modal>
-                <Modal show={updateModal} onHide={() => setUpdateModal(false)}>
-                  <Modal.Header closeButton>
-                    <Modal.Title>Update Package</Modal.Title>
-                  </Modal.Header>
-                  <Modal.Body>
-                    <Form>
-                      <Row className="mb-3">
-                        <Col md={6}>
-                          <Form.Group>
-                            <Form.Label>
-                              <strong>Name of country</strong>
-                            </Form.Label>
-                            <Form.Control
-                              type="text"
-                              value={selectedPackage.name}
-                              onChange={(e) =>
-                                setSelectedPackage({
-                                  ...selectedPackage,
-                                  name: e.target.value,
-                                })
-                              }
-                            />
-                          </Form.Group>
-                        </Col>
-                        <Col md={6}>
-                          <Form.Group>
-                            <Form.Label>
-                              <strong>Destination</strong>
-                            </Form.Label>
-                            <Form.Control
-                              type="text"
-                              value={selectedPackage.destination}
-                              onChange={(e) =>
-                                setSelectedPackage({
-                                  ...selectedPackage,
-                                  destination: e.target.value,
-                                })
-                              }
-                            />
-                          </Form.Group>
-                        </Col>
-                      </Row>
-
-                      <Row className="mb-3">
-                        <Col md={6}>
-                          <Form.Group>
-                            <Form.Label>
-                              <strong>Duration days</strong>
-                            </Form.Label>
-                            <Form.Control
-                              type="text"
-                              value={selectedPackage.duration_days}
-                              onChange={(e) =>
-                                setSelectedPackage({
-                                  ...selectedPackage,
-                                  duration_days: e.target.value,
-                                })
-                              }
-                            />
-                          </Form.Group>
-                        </Col>
-                        <Col md={6}>
-                          <Form.Group>
-                            <Form.Label>
-                              <strong>Start date</strong>
-                            </Form.Label>
-                            <Form.Control
-                              type="datetime-local"
-                              value={selectedPackage.start_date}
-                              onChange={(e) =>
-                                setSelectedPackage({
-                                  ...selectedPackage,
-                                  start_date: e.target.value,
-                                })
-                              }
-                            />
-                          </Form.Group>
-                        </Col>
-                      </Row>
-
-                      <Row className="mb-3">
-                        <Col md={6}>
-                          <Form.Group>
-                            <Form.Label>
-                              <strong>End date</strong>
-                            </Form.Label>
-                            <Form.Control
-                              type="datetime-local"
-                              value={selectedPackage.end_date}
-                              onChange={(e) =>
-                                setSelectedPackage({
-                                  ...selectedPackage,
-                                  end_date: e.target.value,
-                                })
-                              }
-                            />
-                          </Form.Group>
-                        </Col>
-                        <Col md={6}>
-                          <Form.Group>
-                            <Form.Label>
-                              <strong>Hotel name</strong>
-                            </Form.Label>
-                            <Form.Control
-                              type="text"
-                              value={selectedPackage.hotel_name}
-                              onChange={(e) =>
-                                setSelectedPackage({
-                                  ...selectedPackage,
-                                  hotel_name: e.target.value,
-                                })
-                              }
-                            />
-                          </Form.Group>
-                        </Col>
-                      </Row>
-
-                      <Row className="mb-3">
-                        <Col md={6}>
-                          <Form.Group>
-                            <Form.Label>
-                              <strong>Price</strong>
-                            </Form.Label>
-                            <Form.Control
-                              type="number"
-                              value={selectedPackage.price}
-                              onChange={(e) =>
-                                setSelectedPackage({
-                                  ...selectedPackage,
-                                  price: e.target.value,
-                                })
-                              }
-                            />
-                          </Form.Group>
-                        </Col>
-                        <Col md={6}>
-                          <Form.Group>
-                            <Form.Label>
-                              <strong>Description</strong>
-                            </Form.Label>
-                            <Form.Control
-                              type="text"
-                              value={selectedPackage.description}
-                              onChange={(e) =>
-                                setSelectedPackage({
-                                  ...selectedPackage,
-                                  description: e.target.value,
-                                })
-                              }
-                            />
-                          </Form.Group>
-                        </Col>
-                      </Row>
-
-                      <Row className="mb-3">
-                        <Col md={6}>
-                          <Form.Group>
-                            <Form.Label>
-                              <strong>Image url</strong>
-                            </Form.Label>
-                            <Form.Control
-                              type="text"
-                              value={selectedPackage.image_url}
-                              onChange={(e) =>
-                                setSelectedPackage({
-                                  ...selectedPackage,
-                                  image_url: e.target.value,
-                                })
-                              }
-                            />
-                          </Form.Group>
-                        </Col>
-                      </Row>
-
-                      <Button
-                        variant="danger"
-                        onClick={() => {
-                          axios
-                            .put(
-                              `http://localhost:5000/Tour/update/${selectedPackage.tour_packages_id}`,
-                              selectedPackage,
-                              {
-                                headers: {
-                                  Authorization: `Bearer ${token}`,
-                                },
-                              }
-                            )
-                            .then(() => {
-                              toast.success(
-                                "The package was updated successfully."
-                              );
-
-                              setUpdateModal(false);
-                              axios
-                                .get("http://localhost:5000/Tour/all")
-                                .then((response) => {
-                                  setTourPackages(response.data.result);
-                                });
-                            })
-                            .catch(() => {
-                              toast.error("Data update failed");
-                            });
-                        }}
-                      >
-                        Update
-                      </Button>
-                    </Form>
-                  </Modal.Body>
-                </Modal>
+          </Form>
+        </Modal.Body>
+      </Modal>
       <div
         className="d-flex justify-content-center align-items-center flex-column"
         style={{ minHeight: "80vh" }}
@@ -572,8 +566,6 @@ const dispatch = useDispatch();
                   boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
                 }}
               >
-                
-
                 <img
                   src={item.image_url}
                   onClick={() => {
@@ -611,35 +603,41 @@ const dispatch = useDispatch();
                     >
                       BookNow
                     </Button>
-                    {
-  localStorage.getItem("token") && dispatch(role_id === 1) ? (
-    <Button
-      variant="danger"
-      style={{ marginLeft: "10px" }}
-      onClick={() => {
-        setShowDeleteModal(true);
-        setCheckId(item.tour_packages_id);
-      }}
-    >
-      Delete
-    </Button>
-  ) : (
-    <></> 
-  )
-}
-                    
-                    <Button
-                      variant="danger"
-                      style={{ marginLeft: "10px" }}
-                      onClick={() => {
-                        setSelectedPackage(item.checkId);
-                        setUpdateModal(true);
-                        console.log("Update", checkId);
-                        console.log(setSelectedPackage(item));
-                      }}
-                    >
-                      Update
-                    </Button>
+                    {role_id === 1 ? (
+                      <>
+                        
+                        {/* <MdDeleteForever style={{fontSize : "16.5px" , borderRight:"20px"}}/> */}
+                        <Button
+                        
+                          variant="danger"
+                          style={{ marginLeft: "10px" }}
+                          onClick={() => {
+                            setShowDeleteModal(true);
+                            setCheckId(item.tour_packages_id);
+                          }}
+                        >
+                          Delete
+                        </Button>
+                      </>
+                    ) : (
+                      <></>
+                    )}
+                    {role_id === 1 ? (
+                      <Button
+                        variant="danger"
+                        style={{ marginLeft: "10px" }}
+                        onClick={() => {
+                          setSelectedPackage(item.checkId);
+                          setUpdateModal(true);
+                          console.log("Update", checkId);
+                          console.log(setSelectedPackage(item));
+                        }}
+                      >
+                        Update
+                      </Button>
+                    ) : (
+                      <></>
+                    )}
                   </p>
                 </div>
               </div>
@@ -765,7 +763,7 @@ const dispatch = useDispatch();
                 variant="danger"
                 onClick={() =>
                   localStorage.getItem("token")
-                    ? handleCardModal()
+                    ? handlePayment(event)()
                     : handlePaymentNotAuth(event)
                 }
               >
@@ -775,6 +773,7 @@ const dispatch = useDispatch();
                 variant="secondary"
                 onClick={() => {
                   setShowDeleteModal(false);
+                  handleClosePayment(false);
                 }}
               >
                 Close

@@ -53,41 +53,12 @@ const Login = () => {
 
         dispatch(setRole_id(result.data.role));
 
-     
-
-
         navigate("/home");
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
-  // const loginWithGoogle = useGoogleLogin({
-  //   onSuccess: (tokenResponse) => {
-  //     console.log("ahmad", tokenResponse);
-
-  //     if (tokenResponse) {
-  //       axios
-  //         .post(`http://localhost:5000/user/login`, {
-  //           token: tokenResponse.access_token,
-  //           email,
-  //           password,
-  //         })
-  //         .then((response) => {
-  //           dispatch(setUserToken(response.data.token));
-  //           dispatch(userId(response.data.userId));
-  //           navigate("/home");
-  //         })
-  //         .catch((err) => {
-  //           console.log("Google login failed", err);
-  //         });
-  //     }
-  //   },
-  //   onError: (error) => {
-  //     console.log("Google login Failed", error);
-  //   },
-  // });
 
   const containerProps = useSpring({
     opacity: 1,
@@ -140,7 +111,7 @@ const Login = () => {
                 <Form.Group controlId="password" className="mt-3">
                   <InputGroup>
                     <InputGroup.Text>
-                    {lockedLock === true ? (
+                      {lockedLock === true ? (
                         <FaLock
                           onClick={() => {
                             setLockedLock(false);

@@ -5,7 +5,7 @@ import { Carousel } from 'react-bootstrap';
 const ImageSlider = () => {
   return (
     <div className="slider">
-      <Carousel className="slider p-3">
+      <Carousel className="slider p-2" style={{"borderRadius":"50px"}}>
         <Carousel.Item interval={5000}>
           <img
             src="https://images.pexels.com/photos/46148/aircraft-jet-landing-cloud-46148.jpeg"
