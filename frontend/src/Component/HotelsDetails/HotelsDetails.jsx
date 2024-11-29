@@ -140,7 +140,7 @@ const HotelsDetails = () => {
           <Carousel.Item interval={5000}>
             <img style={{ "border-radius": "25px" }}
               className="img"
-              src="https://media.istockphoto.com/id/487042276/photo/hotel-sign.jpg?s=612x612&w=0&k=20&c=DjEVAoFnjB2cWwX28cxSKWkxsbze7o9jgkYrhyfmq9E="
+              src="https://media.gettyimages.com/id/182238066/photo/asian-pool-villa.jpg?s=612x612&w=0&k=20&c=5wTUer7gyIXHoCLlNQ6gbUwQZRYEPdlvPji0wFiL3p8="
               alt="First slide"
               // className="d-block w-100"
             />
@@ -149,7 +149,7 @@ const HotelsDetails = () => {
           <Carousel.Item interval={5000}>
             <img style={{ "border-radius": "25px" }}
               className="img"
-              src="https://media.istockphoto.com/id/591821200/photo/3d-rendering-luxury-hotel-reception-and-lounge.jpg?s=612x612&w=0&k=20&c=ujKL3aloZrbd87Q8fI8L6vTGJ_eAmfipVGxak-c4RTc="
+              src="https://c4.wallpaperflare.com/wallpaper/971/27/637/beach-bungalow-view-out-in-the-maldives-wallpaper-preview.jpg"
               alt="Second slide"
               // className="d-block w-100"
             />
@@ -158,7 +158,7 @@ const HotelsDetails = () => {
           <Carousel.Item interval={5000}>
             <img style={{ "border-radius": "25px" }}
               className="img"
-              src="https://images.pexels.com/photos/261169/pexels-photo-261169.jpeg?auto=compress&cs=tinysrgb&w=600"
+              src="https://images.samsung.com/is/image/samsung/p6pim/levant/feature/163912081/levant-feature-add-comfort-to-every-room-531095840?$FB_TYPE_A_JPG$"
               // className="d-block w-100"
             />
           </Carousel.Item>

@@ -17,6 +17,11 @@ import {
 } from "mdb-react-ui-kit";
 
 const MyProfile = () => {
+  let avatar =
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVm7KqMOxRFzRD_muNtnG-Gk0gOx7n5Uyn_PQn-aHQBUH6gMCwrbCnoAQ&s";
+  avatar =
+    "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp";
+
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState([]);
   useEffect(() => {
@@ -157,14 +162,25 @@ const MyProfile = () => {
                   <MDBCol md="12" xl="4">
                     <MDBCard style={{ borderRadius: "15px" }}>
                       <MDBCardBody className="text-center">
-                        <div className="mt-3 mb-4">
-                          <MDBCardImage
-                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVm7KqMOxRFzRD_muNtnG-Gk0gOx7n5Uyn_PQn-aHQBUH6gMCwrbCnoAQ&s"
-                            className="rounded-circle"
-                            fluid
-                            style={{ width: "100px" }}
-                          />
-                        </div>
+                        {localStorage.getItem("userId") == 1 ? (
+                          <div className="mt-3 mb-4">
+                            <MDBCardImage
+                              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVm7KqMOxRFzRD_muNtnG-Gk0gOx7n5Uyn_PQn-aHQBUH6gMCwrbCnoAQ&s"
+                              className="rounded-circle"
+                              fluid
+                              style={{ width: "100px" }}
+                            />
+                          </div>
+                        ) : (
+                          <div className="mt-3 mb-4">
+                            <MDBCardImage
+                              src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
+                              className="rounded-circle"
+                              fluid
+                              style={{ width: "100px" }}
+                            />
+                          </div>
+                        )}
                         <MDBTypography tag="h4">
                           {ele.first_name + " " + ele.last_name}
                         </MDBTypography>
@@ -201,6 +217,12 @@ const MyProfile = () => {
                             size="lg"
                             variant="danger"
                             style={{ marginTop: "15px" }}
+                            onClick={() => {
+                              localStorage.removeItem("token");
+                              localStorage.removeItem("userId");
+                              localStorage.removeItem("role_id");
+                              navigate("/login");
+                            }}
                           >
                             LogOut
                           </Button>
