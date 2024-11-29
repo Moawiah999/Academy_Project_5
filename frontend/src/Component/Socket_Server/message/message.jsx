@@ -1,5 +1,15 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
+import {
+  MDBContainer,
+  MDBRow,
+  MDBCol,
+  MDBCard,
+  MDBCardHeader,
+  MDBCardBody,
+  MDBIcon,
+  MDBTextArea,
+} from "mdb-react-ui-kit";
 
 const Message = ({ socket, user_id }) => {
   const [to, setTo] = useState("");
@@ -47,7 +57,7 @@ const Message = ({ socket, user_id }) => {
           return (
             <p>
               <small>
-                from:{message.from} {message.message}
+                from {message.from}: TO :{message.to} {message.message}
               </small>
             </p>
           );
