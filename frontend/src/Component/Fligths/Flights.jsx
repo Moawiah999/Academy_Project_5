@@ -27,7 +27,6 @@ const Flights = () => {
   const [flights, setFlights] = useState([]);
   const [loading, setLoading] = useState(true);
   const [flightsId, setFlightsId] = useState(0);
-  const [omar, setOmar] = useState("")
   const handlePayment = (e) => {
     e.preventDefault();
     toast.success("Payment Confirmed! Thank you for booking.");
