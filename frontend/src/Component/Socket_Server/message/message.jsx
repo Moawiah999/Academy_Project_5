@@ -45,6 +45,7 @@ const Message = ({ socket, user_id }) => {
   };
   const sendMessage = () => {
     socket.emit("message", { to, from: user_id, message });
+    setMessage("");
   };
   /* const fromUser = (messaage)=>{
     if (message.from === 1){
@@ -56,7 +57,7 @@ const Message = ({ socket, user_id }) => {
     {
       localStorage.getItem("role_id") == 1 ? setTo(2) : setTo(1);
     }
-    console.log(to);
+    // console.log(to);
   }, 2000);
 
   if (loading) {
@@ -254,14 +255,16 @@ const Message = ({ socket, user_id }) => {
                     class="form-control form-control-lg"
                     id="exampleFormControlInput1"
                     placeholder="Type message"
+                    value={message}
                     onChange={(e) => {
                       setMessage(e.target.value);
                     }}
                   ></input>
                   <BsCursorFill
                     style={{ width: "35px", height: "100%" }}
-                    onClick={() => {
+                    onClick={(e) => {
                       sendMessage();
+                      // setMessage("");
                     }}
                   />
                 </MDBCardFooter>

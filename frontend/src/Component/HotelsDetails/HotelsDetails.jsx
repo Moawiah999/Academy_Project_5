@@ -125,20 +125,18 @@ const HotelsDetails = () => {
         className="d-flex justify-content-center align-items-center"
         style={{ height: "100vh" }}
       >
-        <Spinner
-          animation="border"
-          style={{ color: "#ff5733" }} 
-        />
+        <Spinner animation="border" style={{ color: "#ff5733" }} />
       </div>
     );
-  }  
+  }
   return (
     <>
       {/* <div>HotelsDetails</div> */}
       <div className="slider">
-        <Carousel className="slider p-3" >
+        <Carousel className="slider p-3">
           <Carousel.Item interval={5000}>
-            <img style={{ "border-radius": "25px" }}
+            <img
+              style={{ "border-radius": "25px" }}
               className="img"
               src="https://media.gettyimages.com/id/182238066/photo/asian-pool-villa.jpg?s=612x612&w=0&k=20&c=5wTUer7gyIXHoCLlNQ6gbUwQZRYEPdlvPji0wFiL3p8="
               alt="First slide"
@@ -147,7 +145,8 @@ const HotelsDetails = () => {
           </Carousel.Item>
 
           <Carousel.Item interval={5000}>
-            <img style={{ "border-radius": "25px" }}
+            <img
+              style={{ "border-radius": "25px" }}
               className="img"
               src="https://c4.wallpaperflare.com/wallpaper/971/27/637/beach-bungalow-view-out-in-the-maldives-wallpaper-preview.jpg"
               alt="Second slide"
@@ -156,7 +155,8 @@ const HotelsDetails = () => {
           </Carousel.Item>
 
           <Carousel.Item interval={5000}>
-            <img style={{ "border-radius": "25px" }}
+            <img
+              style={{ "border-radius": "25px" }}
               className="img"
               src="https://images.samsung.com/is/image/samsung/p6pim/levant/feature/163912081/levant-feature-add-comfort-to-every-room-531095840?$FB_TYPE_A_JPG$"
               // className="d-block w-100"
@@ -728,6 +728,7 @@ const HotelsDetails = () => {
                             </Form.Label>
                             <Form.Control
                               type="text"
+                              
                               placeholder={updateHotel.rate}
                               onChange={(e) => {
                                 setEditHotel({
