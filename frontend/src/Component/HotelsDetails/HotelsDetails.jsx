@@ -33,7 +33,7 @@ const HotelsDetails = () => {
   const [title, setTitle] = useState("");
   const [findHotel, setFindHotel] = useState({
     name: "",
-    // rate: "",
+    rate: "",
     city: "",
     price: "",
   });
@@ -66,12 +66,12 @@ const HotelsDetails = () => {
         setHotelDetails(result.data.result);
         // console.log("ahmad", hotelDetails);
         // setFindHotel(result.data.result);
-        // setTitle(result.data.result);
+        setTitle("");
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [title]);
   const handleCloseUpdate = () => {
     setShowUpdate(false);
     toast.success("Hotel Updated Successfully");
@@ -102,8 +102,12 @@ const HotelsDetails = () => {
     setHotelPayment(false);
   };
   const shortDescription = (description) => {
-    const words = description.split(" ");
-    return words.slice(0, 4).join(" ") + " ...";
+    if (typeof description === "string" && description.trim().length > 0) {
+      const words = description.split(" ");
+      return words.slice(0, 4).join(" ") + " ...";
+    } else {
+      return "";
+    }
   };
   const starsRate = (rate) => {
     if (rate === "5") {
@@ -123,42 +127,42 @@ const HotelsDetails = () => {
     return (
       <div
         className="d-flex justify-content-center align-items-center"
-        style={{ height: "100vh" }}
+        style={{ height: "70vh" }}
       >
-        <Spinner
-          animation="border"
-          style={{ color: "#ff5733" }} 
-        />
+        <Spinner animation="border" style={{ color: "#ff5733" }} />
       </div>
     );
-  }  
+  }
   return (
     <>
       {/* <div>HotelsDetails</div> */}
       <div className="slider">
-        <Carousel className="slider p-3" >
+        <Carousel className="slider p-3">
           <Carousel.Item interval={5000}>
-            <img style={{ "border-radius": "25px" }}
+            <img
+              style={{ "border-radius": "25px" }}
               className="img"
-              src="https://media.istockphoto.com/id/487042276/photo/hotel-sign.jpg?s=612x612&w=0&k=20&c=DjEVAoFnjB2cWwX28cxSKWkxsbze7o9jgkYrhyfmq9E="
+              src="/images/HotelSlider1.jpg"
               alt="First slide"
               // className="d-block w-100"
             />
           </Carousel.Item>
 
           <Carousel.Item interval={5000}>
-            <img style={{ "border-radius": "25px" }}
+            <img
+              style={{ "border-radius": "25px" }}
               className="img"
-              src="https://media.istockphoto.com/id/591821200/photo/3d-rendering-luxury-hotel-reception-and-lounge.jpg?s=612x612&w=0&k=20&c=ujKL3aloZrbd87Q8fI8L6vTGJ_eAmfipVGxak-c4RTc="
+              src="/images/HotelSlider2.jpg"
               alt="Second slide"
               // className="d-block w-100"
             />
           </Carousel.Item>
 
           <Carousel.Item interval={5000}>
-            <img style={{ "border-radius": "25px" }}
+            <img
+              style={{ "border-radius": "25px" }}
               className="img"
-              src="https://images.pexels.com/photos/261169/pexels-photo-261169.jpeg?auto=compress&cs=tinysrgb&w=600"
+              src="/images/HotelSlider3.jpg"
               // className="d-block w-100"
             />
           </Carousel.Item>
@@ -228,9 +232,59 @@ const HotelsDetails = () => {
             </Form.Group>
           </Col>
           <Col md={2}>
+            <Form.Label>Hotel Rate :</Form.Label>
+            <DropdownButton
+              id="dropdown-basic-button"
+              variant="danger"
+              title="Hotel Rate"
+            >
+              <Dropdown.Item
+                onClick={() => {
+                  setStars("");
+                  // setHotelDetails(title);
+                  setLoading(true);
+                  setTitle("All");
+                  setTimeout(() => {
+                    setLoading(false);
+                  }, 2000);
+                }}
+              >
+                All
+              </Dropdown.Item>
+              <Dropdown.Item
+                value={"⭐️⭐️⭐️⭐️⭐️"}
+                onClick={() => {
+                  setStars("5");
+                  console.log(stars);
+                  setFindHotel({ ...findHotel, rate: "5" });
+                }}
+              >
+                5 Stars⭐️⭐️⭐️⭐️⭐️
+              </Dropdown.Item>
+              <Dropdown.Item
+                onClick={() => {
+                  setStars("4");
+                  setFindHotel({ ...findHotel, rate: "4" });
+                  // setTitle("5 stars");
+                }}
+              >
+                4 Stars⭐️⭐️⭐️⭐️☆
+              </Dropdown.Item>
+              <Dropdown.Item
+                onClick={() => {
+                  setStars("3");
+                  console.log(stars);
+                  setFindHotel({ ...findHotel, rate: "3" });
+                }}
+              >
+                3 Stars⭐️⭐️⭐️☆☆
+              </Dropdown.Item>
+            </DropdownButton>
+          </Col>
+          <Col md={2}>
             <Button
               variant="danger"
-              className="mt-4 w-50"
+              className="mt-4 "
               onClick={() => {
                 console.log(findHotel);
                 const detail = hotelDetails.filter((ele, i) => {
@@ -238,7 +292,19 @@ const HotelsDetails = () => {
                           ele.name.includes(findHotel.name) ||
                             ele.name.includes(stars)
                         ); */
-                  return ele.name.includes(findHotel.name);
+                  return (
+                    /*  ele.name.includes(findHotel.name) ||
+                    ele.location.includes(findHotel.location) ||
+                    ele.price_per_night.includes(findHotel.price_per_night) || */
+                    ele.rate.includes(findHotel.rate) &&
+                    ele.location
+                      .toLowerCase()
+                      .includes(findHotel.city.toLowerCase()) &&
+                    ele.name
+                      .toLowerCase()
+                      .includes(findHotel.name.toLowerCase()) &&
+                    ele.price_per_night.includes(findHotel.price)
+                  );
                 });
                 // console.log(stars);
                 console.log(detail);
@@ -247,51 +313,21 @@ const HotelsDetails = () => {
             >
               Search
             </Button>
+            <Button
+              variant="danger"
+              className="mt-4"
+              style={{ marginLeft: "10px" }}
+              onClick={() => {
+                setTitle("AllData");
+              }}
+            >
+              Get All Hotels
+            </Button>
           </Col>
         </Row>
       </Form>
       <Form style={{ marginTop: "50px" }}>
-        <Row className="align-items-end">
-          {/*    <Form.Label>Stars</Form.Label>
-        <DropdownButton
-            id="dropdown-basic-button"
-            variant="danger"
-            title="Stars"
-          >
-            <Dropdown.Item
-              onClick={() => {
-                setStars("");
-              }}
-            >
-              All
-            </Dropdown.Item>
-            <Dropdown.Item
-              value={"⭐️⭐️⭐️⭐️⭐️"}
-              onClick={() => {
-                setStars("⭐️⭐️⭐️⭐️⭐️");
-                console.log(stars);
-              }}
-            >
-              5 Stars⭐️⭐️⭐️⭐️⭐️
-            </Dropdown.Item>
-            <Dropdown.Item
-              onClick={() => {
-                setStars("⭐️⭐️⭐️⭐️☆");
-                // setTitle("5 stars");
-              }}
-            >
-              4 Stars⭐️⭐️⭐️⭐️☆
-            </Dropdown.Item>
-            <Dropdown.Item
-              onClick={() => {
-                setStars("⭐️⭐️⭐️☆☆");
-                console.log(stars);
-              }}
-            >
-              3 Stars⭐️⭐️⭐️☆☆
-            </Dropdown.Item>
-          </DropdownButton> */}
-        </Row>
+        <Row className="align-items-end"></Row>
       </Form>
       <>
         {localStorage.getItem("role_id") == 1 ? (
@@ -433,8 +469,9 @@ const HotelsDetails = () => {
                           } */
                         )
                         .then((result) => {
-                          console.log(result);
-                          F;
+                          console.log(result.data.result);
+                          hotelDetails.push(result.data.result);
+                          setTitle("Hotel Created");
                           toast.success("The hotel was created successfully.");
                         })
                         .catch((err) => {
@@ -455,7 +492,7 @@ const HotelsDetails = () => {
 
         <br />
         <div
-          className="packages-container"
+          className="hotel-container"
           style={{ fontFamily: "Roboto, sans-serif" }}
         >
           <div
@@ -471,12 +508,12 @@ const HotelsDetails = () => {
               style={{ gap: "70px" }}
             >
               {hotelDetails.map((ele, i) => (
-                <Col key={i} className="d-flex justify-content-center">
+                <Col key={i} lg={3} className="justify-content-center">
                   <div
-                    className="package-item"
+                    className="hotel-item"
                     style={{
                       cursor: "pointer",
-                      width: "100%",
+                      width: "100vh",
                       maxWidth: "350px",
                       margin: "0 auto",
                       marginBottom: "30px",
@@ -601,6 +638,7 @@ const HotelsDetails = () => {
                     )
                     .then((result) => {
                       handleCloseDelete();
+                      setTitle("Hotel Deleted");
                     })
                     .catch((err) => {
                       console.log(err);
@@ -638,10 +676,17 @@ const HotelsDetails = () => {
                               type="text"
                               placeholder={updateHotel.name}
                               onChange={(e) => {
-                                setEditHotel({
-                                  ...editHotel,
-                                  name: e.target.value,
-                                });
+                                setEditHotel(
+                                  e.target.value
+                                    ? {
+                                        ...editHotel,
+                                        name: e.target.value,
+                                      }
+                                    : {
+                                        ...editHotel,
+                                        name: updateHotel.name,
+                                      }
+                                );
                               }}
                             />
                           </Form.Group>
@@ -679,10 +724,17 @@ const HotelsDetails = () => {
                               as="textarea"
                               placeholder={updateHotel.description}
                               onChange={(e) => {
-                                setEditHotel({
-                                  ...editHotel,
-                                  description: e.target.value,
-                                });
+                                setEditHotel(
+                                  e.target.value
+                                    ? {
+                                        ...editHotel,
+                                        description: e.target.value,
+                                      }
+                                    : {
+                                        ...editHotel,
+                                        description: updateHotel.description,
+                                      }
+                                );
                               }}
                             />
                           </Form.Group>
@@ -696,10 +748,17 @@ const HotelsDetails = () => {
                               type="text"
                               placeholder={updateHotel.location}
                               onChange={(e) => {
-                                setEditHotel({
-                                  ...editHotel,
-                                  location: e.target.value,
-                                });
+                                setEditHotel(
+                                  e.target.value
+                                    ? {
+                                        ...editHotel,
+                                        location: e.target.value,
+                                      }
+                                    : {
+                                        ...editHotel,
+                                        location: updateHotel.location,
+                                      }
+                                );
                               }}
                             />
                           </Form.Group>
@@ -713,10 +772,18 @@ const HotelsDetails = () => {
                               type="text"
                               placeholder={updateHotel.price_per_night + "$"}
                               onChange={(e) => {
-                                setEditHotel({
-                                  ...editHotel,
-                                  price_per_night: e.target.value,
-                                });
+                                setEditHotel(
+                                  e.target.value
+                                    ? {
+                                        ...editHotel,
+                                        price_per_night: e.target.value,
+                                      }
+                                    : {
+                                        ...editHotel,
+                                        price_per_night:
+                                          updateHotel.price_per_night,
+                                      }
+                                );
                               }}
                             />
                           </Form.Group>
@@ -730,10 +797,17 @@ const HotelsDetails = () => {
                               type="text"
                               placeholder={updateHotel.rate}
                               onChange={(e) => {
-                                setEditHotel({
-                                  ...editHotel,
-                                  rate: e.target.value,
-                                });
+                                setEditHotel(
+                                  e.target.value
+                                    ? {
+                                        ...editHotel,
+                                        rate: e.target.value,
+                                      }
+                                    : {
+                                        ...editHotel,
+                                        rate: updateHotel.rate,
+                                      }
+                                );
                               }}
                             />
                           </Form.Group>
@@ -775,53 +849,66 @@ const HotelsDetails = () => {
               </div>
             </Modal.Body>
           </Modal>
-          <Modal show={showDetail} onHide={() => setShowDetail()}>
+          <Modal show={showDetail} onHide={() => setShowDetail()} size="xl">
             <Modal.Header closeButton>
               <Modal.Title>Hotel Information</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               {chosenHotel && (
                 <>
-                  <p>
-                    <strong>Hotel Name:</strong> {chosenHotel.name}
-                    {/* {setHotel_id(chosenHotel.hotel_id)} */}
-                  </p>
-                  <p>
-                    <strong>City :</strong> {chosenHotel.location}
-                  </p>
-                  <p>
-                    <strong>Description :</strong> {chosenHotel.description}
-                  </p>
-                  <p>
-                    <strong>From Date :</strong>
-                    <Col lg={10}>
-                      <Form.Group>
-                        <Form.Control
-                          type="date"
-                          onChange={(e) => setFromDate(e.target.value)}
-                        />
-                      </Form.Group>
-                    </Col>
-                  </p>
-                  <p>
-                    <strong>To Date :</strong>{" "}
-                    {/* {new Date(chosenHotel.arrival_time).toLocaleString()} */}
-                    <Col lg={10}>
-                      <Form.Group>
-                        <Form.Control
-                          type="date"
-                          onChange={(e) => setToDate(e.target.value)}
-                        />
-                      </Form.Group>
-                    </Col>
-                  </p>
-                  <p>
-                    <strong>Rate :</strong> {starsRate(chosenHotel.rate)}
-                  </p>
-                  <p>
-                    <strong>Price Per Night :</strong> $
-                    {chosenHotel.price_per_night}
-                  </p>
+                  <div className="row">
+                    <div className="col-md-4">
+                      <img
+                        className="d-block w-100"
+                        src={chosenHotel.image_url}
+                        alt="Hotel image"
+                      />
+                    </div>
+                    <div className="col-md-8">
+                      <p>
+                        <strong>Hotel Name:</strong> {chosenHotel.name}
+                        {/* {setHotel_id(chosenHotel.hotel_id)} */}
+                      </p>
+                      <p>
+                        <strong>City :</strong> {chosenHotel.location}
+                      </p>
+                      <p>
+                        <strong>Description :</strong> {chosenHotel.description}
+                      </p>
+                      <p>
+                        <strong>From Date :</strong>
+                        <Col lg={10}>
+                          <Form.Group>
+                            <Form.Control
+                              type="date"
+                              min={new Date().toISOString().split("T")[0]}
+                              onChange={(e) => setFromDate(e.target.value)}
+                            />
+                          </Form.Group>
+                        </Col>
+                      </p>
+                      <p>
+                        <strong>To Date :</strong>{" "}
+                        {/* {new Date(chosenHotel.arrival_time).toLocaleString()} */}
+                        <Col lg={10}>
+                          <Form.Group>
+                            <Form.Control
+                              type="date"
+                              min={new Date().toISOString().split("T")[0]}
+                              onChange={(e) => setToDate(e.target.value)}
+                            />
+                          </Form.Group>
+                        </Col>
+                      </p>
+                      <p>
+                        <strong>Rate :</strong> {starsRate(chosenHotel.rate)}
+                      </p>
+                      <p>
+                        <strong>Price Per Night :</strong> $
+                        {chosenHotel.price_per_night}
+                      </p>
+                    </div>
+                  </div>
                 </>
               )}
             </Modal.Body>
