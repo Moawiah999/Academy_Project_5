@@ -5,7 +5,7 @@ import { GrUpdate } from "react-icons/gr";
 import { MdDeleteOutline } from "react-icons/md";
 import { RiVisaFill } from "react-icons/ri";
 import { FaCreditCard, FaCalendarAlt, FaLock } from "react-icons/fa";
-import "../NavBar/navbar.css"
+import "../NavBar/navbar.css";
 import {
   Container,
   Row,
@@ -13,7 +13,8 @@ import {
   Button,
   Form,
   Card,
-  Modal,Spinner 
+  Modal,
+  Spinner,
 } from "react-bootstrap";
 import axios from "axios";
 const Flights = () => {
@@ -67,7 +68,7 @@ const Flights = () => {
         console.log("err: ", err);
         setLoading(false);
       });
-  }, []);
+  }, [flights]);
   const handleShowModal = (flight) => {
     setSelectedFlight(flight);
     setFlightInformation({
@@ -90,19 +91,16 @@ const Flights = () => {
         className="d-flex justify-content-center align-items-center"
         style={{ height: "100vh" }}
       >
-        <Spinner
-          animation="border"
-          style={{ color: "#ff5733" }} 
-        />
+        <Spinner animation="border" style={{ color: "#ff5733" }} />
       </div>
     );
-  }  
+  }
   return (
     <Container>
       <ToastContainer />
       {role_id === 1 ? (
         <Form className="mb-4">
-          <h3  className="title">New Trip</h3>
+          <h3 className="title">New Trip</h3>
           <Row className="mb-3">
             <Col md={4}>
               <Form.Group>
@@ -171,6 +169,7 @@ const Flights = () => {
                 <Form.Label>Departure Date</Form.Label>
                 <Form.Control
                   type="datetime-local"
+                  min={new Date().toISOString().slice(0, 16)}
                   onChange={(e) =>
                     setFlightInformation({
                       ...flightInformation,
@@ -185,6 +184,7 @@ const Flights = () => {
                 <Form.Label>Arrival Date</Form.Label>
                 <Form.Control
                   type="datetime-local"
+                  min={new Date().toISOString().slice(0, 16)}
                   onChange={(e) =>
                     setFlightInformation({
                       ...flightInformation,
@@ -234,6 +234,10 @@ const Flights = () => {
                     })
                     .then((result) => {
                       toast.success("The flight was created successfully.");
+                      setFlights((prevFlights) => [
+                        ...prevFlights,
+                        result.data,
+                      ]);
                     })
                     .catch((err) => {
                       console.log("Error while creating flight:", err);
