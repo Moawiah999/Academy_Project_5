@@ -5,6 +5,7 @@ import { GrUpdate } from "react-icons/gr";
 import { MdDeleteOutline } from "react-icons/md";
 import { RiVisaFill } from "react-icons/ri";
 import { FaCreditCard, FaCalendarAlt, FaLock } from "react-icons/fa";
+import "../NavBar/navbar.css"
 import {
   Container,
   Row,
@@ -56,7 +57,6 @@ const Flights = () => {
     setShowPayment(true);
   };
   useEffect(() => {
-    console.log("role_id :", role_id);
     axios
       .get("http://localhost:5000/flights/")
       .then((result) => {
@@ -102,7 +102,7 @@ const Flights = () => {
       <ToastContainer />
       {role_id === 1 ? (
         <Form className="mb-4">
-          <h3>New Trip</h3>
+          <h3  className="title">New Trip</h3>
           <Row className="mb-3">
             <Col md={4}>
               <Form.Group>
