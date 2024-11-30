@@ -15,9 +15,12 @@ const getReservationsById = async (req, res) => {
       flights.price,
       hotels.name,
       hotels.location,
+      hotels.rate,
       hotels.price_per_night,
-      tour_packages.name,
-      tour_packages.price
+      tour_packages.destination,
+      tour_packages.price,
+      tour_packages.start_date,
+      tour_packages.end_date
     FROM reservations
     LEFT JOIN flights ON reservations.flight_id = flights.flights_id
     LEFT JOIN hotels ON reservations.hotel_id = hotels.hotel_id
@@ -42,8 +45,6 @@ const getReservationsById = async (req, res) => {
     });
   }
 };
-
-
 
 const createFlightsReservation = (req, res) => {
   const user_id = req.token.userId;
