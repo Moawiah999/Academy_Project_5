@@ -15,6 +15,7 @@ import {
   MDBIcon,
 } from "mdb-react-ui-kit";
 import { useNavigate } from "react-router-dom";
+import { Button } from "react-bootstrap";
 
 const MyProfile = () => {
   const navigate = useNavigate();
@@ -45,35 +46,73 @@ const MyProfile = () => {
                       src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVm7KqMOxRFzRD_muNtnG-Gk0gOx7n5Uyn_PQn-aHQBUH6gMCwrbCnoAQ&s"
                       className="rounded-circle"
                       fluid
-                      style={{ width: "150px" }}
+                      style={{ width: "150px" , marginTop:"35px" }}
                     />
-                    <p className="text-muted mb-1">Full Stack Developer</p>
-                    <p className="text-muted mb-4">
-                      {ele.first_name},{ele.last_name}
+                      <p className="text-muted mb-4">
+                      {ele.first_name+" "+ele.last_name}
                     </p>
-                    <p className="text-muted mb-4">{ele.country}</p>
-                    <div className="d-flex justify-content-center mb-2">
-                      <MDBBtn>Follow</MDBBtn>
-                      <MDBBtn outline className="ms-1">
-                        Message
-                      </MDBBtn>
+                    <p className="text-muted mb-1">Full Stack Developer</p>
+                 
+                    <div className="d-flex justify-content-center mb-2" style={{marginTop:"45px"}}>
+                     
+                      <Button
+                        rounded
+                        size="md"
+                        variant="danger"
+                        style={{ marginBottom: "0px" }}
+                        onClick={() => {
+                          navigate("/message");
+                        }}
+                      >
+                        Message now
+                      </Button>
+                      <Button
+
+                            rounded
+                            size="md"
+                            variant="danger"
+                            style={{ marginLeft: "15px" }}
+                            onClick={()=>{
+                              localStorage.removeItem("token");
+                            localStorage.removeItem("userId");
+                            localStorage.removeItem("role_id");
+                            navigate("/login");
+                            }}
+                          >
+                            LogOut
+                          </Button>
                     </div>
                   </MDBCardBody>
                 </MDBCard>
               </MDBCol>
 
-              <MDBCol lg="8">
+              <MDBCol lg="8" >
                 <MDBCard className="mb-4">
-                  <MDBCardBody>
+                  <MDBCardBody style={{marginTop :"25px"}}>
                     <MDBRow>
                       <MDBCol sm="3">
-                        <MDBCardText>Full Name</MDBCardText>
+                        <MDBCardText>First name</MDBCardText>
                       </MDBCol>
                       <MDBCol sm="9">
                         <MDBCardText className="text-muted">
-                          {ele.first_name + " " + ele.last_name}
+                          {ele.first_name }
                         </MDBCardText>
                       </MDBCol>
+
+                      <hr />
+                      <MDBCol sm="3">
+                        <MDBCardText>Last name</MDBCardText>
+                      </MDBCol>
+                      <MDBCol sm="9">
+                        <MDBCardText className="text-muted">
+                          {ele.last_name }
+                        </MDBCardText>
+                      </MDBCol>
+                      {/* <MDBCol sm="9">
+                        <MDBCardText className="text-muted">
+                          {ele.first_name + " " + ele.last_name}
+                        </MDBCardText>
+                      </MDBCol> */}
                     </MDBRow>
                     <hr />
                     <MDBRow>
