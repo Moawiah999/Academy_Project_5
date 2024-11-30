@@ -434,7 +434,7 @@ const HotelsDetails = () => {
                         )
                         .then((result) => {
                           console.log(result);
-                          F;
+
                           toast.success("The hotel was created successfully.");
                         })
                         .catch((err) => {
@@ -638,10 +638,17 @@ const HotelsDetails = () => {
                               type="text"
                               placeholder={updateHotel.name}
                               onChange={(e) => {
-                                setEditHotel({
-                                  ...editHotel,
-                                  name: e.target.value,
-                                });
+                                setEditHotel(
+                                  e.target.value
+                                    ? {
+                                        ...editHotel,
+                                        name: e.target.value,
+                                      }
+                                    : {
+                                        ...editHotel,
+                                        name: updateHotel.name,
+                                      }
+                                );
                               }}
                             />
                           </Form.Group>
@@ -679,10 +686,17 @@ const HotelsDetails = () => {
                               as="textarea"
                               placeholder={updateHotel.description}
                               onChange={(e) => {
-                                setEditHotel({
-                                  ...editHotel,
-                                  description: e.target.value,
-                                });
+                                setEditHotel(
+                                  e.target.value
+                                    ? {
+                                        ...editHotel,
+                                        description: e.target.value,
+                                      }
+                                    : {
+                                        ...editHotel,
+                                        description: updateHotel.description,
+                                      }
+                                );
                               }}
                             />
                           </Form.Group>
@@ -696,10 +710,17 @@ const HotelsDetails = () => {
                               type="text"
                               placeholder={updateHotel.location}
                               onChange={(e) => {
-                                setEditHotel({
-                                  ...editHotel,
-                                  location: e.target.value,
-                                });
+                                setEditHotel(
+                                  e.target.value
+                                    ? {
+                                        ...editHotel,
+                                        location: e.target.value,
+                                      }
+                                    : {
+                                        ...editHotel,
+                                        location: updateHotel.location,
+                                      }
+                                );
                               }}
                             />
                           </Form.Group>
@@ -713,10 +734,18 @@ const HotelsDetails = () => {
                               type="text"
                               placeholder={updateHotel.price_per_night + "$"}
                               onChange={(e) => {
-                                setEditHotel({
-                                  ...editHotel,
-                                  price_per_night: e.target.value,
-                                });
+                                setEditHotel(
+                                  e.target.value
+                                    ? {
+                                        ...editHotel,
+                                        price_per_night: e.target.value,
+                                      }
+                                    : {
+                                        ...editHotel,
+                                        price_per_night:
+                                          updateHotel.price_per_night,
+                                      }
+                                );
                               }}
                             />
                           </Form.Group>
@@ -728,13 +757,19 @@ const HotelsDetails = () => {
                             </Form.Label>
                             <Form.Control
                               type="text"
-                              
                               placeholder={updateHotel.rate}
                               onChange={(e) => {
-                                setEditHotel({
-                                  ...editHotel,
-                                  rate: e.target.value,
-                                });
+                                setEditHotel(
+                                  e.target.value
+                                    ? {
+                                        ...editHotel,
+                                        rate: e.target.value,
+                                      }
+                                    : {
+                                        ...editHotel,
+                                        rate: updateHotel.rate,
+                                      }
+                                );
                               }}
                             />
                           </Form.Group>
@@ -783,46 +818,59 @@ const HotelsDetails = () => {
             <Modal.Body>
               {chosenHotel && (
                 <>
-                  <p>
-                    <strong>Hotel Name:</strong> {chosenHotel.name}
-                    {/* {setHotel_id(chosenHotel.hotel_id)} */}
-                  </p>
-                  <p>
-                    <strong>City :</strong> {chosenHotel.location}
-                  </p>
-                  <p>
-                    <strong>Description :</strong> {chosenHotel.description}
-                  </p>
-                  <p>
-                    <strong>From Date :</strong>
-                    <Col lg={10}>
-                      <Form.Group>
-                        <Form.Control
-                          type="date"
-                          onChange={(e) => setFromDate(e.target.value)}
-                        />
-                      </Form.Group>
-                    </Col>
-                  </p>
-                  <p>
-                    <strong>To Date :</strong>{" "}
-                    {/* {new Date(chosenHotel.arrival_time).toLocaleString()} */}
-                    <Col lg={10}>
-                      <Form.Group>
-                        <Form.Control
-                          type="date"
-                          onChange={(e) => setToDate(e.target.value)}
-                        />
-                      </Form.Group>
-                    </Col>
-                  </p>
-                  <p>
-                    <strong>Rate :</strong> {starsRate(chosenHotel.rate)}
-                  </p>
-                  <p>
-                    <strong>Price Per Night :</strong> $
-                    {chosenHotel.price_per_night}
-                  </p>
+                  <div className="row">
+                    <div className="col-md-4">
+                      <img
+                        className="d-block w-100"
+                        src={chosenHotel.image_url}
+                        alt="Package image"
+                      />
+                    </div>
+                    <div className="col-md-4">
+                      <p>
+                        <strong>Hotel Name:</strong> {chosenHotel.name}
+                        {/* {setHotel_id(chosenHotel.hotel_id)} */}
+                      </p>
+                      <p>
+                        <strong>City :</strong> {chosenHotel.location}
+                      </p>
+                      <p>
+                        <strong>Description :</strong> {chosenHotel.description}
+                      </p>
+                      <p>
+                        <strong>From Date :</strong>
+                        <Col lg={10}>
+                          <Form.Group>
+                            <Form.Control
+                              type="date"
+                              min={new Date().toISOString().split("T")[0]}
+                              onChange={(e) => setFromDate(e.target.value)}
+                            />
+                          </Form.Group>
+                        </Col>
+                      </p>
+                      <p>
+                        <strong>To Date :</strong>{" "}
+                        {/* {new Date(chosenHotel.arrival_time).toLocaleString()} */}
+                        <Col lg={10}>
+                          <Form.Group>
+                            <Form.Control
+                              type="date"
+                              min={new Date().toISOString().split("T")[0]}
+                              onChange={(e) => setToDate(e.target.value)}
+                            />
+                          </Form.Group>
+                        </Col>
+                      </p>
+                      <p>
+                        <strong>Rate :</strong> {starsRate(chosenHotel.rate)}
+                      </p>
+                      <p>
+                        <strong>Price Per Night :</strong> $
+                        {chosenHotel.price_per_night}
+                      </p>
+                    </div>
+                  </div>
                 </>
               )}
             </Modal.Body>
