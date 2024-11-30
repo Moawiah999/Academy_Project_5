@@ -45,6 +45,7 @@ const Message = ({ socket, user_id }) => {
   };
   const sendMessage = () => {
     socket.emit("message", { to, from: user_id, message });
+    setMessage("");
   };
   /* const fromUser = (messaage)=>{
     if (message.from === 1){
@@ -56,7 +57,7 @@ const Message = ({ socket, user_id }) => {
     {
       localStorage.getItem("role_id") == 1 ? setTo(2) : setTo(1);
     }
-    console.log(to);
+    // console.log(to);
   }, 2000);
 
   if (loading) {
@@ -65,13 +66,10 @@ const Message = ({ socket, user_id }) => {
         className="d-flex justify-content-center align-items-center"
         style={{ height: "100vh" }}
       >
-        <Spinner
-          animation="border"
-          style={{ color: "#ff5733" }} 
-        />
+        <Spinner animation="border" style={{ color: "#ff5733" }} />
       </div>
     );
-  }  
+  }
   return (
     <>
       {/*  <div>
@@ -168,60 +166,105 @@ const Message = ({ socket, user_id }) => {
                   allMessages.map((message) => {
                     return (
                       <>
-                        <MDBCardBody>
-                          {message.from == user_id ? (
-                            <div className="d-flex flex-row justify-content-end mb-4 pt-1">
-                              <div>
-                                <span className="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">
-                                  {message.message}
-                                </span>
+                        {localStorage.getItem("userId") == 1 ? (
+                          <MDBCardBody>
+                            {message.from == user_id ? (
+                              <div className="d-flex flex-row justify-content-end mb-4 pt-1">
+                                <div>
+                                  <span
+                                    className="small p-2 ms-3 mb-1 rounded-3"
+                                    style={{ backgroundColor: "#f5f6f7" }}
+                                  >
+                                    {message.message}
+                                  </span>
+                                </div>
+                                <img
+                                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVm7KqMOxRFzRD_muNtnG-Gk0gOx7n5Uyn_PQn-aHQBUH6gMCwrbCnoAQ&s"
+                                  alt="avatar 1"
+                                  style={{ width: "40px", height: "100%" }}
+                                />
                               </div>
-                              <img
-                                src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava4-bg.webp"
-                                alt="avatar 1"
-                                style={{ width: "40px", height: "100%" }}
-                              />
-                            </div>
-                          ) : (
-                            <div className="d-flex flex-row justify-content-start">
-                              <img
-                                src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
-                                alt="avatar 1"
-                                style={{ width: "40px", height: "100%" }}
-                              />
-                              <div>
-                                <span
-                                  className="small p-2 ms-3 mb-1 rounded-3"
-                                  style={{ backgroundColor: "#f5f6f7" }}
-                                >
-                                  {message.message}
-                                </span>
+                            ) : (
+                              <div className="d-flex flex-row justify-content-start">
+                                <img
+                                  src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
+                                  alt="avatar 1"
+                                  style={{ width: "40px", height: "100%" }}
+                                />
+                                <div>
+                                  <span className="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">
+                                    {message.message}
+                                  </span>
+                                </div>
                               </div>
-                            </div>
-                          )}
-                        </MDBCardBody>
+                            )}
+                          </MDBCardBody>
+                        ) : (
+                          <MDBCardBody>
+                            {message.from == user_id ? (
+                              <div className="d-flex flex-row justify-content-end mb-4 pt-1">
+                                <div>
+                                  <span
+                                    className="small p-2 ms-3 mb-1 rounded-3"
+                                    style={{ backgroundColor: "#f5f6f7" }}
+                                  >
+                                    {message.message}
+                                  </span>
+                                </div>
+                                <img
+                                  src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
+                                  alt="avatar 1"
+                                  style={{ width: "40px", height: "100%" }}
+                                />
+                              </div>
+                            ) : (
+                              <div className="d-flex flex-row justify-content-start">
+                                <img
+                                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVm7KqMOxRFzRD_muNtnG-Gk0gOx7n5Uyn_PQn-aHQBUH6gMCwrbCnoAQ&s"
+                                  alt="avatar 1"
+                                  style={{ width: "40px", height: "100%" }}
+                                />
+                                <div>
+                                  <span className="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">
+                                    {message.message}
+                                  </span>
+                                </div>
+                              </div>
+                            )}
+                          </MDBCardBody>
+                        )}
                       </>
                     );
                   })}
                 <MDBCardFooter className="text-muted d-flex justify-content-start align-items-center p-3">
-                  <img
-                    src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
-                    alt="avatar 3"
-                    style={{ width: "40px", height: "100%" }}
-                  />
+                  {localStorage.getItem("userId") == 1 ? (
+                    <img
+                      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVm7KqMOxRFzRD_muNtnG-Gk0gOx7n5Uyn_PQn-aHQBUH6gMCwrbCnoAQ&s"
+                      alt="avatar 3"
+                      style={{ width: "40px", height: "100%" }}
+                    />
+                  ) : (
+                    <img
+                      src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
+                      alt="avatar 3"
+                      style={{ width: "40px", height: "100%" }}
+                    />
+                  )}
                   <input
                     type="text"
                     class="form-control form-control-lg"
                     id="exampleFormControlInput1"
                     placeholder="Type message"
+                    value={message}
                     onChange={(e) => {
                       setMessage(e.target.value);
                     }}
                   ></input>
                   <BsCursorFill
                     style={{ width: "35px", height: "100%" }}
-                    onClick={() => {
+                    onClick={(e) => {
                       sendMessage();
+                      // setMessage("");
                     }}
                   />
                 </MDBCardFooter>

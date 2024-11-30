@@ -6,8 +6,11 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import NavDropdown from "react-bootstrap/NavDropdown";
-
+import { useSelector } from "react-redux";
 const NavbarPage = () => {
+  const { token } = useSelector((state) => {
+    return { token: state.user.token };
+  });
   const navigate = useNavigate();
 
   return (
@@ -76,12 +79,17 @@ const NavbarPage = () => {
                   >
                     PACKAGES
                   </Nav.Link>
-                  <Nav.Link onClick={() => {
-                      navigate("/Reservation");
-
-                    }}>
-                    RESERVATION
-                  </Nav.Link>
+                  {token === null || token === undefined ? (
+                    <></>
+                  ) : (
+                    <Nav.Link
+                      onClick={() => {
+                        navigate("/Reservation");
+                      }}
+                    >
+                      RESERVATION
+                    </Nav.Link>
+                  )}
                   {localStorage.getItem("token") ? (
                     // <Nav.Link
                     //   onClick={() => {
@@ -90,7 +98,7 @@ const NavbarPage = () => {
                     // >
                     //   MY PROFILE
                     // </Nav.Link>
-                    
+
                     <Nav>
                       <NavDropdown
                         id="nav-dropdown-dark-example"
@@ -125,7 +133,7 @@ const NavbarPage = () => {
                       LOGIN
                     </Nav.Link>
                   )}
-                  
+
                   {/* <Nav.Link onClick={() => {
                       navigate("/packages")
                     }}>
