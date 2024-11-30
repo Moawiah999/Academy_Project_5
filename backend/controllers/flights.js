@@ -70,16 +70,18 @@ const bookFlight = (req, res) => {
 const findAtrip = (req, res) => {
   const { origin, destination, departure_date } = req.query;
   const query = `
-  SELECT * FROM flights 
-  WHERE origin = $1 OR destination = $2 OR CAST(departure_time AS date) = $3;
-`;
+    SELECT * FROM flights 
+    WHERE 
+      (origin ILIKE $1 OR $1 IS NULL) AND 
+      (destination ILIKE $2 OR $2 IS NULL) AND 
+      (CAST(departure_time AS date) = $3 OR $3 IS NULL);
+  `;
 
   const values = [
-    origin.toLowerCase(),
-    destination.toLowerCase(),
-    departure_date.toLowerCase(),
+    origin ? `%${origin.toLowerCase()}%` : null,
+    destination ? `%${destination.toLowerCase()}%` : null,
+    departure_date || null,
   ];
-  console.log(values);
   db.query(query, values)
     .then((result) => {
       res.status(200).json({
