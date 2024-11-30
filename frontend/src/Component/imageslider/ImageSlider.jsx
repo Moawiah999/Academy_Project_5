@@ -10,7 +10,7 @@ const ImageSlider = () => {
        
 
           <img style={{ "border-radius": "25px" }}
-            src="https://images.pexels.com/photos/46148/aircraft-jet-landing-cloud-46148.jpeg"
+            src="/images/home_image_1.jpeg"
             alt="First slide"
             className="d-block w-100"
           />
@@ -19,7 +19,7 @@ const ImageSlider = () => {
         <Carousel.Item interval={5000}>
      
           <img style={{ "border-radius": "25px" }}
-            src="https://images.pexels.com/photos/1051075/pexels-photo-1051075.jpeg"
+            src="/images/home_image_2.jpeg"
             alt="Second slide"
             className="d-block w-100"
           />
@@ -29,7 +29,7 @@ const ImageSlider = () => {
           
             
           <img style={{ "border-radius": "25px" }}
-            src="https://themewagon.github.io/keto/images/banner3.jpg"
+            src="/images/home_image_3.jpg"
             alt="Third slide"
             className="d-block w-100"
           />
