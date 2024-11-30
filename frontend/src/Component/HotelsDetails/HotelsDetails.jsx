@@ -71,7 +71,7 @@ const HotelsDetails = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [hotelDetails]);
   const handleCloseUpdate = () => {
     setShowUpdate(false);
     toast.success("Hotel Updated Successfully");
@@ -442,7 +442,8 @@ const HotelsDetails = () => {
                           } */
                         )
                         .then((result) => {
-                          console.log(result);
+                          console.log(result.data.result);
+                          hotelDetails.push(result.data.result);
 
                           toast.success("The hotel was created successfully.");
                         })
@@ -820,7 +821,7 @@ const HotelsDetails = () => {
               </div>
             </Modal.Body>
           </Modal>
-          <Modal show={showDetail} onHide={() => setShowDetail()}>
+          <Modal show={showDetail} onHide={() => setShowDetail()} size="xl">
             <Modal.Header closeButton>
               <Modal.Title>Hotel Information</Modal.Title>
             </Modal.Header>
@@ -832,10 +833,10 @@ const HotelsDetails = () => {
                       <img
                         className="d-block w-100"
                         src={chosenHotel.image_url}
-                        alt="Package image"
+                        alt="Hotel image"
                       />
                     </div>
-                    <div className="col-md-4">
+                    <div className="col-md-8">
                       <p>
                         <strong>Hotel Name:</strong> {chosenHotel.name}
                         {/* {setHotel_id(chosenHotel.hotel_id)} */}
