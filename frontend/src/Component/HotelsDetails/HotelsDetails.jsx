@@ -66,12 +66,12 @@ const HotelsDetails = () => {
         setHotelDetails(result.data.result);
         // console.log("ahmad", hotelDetails);
         // setFindHotel(result.data.result);
-        setTitle(result.data.result);
+        setTitle("");
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [hotelDetails]);
+  }, [title]);
   const handleCloseUpdate = () => {
     setShowUpdate(false);
     toast.success("Hotel Updated Successfully");
@@ -102,8 +102,12 @@ const HotelsDetails = () => {
     setHotelPayment(false);
   };
   const shortDescription = (description) => {
-    const words = description.split(" ");
-    return words.slice(0, 4).join(" ") + " ...";
+    if (typeof description === "string" && description.trim().length > 0) {
+      const words = description.split(" ");
+      return words.slice(0, 4).join(" ") + " ...";
+    } else {
+      return "";
+    }
   };
   const starsRate = (rate) => {
     if (rate === "5") {
@@ -123,7 +127,7 @@ const HotelsDetails = () => {
     return (
       <div
         className="d-flex justify-content-center align-items-center"
-        style={{ height: "100vh" }}
+        style={{ height: "70vh" }}
       >
         <Spinner animation="border" style={{ color: "#ff5733" }} />
       </div>
@@ -138,7 +142,7 @@ const HotelsDetails = () => {
             <img
               style={{ "border-radius": "25px" }}
               className="img"
-              src="https://media.gettyimages.com/id/182238066/photo/asian-pool-villa.jpg?s=612x612&w=0&k=20&c=5wTUer7gyIXHoCLlNQ6gbUwQZRYEPdlvPji0wFiL3p8="
+              src="/images/HotelSlider1.jpg"
               alt="First slide"
               // className="d-block w-100"
             />
@@ -148,7 +152,7 @@ const HotelsDetails = () => {
             <img
               style={{ "border-radius": "25px" }}
               className="img"
-              src="https://c4.wallpaperflare.com/wallpaper/971/27/637/beach-bungalow-view-out-in-the-maldives-wallpaper-preview.jpg"
+              src="/images/HotelSlider2.jpg"
               alt="Second slide"
               // className="d-block w-100"
             />
@@ -158,7 +162,7 @@ const HotelsDetails = () => {
             <img
               style={{ "border-radius": "25px" }}
               className="img"
-              src="https://images.samsung.com/is/image/samsung/p6pim/levant/feature/163912081/levant-feature-add-comfort-to-every-room-531095840?$FB_TYPE_A_JPG$"
+              src="/images/HotelSlider3.jpg"
               // className="d-block w-100"
             />
           </Carousel.Item>
@@ -237,6 +241,12 @@ const HotelsDetails = () => {
               <Dropdown.Item
                 onClick={() => {
                   setStars("");
+                  // setHotelDetails(title);
+                  setLoading(true);
+                  setTitle("All");
+                  setTimeout(() => {
+                    setLoading(false);
+                  }, 2000);
                 }}
               >
                 All
@@ -274,7 +284,7 @@ const HotelsDetails = () => {
           <Col md={2}>
             <Button
               variant="danger"
-              className="mt-4 w-50"
+              className="mt-4 "
               onClick={() => {
                 console.log(findHotel);
                 const detail = hotelDetails.filter((ele, i) => {
@@ -286,7 +296,14 @@ const HotelsDetails = () => {
                     /*  ele.name.includes(findHotel.name) ||
                     ele.location.includes(findHotel.location) ||
                     ele.price_per_night.includes(findHotel.price_per_night) || */
-                    ele.rate.includes(findHotel.rate)
+                    ele.rate.includes(findHotel.rate) &&
+                    ele.location
+                      .toLowerCase()
+                      .includes(findHotel.city.toLowerCase()) &&
+                    ele.name
+                      .toLowerCase()
+                      .includes(findHotel.name.toLowerCase()) &&
+                    ele.price_per_night.includes(findHotel.price)
                   );
                 });
                 // console.log(stars);
@@ -295,6 +312,16 @@ const HotelsDetails = () => {
               }}
             >
               Search
+            </Button>
+            <Button
+              variant="danger"
+              className="mt-4"
+              style={{ marginLeft: "10px" }}
+              onClick={() => {
+                setTitle("AllData");
+              }}
+            >
+              Get All Hotels
             </Button>
           </Col>
         </Row>
@@ -444,7 +471,7 @@ const HotelsDetails = () => {
                         .then((result) => {
                           console.log(result.data.result);
                           hotelDetails.push(result.data.result);
-
+                          setTitle("Hotel Created");
                           toast.success("The hotel was created successfully.");
                         })
                         .catch((err) => {
@@ -465,7 +492,7 @@ const HotelsDetails = () => {
 
         <br />
         <div
-          className="packages-container"
+          className="hotel-container"
           style={{ fontFamily: "Roboto, sans-serif" }}
         >
           <div
@@ -481,12 +508,12 @@ const HotelsDetails = () => {
               style={{ gap: "70px" }}
             >
               {hotelDetails.map((ele, i) => (
-                <Col key={i} className="d-flex justify-content-center">
+                <Col key={i} lg={3} className="justify-content-center">
                   <div
-                    className="package-item"
+                    className="hotel-item"
                     style={{
                       cursor: "pointer",
-                      width: "100%",
+                      width: "100vh",
                       maxWidth: "350px",
                       margin: "0 auto",
                       marginBottom: "30px",
@@ -611,6 +638,7 @@ const HotelsDetails = () => {
                     )
                     .then((result) => {
                       handleCloseDelete();
+                      setTitle("Hotel Deleted");
                     })
                     .catch((err) => {
                       console.log(err);
