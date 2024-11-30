@@ -20,6 +20,9 @@ const Packages = () => {
   const [packagesInfo, setPackagesInfo] = useState({});
   const [checkId, setCheckId] = useState(false);
   const [updateModal, setUpdateModal] = useState(false);
+
+  // const [sta, setUpdateModal] = useState(false);
+
   const [ShowDeleteModal, setShowDeleteModal] = useState(false);
   const dispatch = useDispatch();
   const { token, userId, role_id } = useSelector((state) => {
@@ -41,7 +44,7 @@ const Packages = () => {
         setError("Error fetching tour packages");
         setLoading(false);
       });
-  }, []);
+  }, [tourPackages]);
 
   const handleCardClick = (packageData) => {
     setSelectedPackage(packageData);
@@ -61,8 +64,12 @@ const Packages = () => {
   };
 
   const shortDescription = (description) => {
-    const words = description.split(" ");
-    return words.slice(0, 4).join(" ") + " ...";
+    if (typeof description === "string" && description.trim().length > 0) {
+      const words = description.split(" ");
+      return words.slice(0, 4).join(" ") + " ...";
+    } else {
+      return "";
+    }
   };
 
   const handlePayment = (event) => {
@@ -83,9 +90,11 @@ const Packages = () => {
       })
 
       .then((response) => {
-        toast.success("Add new package successfully.").catch((err) => {
-          console.log(err);
-        });
+        toast.success("Add new package successfully.");
+        setTourPackages((packagesInfo) => [...packagesInfo, response.data]);
+      })
+      .catch((err) => {
+        toast.error("Cant Add new Tour Package");
       });
   };
   const deletePackages = (tour_packages_id) => {
@@ -123,13 +132,10 @@ const Packages = () => {
         className="d-flex justify-content-center align-items-center"
         style={{ height: "100vh" }}
       >
-        <Spinner
-          animation="border"
-          style={{ color: "#ff5733" }} 
-        />
+        <Spinner animation="border" style={{ color: "#ff5733" }} />
       </div>
     );
-  }  
+  }
 
   return (
     <div
@@ -140,7 +146,7 @@ const Packages = () => {
         marginTop: "30px",
       }}
     >
-      {role_id === 1 && (
+      {role_id === 1 ? (
         <Form
           className="mb-3"
           style={{ marginLeft: "144px", marginBottom: "10px" }}
@@ -310,13 +316,17 @@ const Packages = () => {
               <Button
                 variant="danger"
                 className="mt-4 w-50"
-                onClick={() => createPackages()}
+                onClick={() => {
+                  createPackages();
+                }}
               >
                 ADD
               </Button>
             </Col>
           </Row>
         </Form>
+      ) : (
+        <></>
       )}
 
       <Modal show={ShowDeleteModal} onHide={() => setShowDeleteModal(false)}>
@@ -561,7 +571,7 @@ const Packages = () => {
           style={{ gap: "70px" }}
         >
           {tourPackages.map((item, index) => (
-            <Col key={index} className="d-flex justify-content-center">
+            <Col key={index} className="justify-content-center">
               <div
                 className="package-item"
                 style={{
