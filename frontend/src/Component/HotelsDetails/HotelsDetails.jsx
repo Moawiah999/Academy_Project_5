@@ -33,7 +33,7 @@ const HotelsDetails = () => {
   const [title, setTitle] = useState("");
   const [findHotel, setFindHotel] = useState({
     name: "",
-    // rate: "",
+    rate: "",
     city: "",
     price: "",
   });
@@ -66,7 +66,7 @@ const HotelsDetails = () => {
         setHotelDetails(result.data.result);
         // console.log("ahmad", hotelDetails);
         // setFindHotel(result.data.result);
-        // setTitle(result.data.result);
+        setTitle(result.data.result);
       })
       .catch((err) => {
         console.log(err);
@@ -228,6 +228,50 @@ const HotelsDetails = () => {
             </Form.Group>
           </Col>
           <Col md={2}>
+            <Form.Label>Hotel Rate :</Form.Label>
+            <DropdownButton
+              id="dropdown-basic-button"
+              variant="danger"
+              title="Hotel Rate"
+            >
+              <Dropdown.Item
+                onClick={() => {
+                  setStars("");
+                }}
+              >
+                All
+              </Dropdown.Item>
+              <Dropdown.Item
+                value={"⭐️⭐️⭐️⭐️⭐️"}
+                onClick={() => {
+                  setStars("5");
+                  console.log(stars);
+                  setFindHotel({ ...findHotel, rate: "5" });
+                }}
+              >
+                5 Stars⭐️⭐️⭐️⭐️⭐️
+              </Dropdown.Item>
+              <Dropdown.Item
+                onClick={() => {
+                  setStars("4");
+                  setFindHotel({ ...findHotel, rate: "4" });
+                  // setTitle("5 stars");
+                }}
+              >
+                4 Stars⭐️⭐️⭐️⭐️☆
+              </Dropdown.Item>
+              <Dropdown.Item
+                onClick={() => {
+                  setStars("3");
+                  console.log(stars);
+                  setFindHotel({ ...findHotel, rate: "3" });
+                }}
+              >
+                3 Stars⭐️⭐️⭐️☆☆
+              </Dropdown.Item>
+            </DropdownButton>
+          </Col>
+          <Col md={2}>
             <Button
               variant="danger"
               className="mt-4 w-50"
@@ -238,7 +282,12 @@ const HotelsDetails = () => {
                           ele.name.includes(findHotel.name) ||
                             ele.name.includes(stars)
                         ); */
-                  return ele.name.includes(findHotel.name);
+                  return (
+                    /*  ele.name.includes(findHotel.name) ||
+                    ele.location.includes(findHotel.location) ||
+                    ele.price_per_night.includes(findHotel.price_per_night) || */
+                    ele.rate.includes(findHotel.rate)
+                  );
                 });
                 // console.log(stars);
                 console.log(detail);
@@ -251,47 +300,7 @@ const HotelsDetails = () => {
         </Row>
       </Form>
       <Form style={{ marginTop: "50px" }}>
-        <Row className="align-items-end">
-          {/*    <Form.Label>Stars</Form.Label>
-        <DropdownButton
-            id="dropdown-basic-button"
-            variant="danger"
-            title="Stars"
-          >
-            <Dropdown.Item
-              onClick={() => {
-                setStars("");
-              }}
-            >
-              All
-            </Dropdown.Item>
-            <Dropdown.Item
-              value={"⭐️⭐️⭐️⭐️⭐️"}
-              onClick={() => {
-                setStars("⭐️⭐️⭐️⭐️⭐️");
-                console.log(stars);
-              }}
-            >
-              5 Stars⭐️⭐️⭐️⭐️⭐️
-            </Dropdown.Item>
-            <Dropdown.Item
-              onClick={() => {
-                setStars("⭐️⭐️⭐️⭐️☆");
-                // setTitle("5 stars");
-              }}
-            >
-              4 Stars⭐️⭐️⭐️⭐️☆
-            </Dropdown.Item>
-            <Dropdown.Item
-              onClick={() => {
-                setStars("⭐️⭐️⭐️☆☆");
-                console.log(stars);
-              }}
-            >
-              3 Stars⭐️⭐️⭐️☆☆
-            </Dropdown.Item>
-          </DropdownButton> */}
-        </Row>
+        <Row className="align-items-end"></Row>
       </Form>
       <>
         {localStorage.getItem("role_id") == 1 ? (
