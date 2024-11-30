@@ -313,7 +313,7 @@ const HotelsDetails = () => {
             >
               Search
             </Button>
-            <Button
+           {/*  <Button
               variant="danger"
               className="mt-4"
               style={{ marginLeft: "10px" }}
@@ -322,7 +322,7 @@ const HotelsDetails = () => {
               }}
             >
               Get All Hotels
-            </Button>
+            </Button> */}
           </Col>
         </Row>
       </Form>
